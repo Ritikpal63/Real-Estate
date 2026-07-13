@@ -78,8 +78,9 @@ const Login = () => {
                 </div>
                 <div className="form-group col-md-12 mbnone">
                   <button
-                    className="btn btn-contact-bg"
+                    className="btn w-full btn-blog-bg"
                     type="submit"
+					style={{backgroundColor:""}}
                     disabled={authLoading}
                   >
                     {authLoading ? "Signing in..." : "Login"}

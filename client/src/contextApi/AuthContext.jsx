@@ -1,11 +1,24 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const AuthContext = createContext();
 
+const getStoredUser = () => {
+  const stored = localStorage.getItem("realestate_user");
+  return stored ? JSON.parse(stored) : null;
+};
+
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(getStoredUser);
   const [authLoading, setAuthLoading] = useState(false);
   const [authError, setAuthError] = useState("");
+
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem("realestate_user", JSON.stringify(user));
+    } else {
+      localStorage.removeItem("realestate_user");
+    }
+  }, [user]);
 
   const login = async ({ email, password }) => {
     setAuthError("");
@@ -14,8 +27,9 @@ export function AuthProvider({ children }) {
     try {
       await new Promise((resolve) => setTimeout(resolve, 300));
 
-      if (email === "admin@realestate.local" && password === "admin123") {
-        setUser({ email, name: "Admin", role: "admin" });
+      if (email === "ritikpal227@gmail.com" && password === "admin123") {
+        const admin = { email, name: "Admin", role: "admin" };
+        setUser(admin);
         return true;
       }
 

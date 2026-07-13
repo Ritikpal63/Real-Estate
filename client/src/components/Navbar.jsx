@@ -42,7 +42,7 @@ const Navbar = () => {
 								<Link to="#" className="nav-link text-light">Pages</Link>
 								<ul className="dropdown">
 									<li><Link to="agent-profile" className="nav-link">agent profile</Link></li>
-									<li><Link to="login" className="nav-link textx-light">login page</Link></li>
+									{/* <li><Link to="login" className="nav-link textx-light">login page</Link></li> */}
 									<li><Link to="register" className="nav-link">register page</Link></li>
 									<li><Link to="faq" className="nav-link">Faqs</Link></li>
 									<li><Link to="pagenotfound" className="nav-link">404 page</Link></li>

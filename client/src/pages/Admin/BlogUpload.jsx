@@ -113,8 +113,9 @@ const BlogUpload = () => {
               <div>
                 <button
                   type="submit"
-                  className="btn btn-primary px-5 w-100 rounded-md"
+                  className="bg-green-400 text-2xl text-light py-2 px-5 w-100 rounded-md"
                   disabled={loading}
+                  style={{fontSize:"24px", borderRadius:"6px"}}
                 >
                   {loading ? "Uploading..." : "Submit Post"}
                 </button>

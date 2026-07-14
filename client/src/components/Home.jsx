@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 
 const BackgroundCarousel = () => {
   const images = [
-    "assets/img/bg/slide1.jpg",
-    "assets/img/bg/slide2.jpg",
-    "assets/img/bg/slide3.jpg",
+    "/assets/img/bg/slide1.jpg",
+    "/assets/img/bg/slide2.jpg",
+    "/assets/img/bg/slide3.jpg",
   ];
   const [index, setIndex] = useState(0);
 
@@ -27,7 +27,7 @@ const BackgroundCarousel = () => {
       <button
         onClick={prev}
         aria-label="Previous background"
-        className="absolute left-4 top-1/2 -translate-y-1/2 z-1 bg-white/30 hover:bg-white/50 text-white p-3 rounded text-lg"
+        className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-white/30 hover:bg-white/50 text-white p-3 rounded text-lg"
       >
         ‹
       </button>
@@ -35,7 +35,7 @@ const BackgroundCarousel = () => {
       <button
         onClick={next}
         aria-label="Next background"
-        className="absolute right-4 top-1/2 -translate-y-1/2 z-1 bg-white/30 hover:bg-white/50 text-white p-3 rounded"
+        className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-white/30 hover:bg-white/50 text-white p-3 rounded"
       >
         ›
       </button>
@@ -46,11 +46,7 @@ const BackgroundCarousel = () => {
 const Home = () => {
   return (
     <>
-      <section
-        id="home"
-        className="home_bg relative"
-        style={{ height: "870px" }}
-      >
+      <section id="home" className="home_bg relative" style={{ minHeight: '60vh' }}>
         <BackgroundCarousel />
 
         <div className="container relative" style={{ zIndex: 2 }}>

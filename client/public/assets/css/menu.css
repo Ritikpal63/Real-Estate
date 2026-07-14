@@ -31,7 +31,7 @@
 	display: inline-block;
 }
 
-.site-navbar .site-navigation .site-menu>li {
+.site-navbar .site-navigation .site-menu>li> Link{
 	padding: 25px 20px;
 	font-size: 18px;
 	text-transform: capitalize;

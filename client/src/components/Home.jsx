@@ -55,7 +55,7 @@ const Home = () => {
               <div className="hero-text">
                 <h2>
                   Find the Perfect Office Space. Build the Right Business
-                  Connections
+                  Connections 
                 </h2>
                 <p className="fw-bold fs-1 font-bold">
                   NCR Space Connect is a modern commercial real estate platform

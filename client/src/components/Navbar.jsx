@@ -1,8 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 const Navbar = () => {
-  return (
+	const [open, setOpen] = useState(false)
+
+	const toggleMenu = (e) => {
+		e.preventDefault()
+		setOpen((v) => !v)
+	}
+
+	const closeMenu = () => setOpen(false)
+
+	return (
     <>
 	{/* <nav className="navbar">
   <div className="container">
@@ -28,7 +37,7 @@ const Navbar = () => {
 					<nav className="site-navigation position-relative text-right" role="navigation">
 						<ul className="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
 							<li>
-								<Link to="/"  className='nav-link text-light'>Home</Link>
+								<Link to="/"  className='nav-link text-light hover:text-green-500'>Home</Link>
 							</li>
 							<li><Link className="nav-link text-light" to="about">about</Link></li>
 							<li className="has-children">
@@ -60,8 +69,42 @@ const Navbar = () => {
 					</nav>
 				</div>
 				<div className="col-6 d-inline-block d-xl-none ml-md-0 py-3" style={{position: "relative", top: "3px"}}>
-					<Link to="#" className="site-menu-toggle js-menu-toggle float-right"><span
-							className="icon-menu h3"></span></Link>
+					<a href="#" onClick={toggleMenu} className="site-menu-toggle js-menu-toggle float-right" aria-expanded={open} aria-controls="mobile-menu"><span
+						className="icon-menu h3"></span></a>
+				</div>
+
+				{/* Mobile menu */}
+				<div id="mobile-menu" className="d-xl-none" style={{display: open ? 'block' : 'none'}}>
+					<nav className="site-navigation text-center" role="navigation">
+						<ul className="site-menu main-menu">
+							<li><Link to="/" onClick={closeMenu} className='nav-link text-light'>Home</Link></li>
+							<li><Link to="about" onClick={closeMenu} className="nav-link text-light">about</Link></li>
+							<li className="has-children">
+								<Link to="property" onClick={closeMenu} className="nav-link text-light">Property</Link>
+								<ul className="dropdown">
+									<li><Link to="property-details" onClick={closeMenu} className="nav-link">Property Details</Link></li>
+								</ul>
+							</li>
+							<li><Link to="gallery" onClick={closeMenu} className='text-light'>Gallery</Link></li>
+							<li className="has-children">
+								<Link to="#" onClick={(e) => e.preventDefault()} className="nav-link text-light">Pages</Link>
+								<ul className="dropdown">
+									<li><Link to="agent-profile" onClick={closeMenu} className="nav-link">agent profile</Link></li>
+									<li><Link to="register" onClick={closeMenu} className="nav-link">register page</Link></li>
+									<li><Link to="faq" onClick={closeMenu} className="nav-link">Faqs</Link></li>
+									<li><Link to="pagenotfound" onClick={closeMenu} className="nav-link">404 page</Link></li>
+								</ul>
+							</li>
+							<li className="has-children">
+								<Link to="blog" onClick={closeMenu} className="nav-link text-light">Blog</Link>
+								<ul className="dropdown">
+									<li><Link to="blogpost" onClick={closeMenu} className="nav-link">Blog Post</Link></li>
+								</ul>
+							</li>
+							<li><Link className="nav-link text-light" to="contact" onClick={closeMenu}>Contact</Link></li>
+							<li><Link className='nav-link text-light' to='/admin' onClick={closeMenu}>Admin</Link></li>
+						</ul>
+					</nav>
 				</div>
 			</div>
 		</div>

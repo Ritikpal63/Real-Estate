@@ -3,7 +3,7 @@ import React from "react";
 const Section = ({title, classTitle, classPara, sectionpara}) => {
   return (
     <>
-      <section className="section-top">
+      <section className="section-top" style={{backgroundColor:"#374256"}}>
         <div className="container">
           <div className="col-lg-10 offset-lg-1 col-xs-12 text-center">
             <div

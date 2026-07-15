@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Outlet } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import GalleryPage from "./pages/GalleryPage";
 import AboutPage from "./pages/AboutPage";
@@ -20,6 +20,8 @@ import NotAuthorizedPage from "./pages/NotAuthorizedPage";
 import { PostProvider } from "./contextApi/PostContext";
 import { AuthProvider } from "./contextApi/AuthContext";
 import RequireAdmin from "./components/RequireAdmin";
+import AdminHome from "./pages/Admin/AdminHome";
+import AddPropertyPage from "./pages/Admin/AddPropertyPage";
 
 const App = () => {
   return (
@@ -43,10 +45,24 @@ const App = () => {
             path="/admin"
             element={
               <RequireAdmin>
-                <BlogUpload />
+                <Outlet />
               </RequireAdmin>
             }
-          />
+          >
+            <Route index element={<AdminHome />} />
+            <Route path="addblog" element={<BlogUpload />} />
+            <Route path="addproperty" element={<AddPropertyPage />} /> 
+          </Route>
+          {/* <Route
+            path="/admin"
+            element={
+              <RequireAdmin>
+                <Route path="/" element={<AdminHome />} />
+              </RequireAdmin>
+            }
+          >
+            <Route path="/addblog" element={<BlogUpload />} />
+          </Route> */}
           <Route path="/not-authorized" element={<NotAuthorizedPage />} />
           <Route path="/*" element={<NotfoundPage />} />
         </Routes>

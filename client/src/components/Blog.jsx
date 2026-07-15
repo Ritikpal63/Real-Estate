@@ -31,7 +31,7 @@ const Blog = () => {
                       <small className="text-secondary">ID: {item.id}</small>
                     </div>
                   ))}
-					{/* {blogContent.map((item)=>{
+					{blogContent.map((item)=>{
 						return <div key={item.id} className='single_blog_page'>
 							<img src={item.image} className='img-fluid' alt="" />
 							<h2>
@@ -40,7 +40,7 @@ const Blog = () => {
 							<p>{item.content}</p>
 							<Link className="single_blog_page_btn" to="blog-post.html">Read More</Link>
 						</div>
-					})} */}
+					})}
 				</div>
 				<div className="col-lg-4 col-sm-12 col-xs-12">
 					<div className="blog_search">

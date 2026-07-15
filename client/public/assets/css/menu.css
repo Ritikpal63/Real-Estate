@@ -15,7 +15,6 @@
 .site-navbar .site-navigation .site-menu {
 	margin-bottom: 0;
 }
-
 .site-navbar .site-navigation .site-menu .active {
 	color: #35ac39;
 	display: inline-block;
@@ -39,11 +38,11 @@
 	text-decoration: none !important;
 }
 
-.site-navbar .site-navigation .site-menu>li:hover {
+.site-navbar .site-navigation .site-menu>li> Link:hover {
 	color: #35ac39;
 }
 
-.site-navbar .site-navigation .site-menu>li.social>a {
+.site-navbar .site-navigation .site-menu>li.social>Link {
 	padding-left: 5px;
 	padding-right: 5px;
 }

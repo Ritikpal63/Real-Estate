@@ -10,10 +10,10 @@ export default function AddPropertyPage() {
     <Section title={"Add Property"} />
     <div className="container-fluid">
       <div className="row">
-        <div className="col-4 w-full h-[500px] py-2">
+        <div className="col-lg-4 w-full col-md-12 py-2">
           <AdminAsideSection />
         </div>
-        <div className="col-8  w-full py-2">
+        <div className="col-lg-8 col-md-12  w-full py-2">
           <AddProperty />
         </div>
       </div>

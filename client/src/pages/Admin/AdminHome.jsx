@@ -9,10 +9,10 @@ const AdminHome = () => {
       <Section title={"Admin Page"} />
       <div className="container-fluid">
         <div className="row m-2">
-          <div className="col-4w-full">
+          <div className="col-lg-4 col-md-12 w-full">
            <AdminAsideSection />
           </div>
-          <div className="col-8 w-full"></div>
+          <div className="col-lg-8 col-md-12 w-full"></div>
         </div>
       </div>
     </>

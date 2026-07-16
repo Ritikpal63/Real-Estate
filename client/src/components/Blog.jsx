@@ -16,19 +16,21 @@ const Blog = () => {
     <>
 	<section className='blog-page section-padding'>
 		<div className="container">
-			{/* {postHeading} */}
 			<div className="row">
 				<div className='col-lg-8 col-sm-12 col-xs-12'>
 					{posts.map((item) => (
-                    <div key={item.id} className="mb-3 border rounded p-3">
+                    <div key={item.id} className="single_blog_page">
                       {item.image && (
-                        <img src={item.image} alt={item.title} className="img-fluid rounded mb-2" style={{ maxHeight: "150px", width: "100%", objectFit: "cover" }} />
+                        <img src={item.image} alt={item.title} className="img-fluid"  />
                       )}
-                      <h6 className="fw-bold">{item.title}</h6>
-                      <p className="small text-muted" style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                      <h2>
+						<Link>{item.title}</Link>
+					  </h2>
+                      <p>
                         {item.content}
                       </p>
-                      <small className="text-secondary">ID: {item.id}</small>
+					  <Link className="single_blog_page_btn" to="blog-post.html">Read More</Link>
+                      {/* <small className="text-secondary">ID: {item.id}</small> */}
                     </div>
                   ))}
 					{blogContent.map((item)=>{

@@ -10,7 +10,7 @@ const BlogUpload = () => {
     <>
       <Section title={"Admin Blog Upload"} />
       <div className="container-fluid">
-        <div className="row">
+        <div className="row mt-2">
           <div className="col-lg-4 col-md-12">
             <AdminAsideSection />
           </div>

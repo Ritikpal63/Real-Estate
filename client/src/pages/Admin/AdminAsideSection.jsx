@@ -74,7 +74,7 @@ const Sidebar = () => {
   ];
 
   return (
-    <aside className="w-64 min-h-180 relative bg-[#374256] text-gray-300 flex flex-col justify-between font-sans">
+    <aside className="w-80 min-h-180 relative bg-[#374256] text-gray-300 flex flex-col justify-between font-sans">
       <div>
         <div className="flex items-center gap-3 px-6 py-5 border-b border-[#2d3d56]">
           <Home className="w-6 h-6 text-blue-400" />
@@ -103,7 +103,7 @@ const Sidebar = () => {
               <Link
                 key={item.path}
                 to={item.path}
-                className={`w-full flex link items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 group relative block ${
+                className={`w-full d-flex link items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 group relative block ${
                   isActive
                     ? 'bg-[#2b3c56] text-white font-semibold'
                     : 'hover:bg-[#28374f] hover:text-white'
@@ -127,12 +127,12 @@ const Sidebar = () => {
 
       <div className="p-4 border-t border-[#2d3d56] bg-[#374256] bottom-0 absolute">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-full bg-blue-600 flex items-center justify-center text-white font-medium">
-            JD
+          <div className="w-20 h-20 p-1 rounded-full bg-blue-600 flex items-center justify-center text-white font-medium text-2xl font-mono">
+            NCR
           </div>
           <div className="flex-1 overflow-hidden">
-            <h4 className="text-sm font-medium text-white truncate">John Doe</h4>
-            <p className="text-xs text-gray-400 truncate">admin@luxestate.com</p>
+            <h5 className="text-sm font-medium text-white truncate">NCR Space Connect</h5>
+            <p className="text-xs text-gray-400 truncate">ncr@realestate.com</p>
           </div>
         </div>
       </div>

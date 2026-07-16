@@ -81,7 +81,7 @@ export default function AddProperty() {
 
         <ImageUploader />
 
-        <button className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-xl py-3">
+        <button className="w-full bg-[#374256] text-white rounded-lg py-3">
           Continue
         </button>
       </div>

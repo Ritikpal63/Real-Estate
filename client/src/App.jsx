@@ -22,6 +22,7 @@ import { AuthProvider } from "./contextApi/AuthContext";
 import RequireAdmin from "./components/RequireAdmin";
 import AdminHome from "./pages/Admin/AdminHome";
 import AddPropertyPage from "./pages/Admin/AddPropertyPage";
+import AdminNews from "./pages/Admin/News/AdminNews";
 
 const App = () => {
   return (
@@ -52,6 +53,7 @@ const App = () => {
             <Route index element={<AdminHome />} />
             <Route path="addblog" element={<BlogUpload />} />
             <Route path="addproperty" element={<AddPropertyPage />} /> 
+            <Route path="addnews" element={<AdminNews />} />
           </Route>
           {/* <Route
             path="/admin"

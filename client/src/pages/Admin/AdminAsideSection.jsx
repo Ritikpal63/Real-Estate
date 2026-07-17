@@ -61,7 +61,7 @@ const Sidebar = () => {
     },
     {
       type: 'link',
-      path: '/admin',
+      path: '/admin/addnews',
       label: 'Add News Article',
       icon: PlusCircle,
     },

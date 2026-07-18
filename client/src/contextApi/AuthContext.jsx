@@ -1,6 +1,8 @@
 // src/contextApi/AuthContext.js
 import React, { createContext, useState, useContext, useEffect } from "react";
 import axios from "axios";
+import axiosInstance from "../utils/axiosConfig";
+
 
 const AuthContext = createContext();
 
@@ -45,7 +47,7 @@ export const AuthProvider = ({ children }) => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/auth/login",
+        `${axiosInstance}api/auth/login`,
         credentials,
       );
       console.log("Login response:", response.data);
@@ -102,7 +104,7 @@ export const AuthProvider = ({ children }) => {
     setAuthError('');
     
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/register', userData);
+      const response = await axios.post(`${axiosInstance}api/auth/register`, userData);
       console.log('Registration response:', response.data);
       
       if (response.data.success) {

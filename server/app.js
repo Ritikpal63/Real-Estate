@@ -24,9 +24,9 @@ app.use('/api/news', newsRoutes);
 const authRoutes = require('./routes/auth.routes');
 app.use('/api/auth', authRoutes);
 
-app.get('/api/health', (req, res) => {
-  res.json({ status: 'OK', message: 'Server is running' });
-});
+// app.get('/api/health', (req, res) => {
+//   res.json({ status: 'OK', message: 'Server is running' });
+// });
 
 app.use((err, req, res, next) => {
   console.error(err.stack);

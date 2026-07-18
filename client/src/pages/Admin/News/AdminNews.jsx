@@ -3,7 +3,8 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Section from "../../../components/Section";
 // import AdminHome from "../AdminHome";
-import AdminAsideSection from '../AdminAsideSection'
+import AdminAsideSection from "../AdminAsideSection";
+import axios from "axios";
 
 const AdminNews = () => {
   const navigate = useNavigate();
@@ -21,6 +22,8 @@ const AdminNews = () => {
   const [editId, setEditId] = useState(null);
   const [showForm, setShowForm] = useState(false);
 
+  const API_URL= 'http://localhost:5000/api/news';
+
   // Fetch all news
   useEffect(() => {
     fetchNews();
@@ -28,9 +31,8 @@ const AdminNews = () => {
 
   const fetchNews = async () => {
     try {
-      const response = await fetch("/api/news");
-      const data = await response.json();
-      setNews(data);
+      const response = await axios.get(API_URL);
+      setNews(response.data.data);
       setLoading(false);
     } catch (error) {
       console.error("Error fetching news:", error);
@@ -50,20 +52,39 @@ const AdminNews = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const url = isEditing ? `/api/news/${editId}` : "/api/news";
-    const method = isEditing ? "PUT" : "POST";
+    // Validation
+    if (!formData.title.trim()) {
+      alert("Please enter a title");
+      return;
+    }
+    if (!formData.content.trim()) {
+      alert("Please enter content");
+      return;
+    }
 
     try {
-      const response = await fetch(url, {
-        method: method,
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      let response;
 
-      if (response.ok) {
-        fetchNews();
+      if (isEditing) {
+        // Update existing news
+        response = await axios.put(`${API_URL}/${editId}`, formData, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+      } else {
+        // Create new news
+        response = await axios.post(API_URL, formData, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+      }
+
+      console.log("Response:", response.data);
+
+      if (response.data.success) {
+        await fetchNews(); // Refresh the list
         resetForm();
         alert(
           isEditing
@@ -71,11 +92,21 @@ const AdminNews = () => {
             : "News created successfully!",
         );
       } else {
-        alert("Failed to save news. Please try again.");
+        alert(
+          response.data.message || "Failed to save news. Please try again.",
+        );
       }
     } catch (error) {
       console.error("Error saving news:", error);
-      alert("An error occurred. Please try again.");
+
+      if (error.response) {
+        console.error("Server error:", error.response.data);
+        alert(error.response.data.message || "Server error occurred");
+      } else if (error.request) {
+        alert("Cannot connect to server. Please check if backend is running.");
+      } else {
+        alert("An error occurred. Please try again.");
+      }
     }
   };
 
@@ -169,8 +200,6 @@ const AdminNews = () => {
                     </button>
                   )}
                 </div>
-
-                {/* Create/Edit Form */}
                 {showForm && (
                   <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
                     <div className="flex justify-between items-center mb-6">
@@ -196,7 +225,6 @@ const AdminNews = () => {
                         </svg>
                       </button>
                     </div>
-
                     <form onSubmit={handleSubmit} className="space-y-4">
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -324,7 +352,7 @@ const AdminNews = () => {
                         </thead>
                         <tbody className="divide-y divide-gray-200">
                           {news.map((article) => (
-                            <tr key={article._id} className="hover:bg-gray-50">
+                            <tr key={article.id} className="hover:bg-gray-50">
                               <td className="px-6 py-4">
                                 <div className="text-sm font-medium text-gray-900">
                                   {article.title}

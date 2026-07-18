@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 
 const BackgroundCarousel = () => {
   const images = [
-    "/assets/img/bg/NCR02.jpg",
-    "/assets/img/bg/NCR05.jpg",
-    "/assets/img/bg/NCR03.jpg",
+    // "/assets/img/bg/NCR02.jpg",
+    // "/assets/img/bg/NCR05.jpg",
+    // "/assets/img/bg/NCR03.jpg",
     "/assets/img/bg/NCR04.jpg"
   ];
   const [index, setIndex] = useState(0);
@@ -91,14 +91,14 @@ const Home = () => {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-6">
           <Link
             to="/about"
-            className="px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg md:text-xl font-semibold text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-2xl wow bounceIn"
+            className="text-light font-semibold text-xl bg-primary px-5 py-3  rounded-lg bounceIn wow hover:shadow-2xl hover:scale-105"
             data-wow-delay=".6s"
           >
             About Us
           </Link>
           <Link
             to="/gallery"
-            className="px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg md:text-xl font-semibold text-white bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-2xl wow bounceIn"
+            className="px-5 sm:px-8 py-3 sm:py-4 text-base sm:text-lg md:text-xl font-semibold text-light bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-2xl wow bounceIn"
             data-wow-delay=".8s"
           >
             Our Listings

@@ -39,9 +39,9 @@ const App = () => {
           <Route path="/property" element={<PropertyPage />} />
           <Route path="/property-details" element={<PropertyDetailPage />} />
           <Route path="agent-profile" element={<AgentprofilePage />} />
-          <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/faq" element={<FaqPage />} />
+          <Route path="/login" element={<LoginPage />} />
           <Route
             path="/admin"
             element={
@@ -55,16 +55,6 @@ const App = () => {
             <Route path="addproperty" element={<AddPropertyPage />} /> 
             <Route path="addnews" element={<AdminNews />} />
           </Route>
-          {/* <Route
-            path="/admin"
-            element={
-              <RequireAdmin>
-                <Route path="/" element={<AdminHome />} />
-              </RequireAdmin>
-            }
-          >
-            <Route path="/addblog" element={<BlogUpload />} />
-          </Route> */}
           <Route path="/not-authorized" element={<NotAuthorizedPage />} />
           <Route path="/*" element={<NotfoundPage />} />
         </Routes>

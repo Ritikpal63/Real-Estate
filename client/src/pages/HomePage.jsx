@@ -16,7 +16,11 @@ const HomePage = () => {
   return (
     <>
       <Home />
+      <p className="text-center bg-red-500 text-light font-semibold">
+       <span className=""> Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam, molestiae.</span>
+        </p>
       <Search />
+      <Latestnews />
       {/* <About /> */}
       {/* <Services /> */}
       {/* <WhyChooseUs /> */}
@@ -25,7 +29,7 @@ const HomePage = () => {
       <Portfolio />
       <TeamPage />
       <Newsletter />
-      <Latestnews />
+      {/* <Latestnews /> */}
     </>
   );
 };

@@ -1,6 +1,8 @@
 // controllers/newsController.js
 const NewsModel = require('../models/newsModel');
 
+
+
 class NewsController {
   // Get all news
   static async getAll(req, res) {
@@ -53,6 +55,7 @@ class NewsController {
           message: 'Title and content are required' 
         });
       }
+
       
       const newNews = await NewsModel.create({
         title,
@@ -121,6 +124,7 @@ class NewsController {
       
       // Check if news exists
       const existing = await NewsModel.getById(id);
+      console.log("Existing News", existing)
       if (!existing) {
         return res.status(404).json({ success: false, message: 'News not found' });
       }

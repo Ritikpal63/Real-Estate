@@ -1,24 +1,45 @@
-// middleware/auth.js
+// backend/middleware/auth.js
 const jwt = require('jsonwebtoken');
 
-module.exports = (req, res, next) => {
+const authenticate = (req, res, next) => {
   try {
-    const token = req.headers.authorization?.split(' ')[1];
-    
-    if (!token) {
-      return res.status(401).json({ 
-        success: false, 
-        message: 'Authentication required' 
+    // Get token from header
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return res.status(401).json({
+        success: false,
+        message: 'Authentication required'
       });
     }
+
+    const token = authHeader.split(' ')[1];
     
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    // Verify token
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key');
     req.user = decoded;
     next();
   } catch (error) {
-    return res.status(401).json({ 
-      success: false, 
-      message: 'Invalid or expired token' 
+    console.error('Auth error:', error);
+    
+    if (error.name === 'JsonWebTokenError') {
+      return res.status(401).json({
+        success: false,
+        message: 'Invalid token'
+      });
+    }
+    
+    if (error.name === 'TokenExpiredError') {
+      return res.status(401).json({
+        success: false,
+        message: 'Token expired'
+      });
+    }
+    
+    return res.status(401).json({
+      success: false,
+      message: 'Authentication failed'
     });
   }
 };
+
+module.exports = { authenticate };

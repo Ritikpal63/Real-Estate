@@ -7,7 +7,10 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:3000', // Your React app URL
+  credentials: true
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -15,14 +18,8 @@ app.use(express.urlencoded({ extended: true }));
 const newsRoutes = require('./routes/newsRoutes');
 app.use('/api/news', newsRoutes);
 
-app.post("/api/auth/login", async (req, res)=>{
-  try {
-    const {credentials} = req.body
-    console.log("Credentials", credentials)
-  } catch (error) {
-    
-  }
-})
+const authRoutes = require('./routes/auth.routes');
+app.use('/api/auth', authRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {
@@ -42,5 +39,6 @@ app.use((err, req, res, next) => {
 // Start server
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
-  console.log(`📡 API endpoint: http://localhost:${PORT}/api/news`);
+  console.log(`📡 API endpoint: http://localhost:${PORT}/api`);
+  console.log(`🔐 Auth endpoint: http://localhost:${PORT}/api/auth`);
 });

@@ -13,7 +13,7 @@ router.get('/:id', NewsController.getById);
 
 // Protected routes (admin only)
 router.post('/',  NewsController.create);
-router.put('/:id', auth, NewsController.update);
+router.put('/:id',  NewsController.update);
 router.delete('/:id', auth, NewsController.delete);
 
 module.exports = router;

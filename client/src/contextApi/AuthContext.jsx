@@ -1,4 +1,3 @@
-// src/contextApi/AuthContext.js
 import React, { createContext, useState, useContext, useEffect } from "react";
 import axios from "axios";
 import axiosInstance from "../utils/axiosConfig";
@@ -29,7 +28,6 @@ export const AuthProvider = ({ children }) => {
       try {
         setToken(storedToken);
         setUser(JSON.parse(storedUser));
-        // Set default authorization header
         axios.defaults.headers.common["Authorization"] =
           `Bearer ${storedToken}`;
       } catch (error) {
@@ -40,7 +38,6 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  // Login function
   const login = async (credentials) => {
     setAuthLoading(true);
     setAuthError("");
@@ -154,6 +151,7 @@ export const AuthProvider = ({ children }) => {
   const isAuthenticated = () => {
     return !!token && !!user;
   };
+  const isAdmin = user?.role === "admin";
 
   const value = {
     user,
@@ -161,6 +159,7 @@ export const AuthProvider = ({ children }) => {
     login,
     register,
     logout,
+    isAdmin,
     authLoading,
     authError,
     setAuthError,

@@ -97,11 +97,13 @@ const Contact = () => {
 
       <div className="map">
         <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3023.957183635167!2d-74.00402768559431!3d40.71895904512855!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c2598a1316e7a7%3A0x47bb20eb6074b3f0!2sNew%20Work%20City%20-%20(CLOSED)!5e0!3m2!1sbn!2sbd!4v1600305497356!5m2!1sbn!2sbd"
-          //   style="border:0;"
-          //   allowFullScreen=""
-          //   aria-hidden="false"
-          //   tabIndex="0"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d218.96948051169332!2d77.31849866045475!3d28.584422558740314!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce50ca7c756cf%3A0x47139b540aea0eda!2sDigital%20Vyapaar!5e0!3m2!1sen!2sin!4v1784359416275!5m2!1sen!2sin"
+          width="600"
+          height="450"
+          style={{border:"0"}}
+          allowFullScreen=""
+          loading="lazy"
+          referrerPolicy="strict-origin-when-cross-origin"
         ></iframe>
       </div>
     </>

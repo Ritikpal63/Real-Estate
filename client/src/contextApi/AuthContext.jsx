@@ -46,10 +46,7 @@ export const AuthProvider = ({ children }) => {
     setAuthError("");
 
     try {
-      const response = await axios.post(
-        `${axiosInstance}api/auth/login`,
-        credentials,
-      );
+      const response = await axiosInstance.post("/auth/login", credentials);
       console.log("Login response:", response.data);
 
       if (response.data.success) {
@@ -104,7 +101,7 @@ export const AuthProvider = ({ children }) => {
     setAuthError('');
     
     try {
-      const response = await axios.post(`${axiosInstance}api/auth/register`, userData);
+      const response = await await axiosInstance.post("/auth/register", userData);
       console.log('Registration response:', response.data);
       
       if (response.data.success) {

@@ -21,7 +21,7 @@ const Sidebar = () => {
   const navItems = [
     {
       type: 'link',
-      path: '/admin',
+      path: '/admin/dashboard',
       label: 'Dashboard',
       icon: LayoutDashboard,
     },
@@ -37,19 +37,19 @@ const Sidebar = () => {
     },
     {
       type: 'link',
-      path: '/admin',
+      path: '/admin/view-property',
       label: 'View Properties',
       icon: Building2,
     },
     {
       type: 'link',
-      path: '/admin',
+      path: '/admin/addteam',
       label: 'Add Team Member',
       icon: UserPlus,
     },
     {
       type: 'link',
-      path: '/admin',
+      path: '/admin/view-team',
       label: 'View Team',
       icon: Users,
     },
@@ -67,7 +67,7 @@ const Sidebar = () => {
     },
     {
       type: 'link',
-      path: '/admin',
+      path: '/admin/addgallery',
       label: 'Add Gallery Album',
       icon: PlusCircle,
     },

@@ -14,9 +14,9 @@ const LatestnewsPage = () => {
       
       const response = await axios.get('http://localhost:5000/api/news');
       
-      console.log("Full Response:", response);
-      console.log("Response Data:", response.data);
-      console.log("News Array:", response.data.data);
+      // console.log("Full Response:", response);
+      // console.log("Response Data:", response.data);
+      // console.log("News Array:", response.data.data);
       
       if (response.data.success) {
         setNews(response.data.data);

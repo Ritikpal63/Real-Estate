@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../contextApi/AuthContext';
+import axiosInstance from '../utils/axiosConfig';
+
 
 const Register = () => {
   const navigate = useNavigate();
@@ -132,8 +134,7 @@ const Register = () => {
 
       console.log('📤 Sending registration data via Axios:', { ...userData, password: '********' });
 
-      const response = await axios.post(
-        'http://localhost:5000/api/auth/register',
+      const response = await axiosInstance.post('/auth/register',
         userData,
         {
           headers: {

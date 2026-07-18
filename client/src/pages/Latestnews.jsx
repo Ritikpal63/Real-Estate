@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import axiosInstance from '../utils/axiosConfig';
+
 
 const LatestnewsPage = () => {
   const [news, setNews] = useState([]);
@@ -12,11 +14,8 @@ const LatestnewsPage = () => {
       setLoading(true);
       setError(null);
       
-      const response = await axios.get('http://localhost:5000/api/news');
+      const response = await axiosInstance.get('/news');
       
-      // console.log("Full Response:", response);
-      // console.log("Response Data:", response.data);
-      // console.log("News Array:", response.data.data);
       
       if (response.data.success) {
         setNews(response.data.data);

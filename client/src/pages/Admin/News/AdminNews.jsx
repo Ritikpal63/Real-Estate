@@ -170,22 +170,18 @@ const AdminNews = () => {
             <div className="min-h-screen bg-gray-50 py-8">
               <div className="container mx-auto px-4">
                 {/* Header */}
-                <div className="flex justify-between items-center mb-8">
-                  <h1 className="text-3xl font-bold text-gray-800">
-                    News Management
-                  </h1>
-                  {!showForm && (
-                    <button
-                      onClick={() => setShowForm(true)}
-                      className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
-                    >
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
-                      </svg>
-                      Add New Article
-                    </button>
-                  )}
-                </div>
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-8">
+  <h1 className="text-2xl sm:text-3xl font-bold text-gray-800">News Management</h1>
+  {!showForm && (
+    <button
+      onClick={() => setShowForm(true)}
+      className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center gap-2 w-full sm:w-auto"
+    >
+      {/* icon + text same rahega */}
+      Add New Article
+    </button>
+  )}
+</div>
 
                 {/* Form */}
                 {showForm && (

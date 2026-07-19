@@ -5,10 +5,10 @@ require("dotenv").config();
 
 const app = express();
 
-const allowedOrigins = [
-  "http://localhost:5173",
-  process.env.CLIENT_URL, // set this in Vercel env vars to your prod domain
-].filter(Boolean);
+// const allowedOrigins = [
+//   "http://localhost:5173",
+//   process.env.CLIENT_URL, // set this in Vercel env vars to your prod domain
+// ].filter(Boolean);
 
 app.use(
   cors({

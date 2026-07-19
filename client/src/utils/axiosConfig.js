@@ -1,9 +1,8 @@
 // src/utils/axiosConfig.js
 import axios from 'axios';
-
 // Create axios instance
 const axiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || '/api',
+  baseURL: 'https://real-estate-tknc.onrender.com/api' || import.meta.env.VITE_API_URL || '/api',
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',

@@ -1,7 +1,7 @@
 // src/utils/axiosConfig.js
 import axios from 'axios';
 const axiosInstance = axios.create({
-  baseURL: 'https://real-estate-1-x62z.onrender.com/api`' || import.meta.env.VITE_API_URL || '/api',
+  baseURL: 'https://real-estate-1-x62z.onrender.com/api' || import.meta.env.VITE_API_URL || '/api',
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',

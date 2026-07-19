@@ -43,6 +43,7 @@ const AdminNews = () => {
       setNews(response.data.data || []);
       setLoading(false);
     } catch (error) {
+      console.log("AxiosInstance", axiosInstance)
       console.error("Error fetching news:", error);
       if (error.response?.status === 401) {
         navigate('/admin/login');

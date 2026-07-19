@@ -9,10 +9,12 @@ const AdminHome = () => {
       <Section title={"Admin Page"} />
       <div className="container-fluid">
         <div className="row m-2">
-          <div className="col-lg-4 col-md-12 w-full">
-           <AdminAsideSection />
-          </div>
-          <div className="col-lg-8 col-md-12 w-full"></div>
+         <div className="flex flex-col lg:flex-row">
+  <AdminAsideSection />
+  <div className="flex-1 w-full px-4 py-4 lg:px-6">
+    {/* baaki content yahan */}
+  </div>
+</div>
         </div>
       </div>
     </>

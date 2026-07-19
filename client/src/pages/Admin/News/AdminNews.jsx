@@ -272,54 +272,76 @@ const AdminNews = () => {
             ) : (
               <>
                 {/* MOBILE + TABLET: Card view */}
-<div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:hidden">
-  {news.map((article) => (
-    <div
-      key={article.id}
-      className="bg-white rounded-xl shadow-lg p-4 flex flex-col gap-2 w-full min-w-0 overflow-hidden"
-    >
-      <div className="flex items-start justify-between gap-2 min-w-0">
-        <h3 className="text-sm font-semibold text-gray-900 line-clamp-2 min-w-0 break-words">
-          {article.title}
-        </h3>
-        <span className="shrink-0 text-xs font-semibold text-blue-600 bg-blue-50 px-2.5 py-1 rounded-full whitespace-nowrap">
-          {article.category || "General"}
-        </span>
+<div className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:hidden">
+  {news.map((article) => {
+    const styles = {
+      "General":         { bg: "bg-slate-100",  text: "text-slate-600" },
+      "Market Trends":   { bg: "bg-blue-100",   text: "text-blue-600" },
+      "Investment Tips": { bg: "bg-green-100",  text: "text-green-600" },
+      "Property News":   { bg: "bg-orange-100", text: "text-orange-600" },
+      "Legal Updates":   { bg: "bg-purple-100", text: "text-purple-600" },
+    };
+    const style = styles[article.category] || styles["General"];
+
+    return (
+      <div
+        key={article.id}
+        className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 flex flex-col gap-3 w-full min-w-0 overflow-hidden hover:shadow-md transition-shadow"
+      >
+        <div className="flex items-start justify-between">
+          <div className={`w-11 h-11 shrink-0 rounded-xl ${style.bg} ${style.text} flex items-center justify-center`}>
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v12a2 2 0 01-2 2zM7 8h10M7 12h10M7 16h6" />
+            </svg>
+          </div>
+          <button
+            onClick={() => handleEdit(article)}
+            className="w-8 h-8 shrink-0 rounded-full bg-gray-50 hover:bg-gray-100 flex items-center justify-center text-gray-500 transition-colors"
+            title="Quick edit"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+            </svg>
+          </button>
+        </div>
+
+        <div className="min-w-0">
+          <h3 className="text-base font-bold text-gray-900 line-clamp-2 break-words">
+            {article.title}
+          </h3>
+          {article.summary ? (
+            <p className="text-sm text-gray-500 line-clamp-2 break-words mt-1">
+              {article.summary}
+            </p>
+          ) : (
+            <p className="text-sm text-gray-400 italic mt-1">No summary added</p>
+          )}
+        </div>
+
+        <div className="flex items-center justify-between text-xs text-gray-400 -mt-1">
+          <span className={`font-medium ${style.text}`}>{article.category || "General"}</span>
+          <span>{new Date(article.created_at).toLocaleDateString()}</span>
+        </div>
+
+        <div className="grid grid-cols-2 gap-2 mt-1">
+          <button
+            onClick={() => handleEdit(article)}
+            className="flex items-center justify-center gap-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm font-medium py-2.5 rounded-full transition-colors"
+          >
+            Update
+          </button>
+          <button
+            onClick={() => handleDelete(article.id)}
+            className="flex items-center justify-center gap-1.5 bg-red-50 hover:bg-red-100 text-red-600 text-sm font-medium py-2.5 rounded-full transition-colors"
+          >
+            Delete
+          </button>
+        </div>
       </div>
-
-      {article.summary && (
-        <p className="text-xs text-gray-500 line-clamp-2 min-w-0 break-words">
-          {article.summary}
-        </p>
-      )}
-
-      <p className="text-xs text-green-700">
-        {new Date(article.created_at).toLocaleDateString()}
-      </p>
-
-      <div className="grid grid-cols-2 gap-2 mt-2 pt-2 border-t border-gray-100">
-        <button
-          onClick={() => handleEdit(article)}
-          className="flex items-center justify-center gap-1.5 text-blue-600 bg-blue-50 hover:bg-blue-100 text-xs font-medium py-2 rounded-lg transition-colors"
-        >
-          <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-          </svg>
-          Edit
-        </button>
-        <button
-          onClick={() => handleDelete(article.id)}
-          className="flex items-center justify-center gap-1.5 text-red-600 bg-red-50 hover:bg-red-100 text-xs font-medium py-2 rounded-lg transition-colors"
-        >
-          <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-          </svg>
-          Delete
-        </button>
-      </div>
-    </div>
-  ))}
+    );
+  })}
 </div>
+
 
 
                 {/* DESKTOP: Table view */}

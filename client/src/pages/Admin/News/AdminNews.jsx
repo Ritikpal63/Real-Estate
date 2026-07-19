@@ -272,49 +272,55 @@ const AdminNews = () => {
             ) : (
               <>
                 {/* MOBILE + TABLET: Card view */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:hidden">
-                  {news.map((article) => (
-                    <div
-                      key={article.id}
-                      className="bg-white rounded-xl shadow-lg p-4 flex flex-col gap-2"
-                    >
-                      <div className="flex items-start justify-between gap-2">
-                        <h3 className="text-sm font-semibold text-gray-900 line-clamp-2">
-                          {article.title}
-                        </h3>
-                        <span className="shrink-0 text-xs font-semibold text-blue-600 bg-blue-50 px-2.5 py-1 rounded-full">
-                          {article.category || "General"}
-                        </span>
-                      </div>
-                      {article.summary && (
-                        <p className="text-xs text-gray-500 line-clamp-2">{article.summary}</p>
-                      )}
-                      <p className="text-xs text-green-700">
-                        {new Date(article.created_at).toLocaleDateString()}
-                      </p>
-                      <div className="flex gap-4 mt-2 pt-2 border-t border-gray-100">
-                        <button
-                          onClick={() => handleEdit(article)}
-                          className="flex items-center gap-1 text-blue-600 hover:text-blue-800 text-xs font-medium"
-                        >
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                          </svg>
-                          Edit
-                        </button>
-                        <button
-                          onClick={() => handleDelete(article.id)}
-                          className="flex items-center gap-1 text-red-600 hover:text-red-800 text-xs font-medium"
-                        >
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                          </svg>
-                          Delete
-                        </button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+<div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:hidden">
+  {news.map((article) => (
+    <div
+      key={article.id}
+      className="bg-white rounded-xl shadow-lg p-4 flex flex-col gap-2 w-full min-w-0 overflow-hidden"
+    >
+      <div className="flex items-start justify-between gap-2 min-w-0">
+        <h3 className="text-sm font-semibold text-gray-900 line-clamp-2 min-w-0 break-words">
+          {article.title}
+        </h3>
+        <span className="shrink-0 text-xs font-semibold text-blue-600 bg-blue-50 px-2.5 py-1 rounded-full whitespace-nowrap">
+          {article.category || "General"}
+        </span>
+      </div>
+
+      {article.summary && (
+        <p className="text-xs text-gray-500 line-clamp-2 min-w-0 break-words">
+          {article.summary}
+        </p>
+      )}
+
+      <p className="text-xs text-green-700">
+        {new Date(article.created_at).toLocaleDateString()}
+      </p>
+
+      <div className="grid grid-cols-2 gap-2 mt-2 pt-2 border-t border-gray-100">
+        <button
+          onClick={() => handleEdit(article)}
+          className="flex items-center justify-center gap-1.5 text-blue-600 bg-blue-50 hover:bg-blue-100 text-xs font-medium py-2 rounded-lg transition-colors"
+        >
+          <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+          </svg>
+          Edit
+        </button>
+        <button
+          onClick={() => handleDelete(article.id)}
+          className="flex items-center justify-center gap-1.5 text-red-600 bg-red-50 hover:bg-red-100 text-xs font-medium py-2 rounded-lg transition-colors"
+        >
+          <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+          </svg>
+          Delete
+        </button>
+      </div>
+    </div>
+  ))}
+</div>
+
 
                 {/* DESKTOP: Table view */}
                 <div className="hidden lg:block bg-white rounded-xl shadow-lg overflow-hidden">

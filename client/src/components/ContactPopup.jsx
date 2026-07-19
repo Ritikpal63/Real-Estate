@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import "./ContactPopup.css";
 import axiosInstance from "../utils/axiosConfig";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify"; // sirf toast import karo, ToastContainer nahi
 
 export default function ContactPopup() {
   const [isOpen, setIsOpen] = useState(false);
-  const [msg, setMsg] = useState("");
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -21,7 +21,7 @@ export default function ContactPopup() {
 
   const closePopup = () => {
     setIsOpen(false);
-    localStorage.setItem("contactPopupShown", "true"); // ab dobara reload pe nahi dikhega
+    localStorage.setItem("contactPopupShown", "true");
   };
 
   const handleChange = (e) => {
@@ -30,18 +30,23 @@ export default function ContactPopup() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await axiosInstance.post("/contact", formData);
-    setMsg(res.data.data.message);
-    console.log("Form submitted:", formData);
-    closePopup();
-    toast("Message Successfull");
+    setLoading(true);
+    try {
+      await axiosInstance.post("/contact", formData);
+      toast.success("Message sent successfully!");
+      closePopup();
+    } catch (err) {
+      console.error(err);
+      toast.error("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (!isOpen) return null;
 
   return (
     <div className="popup-overlay" onClick={closePopup}>
-        <ToastContainer />
       <div className="popup-box" onClick={(e) => e.stopPropagation()}>
         <button className="popup-close" onClick={closePopup}>
           ✕
@@ -72,7 +77,9 @@ export default function ContactPopup() {
             rows="4"
             required
           />
-          <button type="submit">Send</button>
+          <button type="submit" disabled={loading}>
+            {loading ? "Sending..." : "Send"}
+          </button>
         </form>
       </div>
     </div>

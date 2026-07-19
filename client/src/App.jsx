@@ -24,12 +24,17 @@ import AdminHome from "./pages/Admin/AdminHome";
 import AddPropertyPage from "./pages/Admin/AddPropertyPage";
 import AdminNews from "./pages/Admin/News/AdminNews";
 import ContactPopup from "./components/ContactPopup";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+
 
 const App = () => {
   return (
     <AuthProvider>
       <PostProvider>
         <Navbar />
+        <ToastContainer />
         <ContactPopup />
         <Routes>
           <Route path="/" element={<HomePage />} />

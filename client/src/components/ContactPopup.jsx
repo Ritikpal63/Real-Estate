@@ -28,7 +28,7 @@ export default function ContactPopup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const res = await axiosInstance.post("/contact", formData)
-    console.log("Contact Response", res.message)
+    console.log("Contact Response", res.data.message)
     console.log("Form submitted:", formData);
     closePopup();
   };

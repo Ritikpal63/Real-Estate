@@ -1,13 +1,16 @@
 import { useState, useEffect } from "react";
 import "./ContactPopup.css";
-// import axiosInstance from "../utils/axiosConfig";
-import axios from "axios";
 import axiosInstance from "../utils/axiosConfig";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function ContactPopup() {
   const [isOpen, setIsOpen] = useState(false);
-  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
-
+  const [msg, setMsg] = useState("");
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
 
   useEffect(() => {
     const alreadyShown = localStorage.getItem("contactPopupShown");
@@ -27,18 +30,22 @@ export default function ContactPopup() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await axiosInstance.post("/contact", formData)
-    console.log("Contact Response", res.data.data.message)
+    const res = await axiosInstance.post("/contact", formData);
+    setMsg(res.data.data.message);
     console.log("Form submitted:", formData);
     closePopup();
+    toast("Message Successfull");
   };
 
   if (!isOpen) return null;
 
   return (
     <div className="popup-overlay" onClick={closePopup}>
+        <ToastContainer />
       <div className="popup-box" onClick={(e) => e.stopPropagation()}>
-        <button className="popup-close" onClick={closePopup}>✕</button>
+        <button className="popup-close" onClick={closePopup}>
+          ✕
+        </button>
         <h2>Contact Us</h2>
         <form onSubmit={handleSubmit}>
           <input

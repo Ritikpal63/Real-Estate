@@ -13,7 +13,7 @@ import {
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../../contextApi/AuthContext";
 
-const Sidebar = () => {
+const AdminAsideSection = () => {
   const { pathname } = useLocation();
   const { logout } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
@@ -134,4 +134,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default AdminAsideSection;

@@ -23,12 +23,14 @@ import RequireAdmin from "./components/RequireAdmin";
 import AdminHome from "./pages/Admin/AdminHome";
 import AddPropertyPage from "./pages/Admin/AddPropertyPage";
 import AdminNews from "./pages/Admin/News/AdminNews";
+import ContactPopup from "./components/ContactPopup";
 
 const App = () => {
   return (
     <AuthProvider>
       <PostProvider>
         <Navbar />
+        <ContactPopup />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/gallery" element={<GalleryPage />} />

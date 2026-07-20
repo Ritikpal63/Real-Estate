@@ -1,7 +1,7 @@
 // routes/newsRoutes.js
 const express = require('express');
 const router = express.Router();
-const TeamController = require('../controllers/teamController');
+const TeamController = require('../controllers/TeamController');
 // const {authenticate} = require('../middleware/auth'); 
 // Public routes
 router.get('/', TeamController.getAllTeam);

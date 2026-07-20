@@ -11,7 +11,7 @@ class TeamController {
         data: team
       });
     } catch (error) {
-      console.error("Error fetching news:", error);
+      console.error("Error fetching team:", error);
       res
         .status(500)
         .json({

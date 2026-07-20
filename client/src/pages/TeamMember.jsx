@@ -10,6 +10,7 @@ const TeamMember = () => {
       setLoading(true);
       setError(null);
       const res = await axiosInstance.get("/team");
+      const resData = res.data
       if (res.data.success) {
         setTeam(res.data.data);
       } else {
@@ -17,6 +18,7 @@ const TeamMember = () => {
       }
 
       console.log("Team: ", team)
+      console.log("Team Data: ", resData);
     } catch (err) {
       setError(
         err.response?.data?.message ||

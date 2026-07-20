@@ -5,7 +5,7 @@ const NewsController = require('../controllers/newsController');
 const {authenticate} = require('../middleware/auth'); 
 // Public routes
 router.get('/', NewsController.getAll);
-router.get('/allnews', NewsController.newsallget)
+router.get('/allnews', NewsController.getAllNews)
 router.get('/latest', NewsController.getLatest);
 router.get('/search', NewsController.search);
 router.get('/category/:category', NewsController.getByCategory);

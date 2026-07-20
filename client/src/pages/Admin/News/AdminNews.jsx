@@ -96,7 +96,11 @@ const AdminNews = () => {
       if (response.data.success) {
         await fetchNews();
         resetForm();
-        alert(isEditing ? "News updated successfully!" : "News created successfully!");
+        alert(
+          isEditing
+            ? "News updated successfully!"
+            : "News created successfully!",
+        );
       }
     } catch (error) {
       console.error("Error saving news:", error);
@@ -156,8 +160,18 @@ const AdminNews = () => {
                   onClick={() => setShowForm(true)}
                   className="inline-flex items-center justify-center gap-2 bg-blue-600 text-white text-sm sm:text-base px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors self-start sm:self-auto"
                 >
-                  <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
+                  <svg
+                    className="w-4 h-4 sm:w-5 sm:h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M12 4v16m8-8H4"
+                    />
                   </svg>
                   Add New Article
                 </button>
@@ -171,42 +185,67 @@ const AdminNews = () => {
                   <h2 className="text-lg sm:text-xl font-semibold text-gray-800">
                     {isEditing ? "Edit Article" : "Create New Article"}
                   </h2>
-                  <button onClick={resetForm} className="text-gray-500 hover:text-gray-700 shrink-0">
-                    <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                  <button
+                    onClick={resetForm}
+                    className="text-gray-500 hover:text-gray-700 shrink-0"
+                  >
+                    <svg
+                      className="w-5 h-5 sm:w-6 sm:h-6"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M6 18L18 6M6 6l12 12"
+                      />
                     </svg>
                   </button>
                 </div>
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Title *</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Title *
+                    </label>
                     <input
                       type="text"
                       name="title"
                       value={formData.title}
-                      onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({ ...formData, title: e.target.value })
+                      }
                       required
                       className="w-full px-3 sm:px-4 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
                       placeholder="Enter news title"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Summary</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Summary
+                    </label>
                     <input
                       type="text"
                       name="summary"
                       value={formData.summary}
-                      onChange={(e) => setFormData({ ...formData, summary: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({ ...formData, summary: e.target.value })
+                      }
                       className="w-full px-3 sm:px-4 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
                       placeholder="Short summary (optional)"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Content *</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Content *
+                    </label>
                     <textarea
                       name="content"
                       value={formData.content}
-                      onChange={(e) => setFormData({ ...formData, content: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({ ...formData, content: e.target.value })
+                      }
                       required
                       rows="6"
                       className="w-full px-3 sm:px-4 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
@@ -215,11 +254,15 @@ const AdminNews = () => {
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Category
+                      </label>
                       <select
                         name="category"
                         value={formData.category}
-                        onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                        onChange={(e) =>
+                          setFormData({ ...formData, category: e.target.value })
+                        }
                         className="w-full px-3 sm:px-4 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
                       >
                         <option value="General">General</option>
@@ -230,12 +273,16 @@ const AdminNews = () => {
                       </select>
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Image URL</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Image URL
+                      </label>
                       <input
                         type="text"
                         name="image"
                         value={formData.image}
-                        onChange={(e) => setFormData({ ...formData, image: e.target.value })}
+                        onChange={(e) =>
+                          setFormData({ ...formData, image: e.target.value })
+                        }
                         className="w-full px-3 sm:px-4 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
                         placeholder="https://example.com/image.jpg"
                       />
@@ -267,82 +314,122 @@ const AdminNews = () => {
               </div>
             ) : news.length === 0 ? (
               <div className="bg-white rounded-xl shadow-lg text-center py-12">
-                <p className="text-gray-500">No news articles found. Create your first article!</p>
+                <p className="text-gray-500">
+                  No news articles found. Create your first article!
+                </p>
               </div>
             ) : (
               <>
                 {/* MOBILE + TABLET: Card view */}
-<div className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:hidden">
-  {news.map((article) => {
-    const styles = {
-      "General":         { bg: "bg-slate-100",  text: "text-slate-600" },
-      "Market Trends":   { bg: "bg-blue-100",   text: "text-blue-600" },
-      "Investment Tips": { bg: "bg-green-100",  text: "text-green-600" },
-      "Property News":   { bg: "bg-orange-100", text: "text-orange-600" },
-      "Legal Updates":   { bg: "bg-purple-100", text: "text-purple-600" },
-    };
-    const style = styles[article.category] || styles["General"];
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:hidden">
+                  {news.map((article) => {
+                    const styles = {
+                      General: { bg: "bg-slate-100", text: "text-slate-600" },
+                      "Market Trends": {
+                        bg: "bg-blue-100",
+                        text: "text-blue-600",
+                      },
+                      "Investment Tips": {
+                        bg: "bg-green-100",
+                        text: "text-green-600",
+                      },
+                      "Property News": {
+                        bg: "bg-orange-100",
+                        text: "text-orange-600",
+                      },
+                      "Legal Updates": {
+                        bg: "bg-purple-100",
+                        text: "text-purple-600",
+                      },
+                    };
+                    const style = styles[article.category] || styles["General"];
 
-    return (
-      <div
-        key={article.id}
-        className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 flex flex-col gap-3 w-full min-w-0 overflow-hidden hover:shadow-md transition-shadow"
-      >
-        <div className="flex items-start justify-between">
-          <div className={`w-11 h-11 shrink-0 rounded-xl ${style.bg} ${style.text} flex items-center justify-center`}>
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v12a2 2 0 01-2 2zM7 8h10M7 12h10M7 16h6" />
-            </svg>
-          </div>
-          <button
-            onClick={() => handleEdit(article)}
-            className="w-8 h-8 shrink-0 rounded-full bg-gray-50 hover:bg-gray-100 flex items-center justify-center text-gray-500 transition-colors"
-            title="Quick edit"
-          >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-            </svg>
-          </button>
-        </div>
+                    return (
+                      <div
+                        key={article.id}
+                        className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 flex flex-col gap-3 w-full min-w-0 overflow-hidden hover:shadow-md transition-shadow"
+                      >
+                        <div className="flex items-start justify-between">
+                          <div
+                            className={`w-11 h-11 shrink-0 rounded-xl ${style.bg} ${style.text} flex items-center justify-center`}
+                          >
+                            <svg
+                              className="w-5 h-5"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v12a2 2 0 01-2 2zM7 8h10M7 12h10M7 16h6"
+                              />
+                            </svg>
+                          </div>
+                          <button
+                            onClick={() => handleEdit(article)}
+                            className="w-8 h-8 shrink-0 rounded-full bg-gray-50 hover:bg-gray-100 flex items-center justify-center text-gray-500 transition-colors"
+                            title="Quick edit"
+                          >
+                            <svg
+                              className="w-4 h-4"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                              />
+                            </svg>
+                          </button>
+                        </div>
 
-        <div className="min-w-0">
-          <h3 className="text-base font-bold text-gray-900 line-clamp-2 break-words">
-            {article.title}
-          </h3>
-          {article.summary ? (
-            <p className="text-sm text-gray-500 line-clamp-2 break-words mt-1">
-              {article.summary}
-            </p>
-          ) : (
-            <p className="text-sm text-gray-400 italic mt-1">No summary added</p>
-          )}
-        </div>
+                        <div className="min-w-0">
+                          <h3 className="text-base font-bold text-gray-900 line-clamp-2 break-words">
+                            {article.title}
+                          </h3>
+                          {article.summary ? (
+                            <p className="text-sm text-gray-500 line-clamp-2 break-words mt-1">
+                              {article.summary}
+                            </p>
+                          ) : (
+                            <p className="text-sm text-gray-400 italic mt-1">
+                              No summary added
+                            </p>
+                          )}
+                        </div>
 
-        <div className="flex items-center justify-between text-xs text-gray-400 -mt-1">
-          <span className={`font-medium ${style.text}`}>{article.category || "General"}</span>
-          <span>{new Date(article.created_at).toLocaleDateString()}</span>
-        </div>
+                        <div className="flex items-center justify-between text-xs text-gray-400 -mt-1">
+                          <span className={`font-medium ${style.text}`}>
+                            {article.category || "General"}
+                          </span>
+                          <span>
+                            {new Date(article.created_at).toLocaleDateString()}
+                          </span>
+                        </div>
 
-        <div className="grid grid-cols-2 gap-2 mt-1">
-          <button
-            onClick={() => handleEdit(article)}
-            className="flex items-center justify-center gap-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm font-medium py-2.5 rounded-full transition-colors"
-          >
-            Update
-          </button>
-          <button
-            onClick={() => handleDelete(article.id)}
-            className="flex items-center justify-center gap-1.5 bg-red-50 hover:bg-red-100 text-red-600 text-sm font-medium py-2.5 rounded-full transition-colors"
-          >
-            Delete
-          </button>
-        </div>
-      </div>
-    );
-  })}
-</div>
-
-
+                        <div className="grid grid-cols-2 gap-2 mt-1">
+                          <button
+                            onClick={() => handleEdit(article)}
+                            className="flex items-center justify-center gap-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm font-medium py-2.5 rounded-full transition-colors"
+                          >
+                            Update
+                          </button>
+                          <button
+                            onClick={() => handleDelete(article.id)}
+                            className="flex items-center justify-center gap-1.5 bg-red-50 hover:bg-red-100 text-red-600 text-sm font-medium py-2.5 rounded-full transition-colors"
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
 
                 {/* DESKTOP: Table view */}
                 <div className="hidden lg:block bg-white rounded-xl shadow-lg overflow-hidden">
@@ -350,10 +437,18 @@ const AdminNews = () => {
                     <table className="w-full">
                       <thead className="bg-gray-50">
                         <tr>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Title
+                          </th>
+                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Category
+                          </th>
+                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Date
+                          </th>
+                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Actions
+                          </th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-gray-200">
@@ -370,7 +465,9 @@ const AdminNews = () => {
                               </span>
                             </td>
                             <td className="px-6 py-4 text-sm text-green-800">
-                              {new Date(article.created_at).toLocaleDateString()}
+                              {new Date(
+                                article.created_at,
+                              ).toLocaleDateString()}
                             </td>
                             <td className="px-6 py-4">
                               <div className="flex gap-3">
@@ -378,16 +475,36 @@ const AdminNews = () => {
                                   onClick={() => handleEdit(article)}
                                   className="text-blue-600 hover:text-blue-800 transition-colors"
                                 >
-                                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                  <svg
+                                    className="w-5 h-5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth="2"
+                                      d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                                    />
                                   </svg>
                                 </button>
                                 <button
                                   onClick={() => handleDelete(article.id)}
                                   className="text-red-600 hover:text-red-800 transition-colors"
                                 >
-                                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                  <svg
+                                    className="w-5 h-5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth="2"
+                                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                                    />
                                   </svg>
                                 </button>
                               </div>

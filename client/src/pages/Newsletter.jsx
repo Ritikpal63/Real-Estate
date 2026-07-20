@@ -108,7 +108,7 @@ const NewsletterPage = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="px-6 py-3 bg-[#35AC39] font-semibold rounded-lg hover:bg-[#fefefe] transition-colors duration-300 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
+                  className="px-6 py-3 bg-[#35AC39] font-semibold rounded-lg transition-colors duration-300 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
                 >
                   {isSubmitting ? (
                     <span className="flex items-center gap-2">

@@ -1,5 +1,5 @@
 import { useState } from "react";
-// import { UploadCloud } from "lucide-react";
+import { UploadCloud } from "lucide-react";
 
 export default function ImageUploader() {
   const [preview, setPreview] = useState("");
@@ -24,7 +24,7 @@ export default function ImageUploader() {
           />
         ) : (
           <>
-            {/* <UploadCloud size={40}/> */}
+            <UploadCloud size={40}/>
 
             <p className="mt-4 text-gray-500">Choose image or Drag & Drop</p>
 

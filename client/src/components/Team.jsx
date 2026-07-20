@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
 import axiosInstance from "../utils/axiosConfig";
+import { Link } from "react-router-dom";
 const Team = () => {
   const [team, setTeam] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -73,19 +74,19 @@ const Team = () => {
                     <p>{item.designation}</p>
                     <ul className="list-inline">
                       <li>
-                        <a href={item.facebook} className="st-facebook">
+                        <Link to={item.facebook} className="st-facebook" target="_blank">
                           <i className="fa fa-facebook"></i>
-                        </a>
+                        </Link>
                       </li>
                       <li>
-                        <a href={item.instagram} className="st-instagram">
+                        <Link to={item.instagram} className="st-instagram">
                           <i className="fa fa-instagram"></i>
-                        </a>
+                        </Link>
                       </li>
                       <li>
-                        <a href={item.twitter} className="st-twitter">
+                        <Link to={item.twitter} className="st-twitter">
                           <i className="fa fa-twitter"></i>
-                        </a>
+                        </Link>
                       </li>
                     </ul>
                   </div>

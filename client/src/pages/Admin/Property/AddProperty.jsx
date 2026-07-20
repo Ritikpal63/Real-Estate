@@ -16,7 +16,10 @@ export default function AddProperty() {
   });
 
   return (
-    <div>
+    <div className="max-w-6xl mx-auto px-3 sm:px-6 py-4 sm:py-8">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
+        
+      
       <h2 className="text-2xl font-semibold">Add Key Property Information</h2>
 
       <p className="text-gray-500 mt-1 mb-8">
@@ -71,6 +74,7 @@ export default function AddProperty() {
           Continue
         </button>
       </div>
+    </div>
     </div>
     </div>
   );

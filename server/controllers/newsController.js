@@ -44,7 +44,7 @@ class NewsController {
   }
 
   
-  static async newsallget(req, res) {
+  static async getAllNews(req, res) {
     try {
       const { limit = 10, offset = 0 } = req.query;
       const news = await NewsModel.getAll(parseInt(limit), parseInt(offset));

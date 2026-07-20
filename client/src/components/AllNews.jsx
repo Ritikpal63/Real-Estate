@@ -11,7 +11,7 @@ const AllNews = () => {
     try {
       setLoading(true);
       setError(null);
-      const res = await axiosInstance.get("/news");
+      const res = await axiosInstance.get("/news/allnews");
       if (res.data.success) {
         setNews(res.data.data);
       } else {

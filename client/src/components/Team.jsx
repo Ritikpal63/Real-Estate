@@ -35,10 +35,11 @@ const Team = () => {
             <h2>Professional Team</h2>
           </div>
           <div className="row text-center">
-            <div className="col-lg-3 col-sm-3 col-xs-12">
+            
               {teamMember?.map((item) => {
                 return (
-                  <div key={item.id} className="single_team">
+                  <div  key={item.id}  className="col-lg-3 col-sm-3 col-xs-12">
+                  <div className="single_team">
                     <img
                       src={item.image}
                       className="img-fluid"
@@ -64,11 +65,11 @@ const Team = () => {
                       </li>
                     </ul>
                   </div>
+                  </div>
                 );
               })}
             </div>
           </div>
-        </div>
       </section>
       {/* <section id="team" className="our_team section-padding">
         <div className="container">

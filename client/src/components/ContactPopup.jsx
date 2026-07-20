@@ -21,7 +21,7 @@ export default function ContactPopup() {
 
   const closePopup = () => {
     setIsOpen(false);
-    localStorage.setItem("contactPopupShown", "true");
+    sessionStorage.setItem("contactPopupShown", "true");
   };
 
   const handleChange = (e) => {

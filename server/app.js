@@ -48,6 +48,9 @@ app.use("/api/news", newsRoutes);
 const authRoutes = require("./routes/auth.routes");
 app.use("/api/auth", authRoutes);
 
+const teamRoutes = require('./routes/teamRoutes');
+app.use('/api/team', teamRoutes)
+
 // app.get('/api/health', (req, res) => {
 //   res.json({ status: 'OK', message: 'Server is running' });
 // });

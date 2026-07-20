@@ -3,16 +3,12 @@ const TeamModel = require("../models/teamModel");
 class TeamController {
   static async getAllTeam(req, res) {
     try {
-      const { limit = 10, offset = 0 } = req.query;
-      const team = await TeamModel.getAllTeam(parseInt(limit), parseInt(offset));
+      // const { limit = 10, offset = 0 } = req.query;
+      const team = await TeamModel.getAllTeam();
 
       res.json({
         success: true,
-        data: team,
-        pagination: {
-          limit: parseInt(limit),
-          offset: parseInt(offset),
-        },
+        data: team
       });
     } catch (error) {
       console.error("Error fetching news:", error);

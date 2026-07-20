@@ -47,31 +47,17 @@ export default function AddProperty() {
           className="w-full bg-gray-100 rounded-xl mb-3 px-4 py-3 outline-none"
         />
 
-        <div className="grid grid-cols-2 gap-4">
-          <input
-            type="number"
-            placeholder="Bedrooms"
-            className="bg-gray-100 rounded-xl px-4 py-3"
-          />
+        // pehle: <div className="grid grid-cols-2 gap-4">
+<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+  <input type="number" placeholder="Bedrooms" className="bg-gray-100 rounded-xl px-4 py-3 w-full" />
+  <input type="number" placeholder="Bathrooms" className="bg-gray-100 rounded-xl px-4 py-3 w-full" />
+</div>
 
-          <input
-            type="number"
-            placeholder="Bathrooms"
-            className="bg-gray-100 rounded-xl px-4 py-3"
-          />
-        </div>
+<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+  <input placeholder="Size (SQM)" className="bg-gray-100 rounded-xl px-4 py-3 w-full" />
+  <input placeholder="Year Built" className="bg-gray-100 rounded-xl px-4 py-3 w-full" />
+</div>
 
-        <div className="grid grid-cols-2 gap-4">
-          <input
-            placeholder="Size (SQM)"
-            className="bg-gray-100 rounded-xl px-4 py-3"
-          />
-
-          <input
-            placeholder="Year Built"
-            className="bg-gray-100 rounded-xl px-4 py-3"
-          />
-        </div>
 
         <textarea
           rows={5}

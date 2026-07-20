@@ -73,18 +73,18 @@ const Team = () => {
                     <p>{item.designation}</p>
                     <ul className="list-inline">
                       <li>
-                        <a href="#" className="st-facebook">
-                          <i className="fa fa-facebook">{item.facebook}</i>
+                        <a href={item.facebook} className="st-facebook">
+                          <i className="fa fa-facebook"></i>
                         </a>
                       </li>
                       <li>
-                        <a href="#" className="st-instagram">
-                          <i className="fa fa-instagram">{item.instagram}</i>
+                        <a href={item.instagram} className="st-instagram">
+                          <i className="fa fa-instagram"></i>
                         </a>
                       </li>
                       <li>
-                        <a href="#" className="st-twitter">
-                          <i className="fa fa-twitter">{item.twitter}</i>
+                        <a href={item.twitter} className="st-twitter">
+                          <i className="fa fa-twitter"></i>
                         </a>
                       </li>
                     </ul>

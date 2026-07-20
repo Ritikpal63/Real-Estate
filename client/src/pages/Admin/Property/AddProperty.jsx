@@ -17,7 +17,7 @@ export default function AddProperty() {
 
   return (
     <div className="max-w-6xl mx-auto px-3 sm:px-6 py-4 sm:py-8">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
+      <div className="flex flex-col lg:flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
         
       
       <h2 className="text-2xl font-semibold">Add Key Property Information</h2>

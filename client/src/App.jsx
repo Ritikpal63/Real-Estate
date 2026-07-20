@@ -27,6 +27,7 @@ import ContactPopup from "./components/ContactPopup";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import NewsDetailPage from "./components/NewsDetailPage";
+import AllNews from "./components/AllNews";
 
 
 
@@ -51,6 +52,7 @@ const App = () => {
           <Route path="/faq" element={<FaqPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/news/:id" element={<NewsDetailPage />} />
+          <Route path="/news/allnews" element={<AllNews />} />
           <Route
             path="/admin"
             element={

@@ -176,7 +176,7 @@ const LatestnewsPage = () => {
         {!loading && !error && news.length > 0 && (
           <div className="text-center mt-12">
             <Link 
-              to="/all-news" 
+              to="/news/allnews" 
               className=""
             >
               <span className="inline-block btn-contact-bg">

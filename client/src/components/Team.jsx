@@ -32,7 +32,7 @@ const Team = () => {
       <section id="team" className="our_team section-padding">
         <div className="container">
           <div className="section-title text-center wow zoomIn">
-            <h2>Professional team</h2>
+            <h2>Professional Team</h2>
           </div>
           <div className="row text-center">
             <div className="col-lg-3 col-sm-3 col-xs-12">

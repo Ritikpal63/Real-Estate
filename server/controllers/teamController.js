@@ -10,7 +10,6 @@ class TeamController {
         success: true,
         data: team,
         pagination: {
-          total,
           limit: parseInt(limit),
           offset: parseInt(offset),
         },

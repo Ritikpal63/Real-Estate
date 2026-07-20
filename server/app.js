@@ -1,9 +1,17 @@
 // server/app.js
+// app.js ke top me
+const { sequelize } = require("./models");
+
+
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
 
 const app = express();
+sequelize
+  .sync()
+  .then(() => console.log("✅ All tables synced (auto-created if missing)"))
+  .catch((err) => console.error("❌ Sequelize sync error:", err));
 
 // const allowedOrigins = [
 //   "http://localhost:5173",

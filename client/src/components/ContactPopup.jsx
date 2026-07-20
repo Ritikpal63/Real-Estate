@@ -13,7 +13,7 @@ export default function ContactPopup() {
   });
 
   useEffect(() => {
-    const alreadyShown = localStorage.getItem("contactPopupShown");
+    const alreadyShown = sessionStorage.getItem("contactPopupShown");
     if (!alreadyShown) {
       setIsOpen(true);
     }

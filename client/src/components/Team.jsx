@@ -68,23 +68,23 @@ const Team = () => {
               return (
                 <div key={item.id} className="col-lg-3 col-sm-3 col-xs-12">
                   <div className="single_team">
-                    <img src={item.image} className="img-fluid" alt="" />
+                    <img src='assets/img/team/team-2.jpg' className="img-fluid" alt="" />
                     <h3>{item.name}</h3>
                     <p>{item.designation}</p>
                     <ul className="list-inline">
                       <li>
                         <a href="#" className="st-facebook">
-                          <i className="fa fa-facebook"></i>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#" className="st-twitter">
-                          <i className="fa fa-instagram"></i>
+                          <i className="fa fa-facebook">{item.facebook}</i>
                         </a>
                       </li>
                       <li>
                         <a href="#" className="st-instagram">
-                          <i className="fa fa-instagram"></i>
+                          <i className="fa fa-instagram">{item.instagram}</i>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#" className="st-twitter">
+                          <i className="fa fa-twitter">{item.twitter}</i>
                         </a>
                       </li>
                     </ul>

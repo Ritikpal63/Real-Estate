@@ -20,7 +20,7 @@ class TeamController {
         .status(500)
         .json({
           success: false,
-          message: "Failed to fetch news",
+          message: "Failed to fetch team",
           error: error.message,
         });
     }

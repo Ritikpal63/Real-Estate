@@ -26,6 +26,7 @@ import AdminNews from "./pages/Admin/News/AdminNews";
 import ContactPopup from "./components/ContactPopup";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import NewsDetailPage from "./components/NewsDetailPage";
 
 
 
@@ -49,6 +50,7 @@ const App = () => {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/faq" element={<FaqPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/news/:id" element={<NewsDetailPage />} />
           <Route
             path="/admin"
             element={

@@ -371,7 +371,7 @@ const NewsDetailPage = () => {
                       Related News
                     </h4>
                     <Link
-                      to="/blog"
+                      to="/news/allnews"
                       className="text-xs font-semibold text-green-600 hover:text-green-700 flex items-center gap-0.5"
                     >
                       See all

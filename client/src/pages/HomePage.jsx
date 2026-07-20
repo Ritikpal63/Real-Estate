@@ -7,6 +7,7 @@ import Latestnews from "./Latestnews";
 import Search from "./Search";
 import Property from "../components/Property";
 import Home from "../components/Home";
+import TeamMember from "./TeamMember";
 // import Services from "../components/Services";
 // import About from "../components/About";
 // import WhyChooseUs from "../components/WhyChooseUs";
@@ -21,6 +22,7 @@ const HomePage = () => {
         </p> */}
       <Search />
       <Latestnews />
+
       {/* <About /> */}
       {/* <Services /> */}
       {/* <WhyChooseUs /> */}
@@ -29,6 +31,7 @@ const HomePage = () => {
       <Portfolio />
       <TeamPage />
       <Newsletter />
+      <TeamMember />
       {/* <Latestnews /> */}
     </>
   );

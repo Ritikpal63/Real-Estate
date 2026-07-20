@@ -43,6 +43,28 @@ class NewsController {
     }
   }
 
+  
+  static async newsallget(req, res) {
+    try {
+      const { limit = 10, offset = 0 } = req.query;
+      const news = await NewsModel.getAll(parseInt(limit), parseInt(offset));
+      const total = await NewsModel.getCount();
+      
+      res.json({
+        success: true,
+        data: news,
+        pagination: {
+          total,
+          limit: parseInt(limit),
+          offset: parseInt(offset)
+        }
+      });
+    } catch (error) {
+      console.error('Error fetching news:', error);
+      res.status(500).json({ success: false, message: 'Failed to fetch news', error: error.message });
+    }
+  }
+
   // Create news
   static async create(req, res) {
     try {

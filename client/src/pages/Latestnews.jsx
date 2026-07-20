@@ -110,7 +110,7 @@ const LatestnewsPage = () => {
               </div>
             ) : (
               news.map((item) => {
-                const { day, month } = formatDate(item.createdAt);
+                const { day, month } = formatDate(item.created_at);
                 return (
                   <div key={item.id} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 group">
                     {/* Blog Image */}

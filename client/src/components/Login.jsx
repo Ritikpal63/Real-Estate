@@ -13,12 +13,8 @@ const Login = () => {
   const from = location.state?.from?.pathname || "/admin";
 
   useEffect(() => {
-    console.log('🔍 Login page mounted');
-    console.log('Current auth status:', isAuthenticated());
-    console.log('Current user:', user);
     
     if (isAuthenticated() || user) {
-      console.log('Already authenticated, redirecting to:', from);
       navigate(from, { replace: true });
     }
   }, [user, from, navigate, isAuthenticated]);
@@ -44,12 +40,9 @@ const Login = () => {
       return;
     }
 
-    console.log('Calling login function with:', credentials.email);
     const success = await login(credentials);
-    console.log('Login result:', success);
     
     if (success) {
-      console.log('✅ Login successful, redirecting to:', from);
       navigate(from, { replace: true });
     } else {
       console.log('❌ Login failed');
@@ -108,9 +101,9 @@ const Login = () => {
                   </button>
                 </div>
               </form>
-              <p className="mt-3 text-muted">
+              {/* <p className="mt-3 text-muted">
                 Use admin@realestate.local / admin123
-              </p>
+              </p> */}
             </div>
           </div>
         </div>

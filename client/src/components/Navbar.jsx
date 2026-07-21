@@ -101,12 +101,12 @@ const Navbar = () => {
                 >
                   Agent Profile
                 </Link>
-                <Link
+                {/* <Link
                   to="/register"
                   className="block px-4 py-2 hover:bg-gray-100 transition-colors"
                 >
                   Register
-                </Link>
+                </Link> */}
                 <Link
                   to="/faq"
                   className="block px-4 py-2 hover:bg-gray-100 transition-colors"

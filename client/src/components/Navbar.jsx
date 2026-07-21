@@ -54,7 +54,7 @@ const Navbar = () => {
                   />
                 </svg>
               </button>
-              <div className="absolute left-0 mt-2 w-48 bg-white text-gray-800 rounded-lg shadow-xl py-2 z-50 hidden group-hover:block">
+              <div className="absolute left-0 w-48 bg-white text-gray-800 rounded-lg shadow-xl py-2 z-50 hidden group-hover:block">
                 <Link
                   to="/property"
                   className="block px-4 py-2 hover:bg-gray-100 transition-colors"
@@ -326,7 +326,7 @@ const Navbar = () => {
               <details className="group">
                 <summary className="flex items-center justify-between w-full py-2 text-white hover:text-green-400 transition-colors cursor-pointer list-none">
                   <span>Blog</span>
-                  <svg
+                  <svgx
                     className="w-4 h-4 transition-transform duration-300 group-open:rotate-180"
                     fill="none"
                     stroke="currentColor"

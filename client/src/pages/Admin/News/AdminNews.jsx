@@ -33,7 +33,7 @@ const AdminNews = () => {
 
   const fetchNews = async () => {
     try {
-      const response = await axiosInstance.get("/allnews");
+      const response = await axiosInstance.get("/news/allnews");
       setNews(response.data.data || []);
       setLoading(false);
     } catch (error) {

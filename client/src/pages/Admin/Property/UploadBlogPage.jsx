@@ -68,7 +68,7 @@ const UploadBlogPage = () => {
   return (
     <div>
         <div className="container-fluid py-4">
-        <div className="row gx-4">
+        <div className="row px-4">
           <div className="col-xl-7 mb-4">
             <div className="card shadow-sm border-0">
               <div className="card-body p-4">

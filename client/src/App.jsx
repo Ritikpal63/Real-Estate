@@ -28,6 +28,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import NewsDetailPage from "./components/NewsDetailPage";
 import AllNews from "./components/AllNews";
+import TeamMember from "./pages/TeamMember";
 
 
 
@@ -61,6 +62,7 @@ const App = () => {
               </RequireAdmin>
             }
           >
+            <Route path="allteam" element={<TeamMember />} />
             <Route index element={<AdminHome />} />
             <Route path="addblog" element={<BlogUpload />} />
             <Route path="addproperty" element={<AddPropertyPage />} /> 

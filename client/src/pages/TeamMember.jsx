@@ -9,7 +9,7 @@ const TeamMember = () => {
     try {
       setLoading(true);
       setError(null);
-      const res = await axiosInstance.get("/team");
+      const res = await axiosInstance.get("/team/allteam");
       if (res.data.success) {
         setTeam(res.data.data);
       } else {
@@ -28,7 +28,16 @@ const TeamMember = () => {
   useEffect(() => {
     getNews();
   }, []);
-  return (<></>
+  return (<>
+  <div>
+    <h1>All Team</h1>
+    {team?.map((item)=>{
+      return <div key={item.id}>
+        {item.name}
+      </div>
+    })}
+  </div>
+  </>
   );
 };
 

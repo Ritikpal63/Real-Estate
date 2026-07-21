@@ -9,7 +9,7 @@ const Team = () => {
     try {
       setLoading(true);
       setError(null);
-      const res = await axiosInstance.get("/team", {params:{limit:4, offset:0}});
+      const res = await axiosInstance.get("/team", {params:{limit:6, offset:0}});
       if (res.data.success) {
         setTeam(res.data.data);
       } else {

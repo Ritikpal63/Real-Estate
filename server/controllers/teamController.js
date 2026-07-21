@@ -3,7 +3,7 @@ const TeamModel = require("../models/teamModel");
 class TeamController {
   static async getAllTeam(req, res) {
     try {
-      const { limit, offset = 0 } = req.query;
+      const { limit, offset} = req.query;
       const parsedLimit = parseInt(limit, 10);
       const parsedOffset = parseInt(offset, 10);
 

@@ -433,7 +433,7 @@ const AdminNews = () => {
 
                 {/* DESKTOP: Table view */}
                 <div className="hidden lg:block bg-white rounded-xl shadow-lg overflow-hidden">
-                  <div className="h-96 overflow-y-auto ritik">
+                  <div className="h-[400px] overflow-y-auto ritik">
                     <table className="w-full">
                       <thead className="bg-gray-50">
                         <tr>

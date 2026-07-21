@@ -46,8 +46,8 @@ class NewsController {
   
   static async getAllNews(req, res) {
     try {
-      const { limit = 10, offset = 0 } = req.query;
-      const news = await NewsModel.getAll(parseInt(limit), parseInt(offset));
+      // const { limit = 10, offset = 0 } = req.query;
+      const news = await NewsModel.getAll();
       const total = await NewsModel.getCount();
       
       res.json({
@@ -55,8 +55,6 @@ class NewsController {
         data: news,
         pagination: {
           total,
-          limit: parseInt(limit),
-          offset: parseInt(offset)
         }
       });
     } catch (error) {

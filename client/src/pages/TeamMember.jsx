@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axiosInstance from "../utils/axiosConfig";
+import Section from "../components/Section";
+
 
 const TeamMember = () => {
   const [team, setTeam] = useState([]);

@@ -140,7 +140,7 @@ const Navbar = () => {
                   />
                 </svg>
               </button>
-              <div className="absolute left-0 mt-1 w-48 bg-white text-gray-800 rounded-lg shadow-xl py-2 z-50 hidden group-hover:block">
+              <div className="absolute left-0 w-48 bg-white text-gray-800 rounded-lg shadow-xl py-2 z-50 hidden group-hover:block">
                 <Link
                   to="/blog"
                   className="block px-4 py-2 hover:bg-gray-100 transition-colors"

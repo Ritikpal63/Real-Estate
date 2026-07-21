@@ -326,7 +326,7 @@ const Navbar = () => {
               <details className="group">
                 <summary className="flex items-center justify-between w-full py-2 text-white hover:text-green-400 transition-colors cursor-pointer list-none">
                   <span>Blog</span>
-                  <svgx
+                  <svg
                     className="w-4 h-4 transition-transform duration-300 group-open:rotate-180"
                     fill="none"
                     stroke="currentColor"

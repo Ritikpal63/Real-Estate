@@ -29,7 +29,7 @@ class TeamController {
   }
   static async getAllTeam(req, res){
     try {
-      const allTeam = await TeamModel.getAllTeam()
+      const allTeam = await TeamModel.getAll()
     res.json({
       success:true,
       data:allTeam,

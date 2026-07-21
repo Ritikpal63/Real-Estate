@@ -4,7 +4,7 @@ const TeamController = require('../controllers/teamController');
 
 
 router.get('/', TeamController.getTeam);
-router.get('/allteam', TeamController.getAllTeam)
+router.get('/all', TeamController.getAllTeam)
 
 
 module.exports = router;

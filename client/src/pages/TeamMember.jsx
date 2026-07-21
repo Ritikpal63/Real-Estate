@@ -9,7 +9,7 @@ const TeamMember = () => {
     try {
       setLoading(true);
       setError(null);
-      const res = await axiosInstance.get("/team/allteam");
+      const res = await axiosInstance.get("/team/all");
       if (res.data.success) {
         setTeam(res.data.data);
       } else {

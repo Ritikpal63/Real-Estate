@@ -41,7 +41,7 @@ const TeamMember = () => {
             <AdminAsideSection />
           </div>
           <div className="flex-1 w-full min-w-0 bg-gray-50">
-            <div>
+            <div className="container-fluid">
               <h1>All Team</h1>
               {team?.map((item) => {
                 return <div key={item.id}>{item.name}</div>;

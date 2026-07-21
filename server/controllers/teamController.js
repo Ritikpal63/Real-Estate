@@ -4,16 +4,15 @@ class TeamController {
   static async getAllTeam(req, res) {
     try {
       const { limit, offset = 0 } = req.query;
-      const parsedLimit = limit !== undefined ? parseInt(limit, 10) : undefined;
-      const parsedOffset = offset !== undefined ? parseInt(offset, 10) : undefined;
+      const parsedLimit = parseInt(limit, 10);
+      const parsedOffset = parseInt(offset, 10);
 
       const team = await TeamModel.getAllTeam(parsedLimit, parsedOffset);
 
       res.json({
         success: true,
         data: team,
-        limit: parsedLimit,
-        offset:parsedOffset,
+        count:team.length
       });
     } catch (error) {
       console.error("Error fetching team:", error);

@@ -16,7 +16,7 @@ const Navbar = () => {
           <div className="flex-shrink-0">
             <Link to="/" className="block">
               <img
-                src="/assets/img/ncrlogowithoutbg.png"
+                src="/assets/img/NCRLOGOGolden01.png"
                 alt="NCR Space Connect"
                 className="h-16 w-auto"
               />

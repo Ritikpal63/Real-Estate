@@ -19,7 +19,7 @@ const AdminAsideSection = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const navItems = [
-    { type: "link", path: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard },
+    { type: "link", path: "/admin", label: "Dashboard", icon: LayoutDashboard },
     { type: "category", label: "MANAGEMENT" },
     { type: "link", path: "/admin/addproperty", label: "Add Property", icon: PlusCircle },
     { type: "link", path: "/admin/view-property", label: "View Properties", icon: Building2 },

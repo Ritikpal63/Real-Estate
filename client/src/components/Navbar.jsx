@@ -18,7 +18,8 @@ const Navbar = () => {
               <img
                 src="/assets/img/NCRLOGOGolden01.png"
                 alt="NCR Space Connect"
-                className="h-16 w-auto"
+                className="w-auto"
+                style={{width:"90px"}}
               />
             </Link>
           </div>

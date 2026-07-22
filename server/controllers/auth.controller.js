@@ -122,7 +122,7 @@ const login = async (req, res) => {
         role: user.role 
       },
       process.env.JWT_SECRET || 'your-secret-key',
-      { expiresIn: '7d' }
+      { expiresIn: '24h' }
     );
     
     console.log('✅ Login successful for:', email);

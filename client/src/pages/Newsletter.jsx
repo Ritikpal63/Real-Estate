@@ -66,7 +66,7 @@ const NewsletterPage = () => {
     <section className="py-16 bg-[#394458]">
       <div className="container mx-auto px-4">
         {/* Partner Logos Carousel */}
-        <div className="mb-12" style={{width:"100%"}}>
+        <div className="mb-12">
           <div className="flex gap-8 animate-scroll">
             {crousel.map((item) => (
               <div key={item.id} className="flex-shrink-0">

@@ -2,3 +2,12 @@
 @tailwind components;
 @tailwind utilities; */
 @import "tailwindcss";
+
+.ncr-logo{
+    height: 90px;
+}
+@media  (min-width:425px) {
+    .ncr-logo{
+        height: 50px;
+    }
+}

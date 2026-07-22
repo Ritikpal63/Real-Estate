@@ -4,19 +4,13 @@ import UploadBlogPage from "./Property/UploadBlogPage";
 import AdminAsideSection from "./AdminAsideSection";
 
 const BlogUpload = () => {
-
-
   return (
     <>
       <Section title={"Add Blog"} />
-      <div className="container-fluid">
-        <div className="row">
-          <div className="flex flex-col lg:flex-row">
-            <AdminAsideSection />
-          </div>
-          <div className="flex-1 w-full min-w-0 bg-gray-50">
-            <UploadBlogPage />
-          </div>
+      <div className="flex flex-col lg:flex-row">
+        <AdminAsideSection />
+        <div className="flex-1 w-full min-w-0 bg-gray-50">
+          <UploadBlogPage />
         </div>
       </div>
     </>

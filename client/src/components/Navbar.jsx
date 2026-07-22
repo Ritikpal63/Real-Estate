@@ -11,14 +11,15 @@ const Navbar = () => {
   return (
     <nav className="bg-[#374256] text-white shadow-lg border-b border-white/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20">
+        <div className="flex justify-between items-center h-24">
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link to="/" className="block">
               <img
-                src="/assets/img/ncrlogowithoutbg.png"
+                src="/assets/img/NCRLOGOGolden01.png"
                 alt="NCR Space Connect"
-                className="h-16 w-auto"
+                className="w-auto ncr-logo"
+                
               />
             </Link>
           </div>

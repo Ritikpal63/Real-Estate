@@ -13,7 +13,7 @@ const NewsletterPage = () => {
     { id: 4, pic: "/assets/img/partner/M3MTRUMP04.jpg" },
     { id: 5, pic: "/assets/img/partner/Godrege05.jpg" },
     { id: 6, pic: "/assets/img/partner/County06.jpg" },
-    { id: 7, pic: "/assets/img/partner/Supertechc07.jpg" },
+    { id: 7, pic: "/assets/img/partner/Supertech07.jpg" },
     { id: 8, pic: "/assets/img/partner/ACE08.jpg" },
   ];
   const handleSubmit = async (e) => {
@@ -64,19 +64,17 @@ const NewsletterPage = () => {
 
   return (
     <section className="py-16 bg-[#394458]">
-      <div className="container mx-auto px-4">
+      <div className="container-fluid">
         {/* Partner Logos Carousel */}
-        <div className="mb-12 overflow-hidden">
+        <div className="mb-12 w-9/12 mx-auto overflow-hidden">
           <div className="flex gap-8 animate-scroll">
             {crousel.map((item) => (
-              <div key={item.id} className="flex-shrink-0">
-                <Link href="#" className="block">
+              <div key={item.id} className="shrink-0">
                   <img
                     src={item.pic}
                     alt="Partner"
-                    className="w-full h-35 object-contain filter hover:filter-none transition-all duration-300"
+                    className="object-contain filter hover:filter-none transition-all duration-300 h-30"
                   />
-                </Link>
               </div>
             ))}
            

@@ -75,14 +75,14 @@ const Newsletter = () => {
                   <img
                     src={item.pic}
                     alt="Partner"
-                    className="w-full h-16 object-contain filter brightness-0 invert hover:filter-none transition-all duration-300"
+                    className="h-16 object-contain filter brightness-0 invert hover:filter-none transition-all duration-300"
                   />
                 </a>
               </div>
             ))}
             {/* Duplicate for seamless scrolling */}
             {crousel.map((item) => (
-              <div key={`dup-${item.id}`} className="flex-shrink-0 w-48">
+              <div key={`dup-${item.id}`} className="flex-shrink-0">
                 <Link href="#" className="block">
                   <img
                     src={item.pic}

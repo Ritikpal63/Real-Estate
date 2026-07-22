@@ -7,15 +7,14 @@ const NewsletterPage = () => {
   const [message, setMessage] = useState({ type: "", text: "" });
 
   const crousel = [
-    { id: 1, pic: "/assets/img/partner/1.png" },
-    { id: 2, pic: "/assets/img/partner/2.png" },
-    { id: 3, pic: "/assets/img/partner/3.png" },
-    { id: 4, pic: "/assets/img/partner/4.png" },
-    { id: 5, pic: "/assets/img/partner/5.png" },
-    { id: 6, pic: "/assets/img/partner/1.png" },
-    { id: 7, pic: "/assets/img/partner/2.png" },
-    { id: 8, pic: "/assets/img/partner/3.png" },
-    { id: 9, pic: "/assets/img/partner/4.png" },
+    { id: 1, pic: "/assets/img/partner/M3M01.jpg" },
+    { id: 2, pic: "/assets/img/partner/M3mElleSaab02.jpg" },
+    { id: 3, pic: "/assets/img/partner/M3M03.jpg" },
+    { id: 4, pic: "/assets/img/partner/M3MTRUMP04.jpg" },
+    { id: 5, pic: "/assets/img/partner/Godrege05.jpg" },
+    { id: 6, pic: "/assets/img/partner/County06.jpg" },
+    { id: 7, pic: "/assets/img/partner/Supertechc07.jpg" },
+    { id: 8, pic: "/assets/img/partner/ACE08.jpg" },
   ];
   const handleSubmit = async (e) => {
     e.preventDefault();

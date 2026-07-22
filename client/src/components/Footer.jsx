@@ -38,11 +38,10 @@ const Footer = () => {
 						<h4>Contact Us</h4>
 						<div className="footer_contact">
 							<ul>
-								<li><i className="fa fa-rocket"></i> <span>3481 Melrose Place, Beverly Hills, CA
-										90210</span></li>
-								<li><i className="fa fa-phone"></i> <span>Call Us - (+1) 517 397 7100</span></li>
-								<li><i className="fa fa-fax"></i> <span>Fax - (+12) 123 1234</span></li>
-								<li><i className="fa fa-envelope"></i> <span>info@example.com</span></li>
+								<li><i className="fa fa-rocket"></i> <span>D 80 Vypaar Marg Sector 2 Noida 201301</span></li>
+								<li><i className="fa fa-phone"></i> <span>Call Us - (+91) 9911819708</span></li>
+								<li><i className="fa fa-fax"></i> <span>Landline - 0120-4656339</span></li>
+								<li><i className="fa fa-envelope"></i> <span>info@ncrspaceconnect.com</span></li>
 							</ul>
 						</div>
 					</div>

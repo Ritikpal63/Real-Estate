@@ -6,7 +6,7 @@
 .ncr-logo{
     height: 90px;
 }
-@media  (min-width:425px) {
+@media  (max-width:425px) {
     .ncr-logo{
         height: 50px;
     }

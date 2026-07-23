@@ -20,7 +20,7 @@ const HomePage = () => {
       {/* <p className="text-center bg-red-500 text-light font-semibold animate">
        <span className=""> Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam, molestiae.</span> 
         </p> */}
-      <Search />
+      {/* <Search /> */}
       <Latestnews />
 
       {/* <About /> */}

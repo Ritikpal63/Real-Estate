@@ -3,6 +3,12 @@
 @tailwind utilities; */
 @import "tailwindcss";
 
-.adminNews::-webkit-scrollbar{
-    display: none;
+
+.logo{
+    height: 90px;
+}
+@media (max-width:768px) {
+    .logo{
+    height: 50px;
+}
 }

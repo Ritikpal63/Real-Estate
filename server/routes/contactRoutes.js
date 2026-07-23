@@ -5,7 +5,7 @@ const { authenticate } = require('../middleware/auth');
 const { isAdmin } = require('../middleware/isAdmin');
 
 router.post('/', ContactController.postContact);
-router.get('/all', authenticate, isAdmin, ContactController.getContact);
+router.get('/', authenticate, isAdmin, ContactController.getContact);
 
 
 module.exports = router;

@@ -7,7 +7,7 @@ const AdminDashboardStats = () => {
   const getDetails = async () =>{
     try {
       const newsCount = await axiosInstance.get('/news/allnews')
-      const contactCount = await axiosInstance.get('/contact')
+      const contactCount = await axiosInstance.get('/contact/all')
       setCountNews(newsCount.data.pagination.total)
       setCountContact(contactCount.data.pagination.total)
     } catch (error) {

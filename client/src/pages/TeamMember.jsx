@@ -35,11 +35,8 @@ const TeamMember = () => {
   return (
     <>
       <Section title={"All Team"} />
-      <div className="container-fluid">
-        <div className="row">
           <div className="flex flex-col lg:flex-row">
             <AdminAsideSection />
-          </div>
           <div className="flex-1 w-full min-w-0 bg-gray-50">
             <div className="container-fluid">
               <h1>All Team</h1>
@@ -47,7 +44,6 @@ const TeamMember = () => {
                 return <div key={item.id}>{item.name}</div>;
               })}
             </div>
-          </div>
         </div>
       </div>
     </>

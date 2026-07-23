@@ -3,6 +3,10 @@
 @tailwind utilities; */
 @import "tailwindcss";
 
+
+.logo{
+    height: 90px;
+}
 @media (max-width:768px) {
     .logo{
     height: 50px;

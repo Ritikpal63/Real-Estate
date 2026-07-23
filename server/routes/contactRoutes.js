@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const ContactController = require('../controllers/contactController')
+const ContactController = require('../controllers/contactController');
+const { authenticate } = require('../middleware/auth');
+const { isAdmin } = require('../middleware/isAdmin');
 
 router.post('/', ContactController.postContact);
-router.get('/all', ContactController.getContact);
+router.get('/all', authenticate, isAdmin, ContactController.getContact);
 
 
 module.exports = router;

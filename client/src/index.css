@@ -3,11 +3,8 @@
 @tailwind utilities; */
 @import "tailwindcss";
 
-.ncr-logo{
-    height: 90px;
+@media (max-width:768px) {
+    .logo{
+    height: 50px;
 }
-@media  (max-width:425px) {
-    .ncr-logo{
-        height: 50px;
-    }
 }

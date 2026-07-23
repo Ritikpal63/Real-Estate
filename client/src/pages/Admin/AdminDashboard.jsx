@@ -6,8 +6,8 @@ const AdminDashboardStats = () => {
   const getDetails = async () =>{
     try {
       const res = await axiosInstance.get('/news/allnews')
-      setCountNews(res.data.data)
-      console.log("Count News: ",countNews.total)
+      setCountNews(res.data.pagination.total)
+      console.log("Count News: ",countNews)
     } catch (error) {
       console.log("Dashboard: ", error)
     }

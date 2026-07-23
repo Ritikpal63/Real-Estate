@@ -14,5 +14,21 @@ class ContactController {
       res.status(500).json({ error: "Something went wrong" });
     }
   }
+  static async getContact(req, res) {
+    try {
+      const total = await ContactModel.getCount();
+      
+      res.json({
+        success: true,
+        pagination: {
+          total,
+        }
+      });
+      
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: "Something went wrong" });
+    }
+  }
 }
 module.exports = ContactController;

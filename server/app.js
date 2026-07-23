@@ -40,7 +40,7 @@ app.use(express.urlencoded({ extended: true }));
 // Routes
 
 const contactRoutes = require('./routes/contactRoutes')
-app.use('/api', contactRoutes)
+app.use('/api/contact', contactRoutes)
 
 const newsRoutes = require("./routes/newsRoutes");
 app.use("/api/news", newsRoutes);

@@ -121,8 +121,8 @@ const login = async (req, res) => {
         email: user.email, 
         role: user.role 
       },
-      process.env.JWT_SECRET,
-      { expiresIn: '7d' }
+      process.env.JWT_SECRET || 'your-secret-key',
+      { expiresIn: '24h' }
     );
     
     console.log('✅ Login successful for:', email);

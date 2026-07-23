@@ -433,9 +433,9 @@ const AdminNews = () => {
 
                 {/* DESKTOP: Table view */}
                 <div className="hidden lg:block bg-white rounded-xl shadow-lg overflow-hidden">
-                  <div className="h-96 overflow-y-auto">
+                  <div className="h-[500px] overflow-y-auto adminNews">
                     <table className="w-full">
-                      <thead className="bg-gray-50">
+                      <thead className="bg-gray-50 sticky top-0">
                         <tr>
                           <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Title

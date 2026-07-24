@@ -5,5 +5,9 @@ class PropertyModel{
     const [rows] = await pool.query("SELECT COUNT(*) as total FROM properties");
     return rows[0].total;
   }
+  static async getAllProperty() {
+    const [rows] = await pool.query("SELECT *  FROM properties");
+    return rows;
+  }
 }
 module.exports = PropertyModel

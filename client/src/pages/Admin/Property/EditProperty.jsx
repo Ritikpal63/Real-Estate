@@ -1,9 +1,10 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import ImageUploader from "./ImageUploader";
 import axiosInstance from "../../../utils/axiosConfig";
 
-export default function AddProperty() {
+export default function EditProperty() {
+  const { id } = useParams();
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
@@ -20,8 +21,40 @@ export default function AddProperty() {
   });
 
   const [imageFile, setImageFile] = useState(null);
+  const [existingImage, setExistingImage] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [fetching, setFetching] = useState(true);
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    const fetchProperty = async () => {
+      try {
+        setFetching(true);
+        const res = await axiosInstance.get(`/property/${id}`);
+        const p = res.data;
+        setForm({
+          title: p.title || "",
+          location: p.location || "",
+          type: p.type || "",
+          amenities: p.amenities || "",
+          bedroom: p.bedroom || 0,
+          bathroom: p.bathroom || 0,
+          size: p.size || "",
+          year: p.year || "",
+          price: p.price || "",
+          description: p.description || "",
+        });
+        setExistingImage(p.image);
+      } catch (err) {
+        console.error(err);
+        setError("Failed to load property details.");
+      } finally {
+        setFetching(false);
+      }
+    };
+
+    fetchProperty();
+  }, [id]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -48,26 +81,34 @@ export default function AddProperty() {
         formData.append("image", imageFile);
       }
 
-      await axiosInstance.post("/property", formData, {
+      await axiosInstance.put(`/properties/${id}`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
-      navigate("/admin/property");
+      navigate("/admin/properties");
     } catch (err) {
       console.error(err);
       setError(
-        err.response?.data?.message || "Failed to add property. Try again."
+        err.response?.data?.message || "Failed to update property. Try again."
       );
     } finally {
       setLoading(false);
     }
   };
 
+  if (fetching) {
+    return (
+      <div className="max-w-6xl mx-auto px-3 sm:px-6 py-8 text-gray-500">
+        Loading property...
+      </div>
+    );
+  }
+
   return (
     <div className="max-w-6xl mx-auto px-3 sm:px-6 py-4 sm:py-8">
       <div className="mb-6">
-        <h2 className="text-2xl font-semibold">Add Key Property Information</h2>
-        <p className="text-gray-500 mt-1">Describe your real estate asset.</p>
+        <h2 className="text-2xl font-semibold">Edit Property</h2>
+        <p className="text-gray-500 mt-1">Update your real estate listing.</p>
       </div>
 
       {error && (
@@ -173,14 +214,17 @@ export default function AddProperty() {
           className="w-full bg-gray-100 rounded-xl px-4 py-3 outline-none"
         />
 
-        <ImageUploader onImageSelect={setImageFile} />
+        <ImageUploader
+          onImageSelect={setImageFile}
+          existingImage={existingImage}
+        />
 
         <button
           type="submit"
           disabled={loading}
           className="w-full bg-[#374256] text-white rounded-lg py-3 disabled:opacity-60"
         >
-          {loading ? "Saving..." : "Continue"}
+          {loading ? "Updating..." : "Save Changes"}
         </button>
       </form>
     </div>

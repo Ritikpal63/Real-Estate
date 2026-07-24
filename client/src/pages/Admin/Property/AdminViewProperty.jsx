@@ -159,13 +159,13 @@ export default function PropertyView() {
                       {/* Actions */}
                       <div className="flex items-center gap-2 mt-4 mt-auto pt-3">
                         <Link
-                          to={`/admin/properties/${property.id}`}
+                          to={`/admin/property/${property.id}`}
                           className="flex-1 text-center text-xs sm:text-sm bg-gray-100 hover:bg-gray-200 transition rounded-lg py-2"
                         >
                           See Details
                         </Link>
                         <Link
-                          to={`/admin/properties/${property.id}/edit`}
+                          to={`/admin/property/${property.id}/edit`}
                           className="flex-1 text-center text-xs sm:text-sm bg-[#374256] hover:opacity-90 transition text-white rounded-lg py-2"
                         >
                           Edit

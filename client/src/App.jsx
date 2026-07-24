@@ -29,6 +29,8 @@ import "react-toastify/dist/ReactToastify.css";
 import NewsDetailPage from "./components/NewsDetailPage";
 import AllNews from "./components/AllNews";
 import TeamMember from "./pages/TeamMember";
+import AdminViewProperty from "./pages/Admin/Property/AdminViewProperty";
+
 
 
 
@@ -67,6 +69,7 @@ const App = () => {
             <Route path="addblog" element={<BlogUpload />} />
             <Route path="addproperty" element={<AddPropertyPage />} /> 
             <Route path="addnews" element={<AdminNews />} />
+            <Route path="viewproperty" element={<AdminViewProperty />} />
           </Route>
           <Route path="/not-authorized" element={<NotAuthorizedPage />} />
           <Route path="/*" element={<NotfoundPage />} />

@@ -34,10 +34,18 @@ app.use(
 //     credentials: true,
 //   }),
 // );
+const path = require("path");
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
+
+
 
 // Routes
+
+
 
 const contactRoutes = require('./routes/contactRoutes')
 app.use('/api/contact', contactRoutes)

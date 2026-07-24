@@ -1,7 +1,6 @@
 // models/newsModel.js
 const pool = require("../config/database");
 
-
 class NewsModel {
   // Get all news
   static async getAll(limit = 50, offset = 0) {
@@ -18,13 +17,12 @@ class NewsModel {
     return rows[0];
   }
 
-
   // Create news
   static async create(data) {
     const { title, content, summary, category, image, author } = data;
     const [result] = await pool.query(
       "INSERT INTO news (title, content, summary, category, image, author) VALUES (?, ?, ?, ?, ?, ?)",
-      [ 
+      [
         title,
         content,
         summary || null,

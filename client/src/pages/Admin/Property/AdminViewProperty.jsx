@@ -30,7 +30,7 @@ export default function PropertyView() {
     if (!window.confirm("Are you sure you want to delete this property?"))
       return;
     try {
-      const res = await axiosInstance.delete("/property");
+      const res = await axiosInstance.delete(`/property/${id}`);
       setProperties((prev) => prev.filter((p) => p.id !== id));
     } catch (err) {
       alert(err.message);

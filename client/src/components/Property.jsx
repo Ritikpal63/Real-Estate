@@ -1,307 +1,369 @@
-import React from 'react'
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import axiosInstance from "../utils/axiosConfig";
 
 const Property = () => {
+  const [properties, setProperties] = useState([]);
+
+  useEffect(() => {
+    axiosInstance.get("/property").then((res) => setProperties(res.data.data));
+  }, []);
+
   return (
-    <>
-	<section className="template_property">
-		<div className="container">
-			<div className="section-title text-center wow zoomIn">
-				<h2>Latest listing</h2>
-				<div></div>
-			</div>
-			<div className="row">
-				<div className="col-md-4 col-sm-12 col-xs-12">
-					<div className="single_property">
-						<img src="assets/img/property/1.jpg" className="img-fluid" alt="" />
-						<div className="single_property_description text-center">
-							<span><i className="fa fa-object-group"></i> 900 sq ft</span>
-							<span><i className="fa fa-bed"></i> 4 Badrooms</span>
-							<span><i className="fa fa-star-o"></i> 2 Baths</span>
-						</div>
-						<div className="single_property_content">
-							<h4><a href="#">Lodgeville Road</a></h4>
-							<p>Lorem Ipsum is not simply random text. It has roots in a piece of classical. </p>
+    <section className="template_property">
+      <div className="container">
+        <div className="row">
+          {properties.map((p) => (
+            <div className="col-md-4 col-sm-12 col-xs-12" key={p.id}>
+              <div className="single_property">
+                <img src={p.image || "/assets/img/property/1.jpg"} className="img-fluid" alt={p.title} />
+                <div className="single_property_content">
+                  <h4><Link to={`/property/${p.id}`}>{p.title}</Link></h4>
+                  <p>{p.location}</p>
+                </div>
+                <div className="single_property_price">
+                  {p.location} <span>${Number(p.price || 0).toLocaleString()}</span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
 
-						</div>
-						<div className="single_property_price">
-							High Meadow Lane Mount Pleasant <span>$ 170,000</span>
-							<i className="fa fa-star"></i>
-							<i className="fa fa-star"></i>
-							<i className="fa fa-star"></i>
-							<i className="fa fa-star"></i>
-							<i className="fa fa-star"></i>
-						</div>
-					</div>
-				</div>
-				<div className="col-md-4 col-sm-12 col-xs-12">
-					<div className="single_property">
-						<img src="assets/img/property/2.jpg" className="img-fluid" alt="" />
-						<div className="single_property_description text-center">
-							<span><i className="fa fa-object-group"></i> 900 sq ft</span>
-							<span><i className="fa fa-bed"></i> 4 Badrooms</span>
-							<span><i className="fa fa-star-o"></i> 2 Baths</span>
-						</div>
-						<div className="single_property_content">
-							<h4><a href="#">Rinehart Road</a></h4>
-							<p>Lorem Ipsum is not simply random text. It has roots in a piece of classical. </p>
+export default Property;
 
-						</div>
-						<div className="single_property_price">
-							High Meadow Lane Mount Pleasant <span>$ 170,000</span>
-							<i className="fa fa-star"></i>
-							<i className="fa fa-star"></i>
-							<i className="fa fa-star"></i>
-							<i className="fa fa-star"></i>
-							<i className="fa fa-star"></i>
-						</div>
-					</div>
-				</div>
-				<div className="col-md-4 col-sm-12 col-xs-12">
-					<div className="single_property">
-						<img src="assets/img/property/3.jpg" className="img-fluid" alt="" />
-						<div className="single_property_description text-center">
-							<span><i className="fa fa-object-group"></i> 900 sq ft</span>
-							<span><i className="fa fa-bed"></i> 4 Badrooms</span>
-							<span><i className="fa fa-star-o"></i> 2 Baths</span>
-						</div>
-						<div className="single_property_content">
-							<h4><a href="#">Brighton Circle Road</a></h4>
-							<p>Lorem Ipsum is not simply random text. It has roots in a piece of classical. </p>
 
-						</div>
-						<div className="single_property_price">
-							High Meadow Lane Mount Pleasant <span>$ 170,000</span>
-							<i className="fa fa-star"></i>
-							<i className="fa fa-star"></i>
-							<i className="fa fa-star"></i>
-							<i className="fa fa-star"></i>
-							<i className="fa fa-star"></i>
-						</div>
-					</div>
-				</div>
-				<div className="col-md-4 col-sm-12 col-xs-12">
-					<div className="single_property">
-						<img src="assets/img/property/4.jpg" className="img-fluid" alt="" />
-						<div className="single_property_description text-center">
-							<span><i className="fa fa-object-group"></i> 900 sq ft</span>
-							<span><i className="fa fa-bed"></i> 4 Badrooms</span>
-							<span><i className="fa fa-star-o"></i> 2 Baths</span>
-						</div>
-						<div className="single_property_content">
-							<h4><a href="#">Lynn Ogden Lane</a></h4>
-							<p>Lorem Ipsum is not simply random text. It has roots in a piece of classical. </p>
 
-						</div>
-						<div className="single_property_price">
-							High Meadow Lane Mount Pleasant <span>$ 170,000</span>
-							<i className="fa fa-star"></i>
-							<i className="fa fa-star"></i>
-							<i className="fa fa-star"></i>
-							<i className="fa fa-star"></i>
-							<i className="fa fa-star"></i>
-						</div>
-					</div>
-				</div>
-				<div className="col-md-4 col-sm-12 col-xs-12">
-					<div className="single_property">
-						<img src="assets/img/property/5.jpg" className="img-fluid" alt="" />
-						<div className="single_property_description text-center">
-							<span><i className="fa fa-object-group"></i> 900 sq ft</span>
-							<span><i className="fa fa-bed"></i> 4 Badrooms</span>
-							<span><i className="fa fa-star-o"></i> 2 Baths</span>
-						</div>
-						<div className="single_property_content">
-							<h4><a href="#">2045 B Street</a></h4>
-							<p>Lorem Ipsum is not simply random text. It has roots in a piece of classical. </p>
 
-						</div>
-						<div className="single_property_price">
-							High Meadow Lane Mount Pleasant <span>$ 170,000</span>
-							<i className="fa fa-star"></i>
-							<i className="fa fa-star"></i>
-							<i className="fa fa-star"></i>
-							<i className="fa fa-star"></i>
-							<i className="fa fa-star"></i>
-						</div>
-					</div>
-				</div>
-				<div className="col-md-4 col-sm-12 col-xs-12">
-					<div className="single_property">
-						<img src="assets/img/property/6.jpg" className="img-fluid" alt="" />
-						<div className="single_property_description text-center">
-							<span><i className="fa fa-object-group"></i> 900 sq ft</span>
-							<span><i className="fa fa-bed"></i> 4 Badrooms</span>
-							<span><i className="fa fa-star-o"></i> 2 Baths</span>
-						</div>
-						<div className="single_property_content">
-							<h4><a href="#">White Maria Street</a></h4>
-							<p>Lorem Ipsum is not simply random text. It has roots in a piece of classical. </p>
 
-						</div>
-						<div className="single_property_price">
-							High Meadow Lane Mount Pleasant <span>$ 170,000</span>
-							<i className="fa fa-star"></i>
-							<i className="fa fa-star"></i>
-							<i className="fa fa-star"></i>
-							<i className="fa fa-star"></i>
-							<i className="fa fa-star"></i>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
 
-	<section className="template_property section-padding">
-		<div className="container">
-			<div className="section-title  text-center wow zoomIn">
-				<h2>Latest for Rent</h2>
-				<div></div>
-			</div>
-			<div className="row">
-				<div className="col-md-4 col-sm-12 col-xs-12">
-					<div className="single_property">
-						<img src="assets/img/property/1.jpg" className="img-fluid" alt="" />
-						<div className="single_property_description text-center">
-							<span><i className="fa fa-object-group"></i> 900 sq ft</span>
-							<span><i className="fa fa-bed"></i> 4 Badrooms</span>
-							<span><i className="fa fa-star-o"></i> 2 Baths</span>
-						</div>
-						<div className="single_property_content">
-							<h4><a href="#">Lodgeville Road</a></h4>
-							<p>Lorem Ipsum is not simply random text. It has roots in a piece of classical. </p>
 
-						</div>
-						<div className="single_property_price">
-							High Meadow Lane Mount Pleasant <span>$ 170,000</span>
-							<i className="fa fa-star"></i>
-							<i className="fa fa-star"></i>
-							<i className="fa fa-star"></i>
-							<i className="fa fa-star"></i>
-							<i className="fa fa-star"></i>
-						</div>
-					</div>
-				</div>
-				<div className="col-md-4 col-sm-12 col-xs-12">
-					<div className="single_property">
-						<img src="assets/img/property/2.jpg" className="img-fluid" alt="" />
-						<div className="single_property_description text-center">
-							<span><i className="fa fa-object-group"></i> 900 sq ft</span>
-							<span><i className="fa fa-bed"></i> 4 Badrooms</span>
-							<span><i className="fa fa-star-o"></i> 2 Baths</span>
-						</div>
-						<div className="single_property_content">
-							<h4><a href="#">Rinehart Road</a></h4>
-							<p>Lorem Ipsum is not simply random text. It has roots in a piece of classical. </p>
 
-						</div>
-						<div className="single_property_price">
-							High Meadow Lane Mount Pleasant <span>$ 170,000</span>
-							<i className="fa fa-star"></i>
-							<i className="fa fa-star"></i>
-							<i className="fa fa-star"></i>
-							<i className="fa fa-star"></i>
-							<i className="fa fa-star"></i>
-						</div>
-					</div>
-				</div>
-				<div className="col-md-4 col-sm-12 col-xs-12">
-					<div className="single_property">
-						<img src="assets/img/property/3.jpg" className="img-fluid" alt="" />
-						<div className="single_property_description text-center">
-							<span><i className="fa fa-object-group"></i> 900 sq ft</span>
-							<span><i className="fa fa-bed"></i> 4 Badrooms</span>
-							<span><i className="fa fa-star-o"></i> 2 Baths</span>
-						</div>
-						<div className="single_property_content">
-							<h4><a href="#">Brighton Circle Road</a></h4>
-							<p>Lorem Ipsum is not simply random text. It has roots in a piece of classical. </p>
+// import React from 'react'
 
-						</div>
-						<div className="single_property_price">
-							High Meadow Lane Mount Pleasant <span>$ 170,000</span>
-							<i className="fa fa-star"></i>
-							<i className="fa fa-star"></i>
-							<i className="fa fa-star"></i>
-							<i className="fa fa-star"></i>
-							<i className="fa fa-star"></i>
-						</div>
-					</div>
-				</div>
-				<div className="col-md-4 col-sm-12 col-xs-12">
-					<div className="single_property">
-						<img src="assets/img/property/4.jpg" className="img-fluid" alt="" />
-						<div className="single_property_description text-center">
-							<span><i className="fa fa-object-group"></i> 900 sq ft</span>
-							<span><i className="fa fa-bed"></i> 4 Badrooms</span>
-							<span><i className="fa fa-star-o"></i> 2 Baths</span>
-						</div>
-						<div className="single_property_content">
-							<h4><a href="#">Lynn Ogden Lane</a></h4>
-							<p>Lorem Ipsum is not simply random text. It has roots in a piece of classical. </p>
+// const Property = () => {
+//   return (
+//     <>
+// 	<section className="template_property">
+// 		<div className="container">
+// 			<div className="section-title text-center wow zoomIn">
+// 				<h2>Latest listing</h2>
+// 				<div></div>
+// 			</div>
+// 			<div className="row">
+// 				<div className="col-md-4 col-sm-12 col-xs-12">
+// 					<div className="single_property">
+// 						<img src="assets/img/property/1.jpg" className="img-fluid" alt="" />
+// 						<div className="single_property_description text-center">
+// 							<span><i className="fa fa-object-group"></i> 900 sq ft</span>
+// 							<span><i className="fa fa-bed"></i> 4 Badrooms</span>
+// 							<span><i className="fa fa-star-o"></i> 2 Baths</span>
+// 						</div>
+// 						<div className="single_property_content">
+// 							<h4><a href="#">Lodgeville Road</a></h4>
+// 							<p>Lorem Ipsum is not simply random text. It has roots in a piece of classical. </p>
 
-						</div>
-						<div className="single_property_price">
-							High Meadow Lane Mount Pleasant <span>$ 170,000</span>
-							<i className="fa fa-star"></i>
-							<i className="fa fa-star"></i>
-							<i className="fa fa-star"></i>
-							<i className="fa fa-star"></i>
-							<i className="fa fa-star"></i>
-						</div>
-					</div>
-				</div>
-				<div className="col-md-4 col-sm-12 col-xs-12">
-					<div className="single_property">
-						<img src="assets/img/property/5.jpg" className="img-fluid" alt="" />
-						<div className="single_property_description text-center">
-							<span><i className="fa fa-object-group"></i> 900 sq ft</span>
-							<span><i className="fa fa-bed"></i> 4 Badrooms</span>
-							<span><i className="fa fa-star-o"></i> 2 Baths</span>
-						</div>
-						<div className="single_property_content">
-							<h4><a href="#">2045 B Street</a></h4>
-							<p>Lorem Ipsum is not simply random text. It has roots in a piece of classical. </p>
+// 						</div>
+// 						<div className="single_property_price">
+// 							High Meadow Lane Mount Pleasant <span>$ 170,000</span>
+// 							<i className="fa fa-star"></i>
+// 							<i className="fa fa-star"></i>
+// 							<i className="fa fa-star"></i>
+// 							<i className="fa fa-star"></i>
+// 							<i className="fa fa-star"></i>
+// 						</div>
+// 					</div>
+// 				</div>
+// 				<div className="col-md-4 col-sm-12 col-xs-12">
+// 					<div className="single_property">
+// 						<img src="assets/img/property/2.jpg" className="img-fluid" alt="" />
+// 						<div className="single_property_description text-center">
+// 							<span><i className="fa fa-object-group"></i> 900 sq ft</span>
+// 							<span><i className="fa fa-bed"></i> 4 Badrooms</span>
+// 							<span><i className="fa fa-star-o"></i> 2 Baths</span>
+// 						</div>
+// 						<div className="single_property_content">
+// 							<h4><a href="#">Rinehart Road</a></h4>
+// 							<p>Lorem Ipsum is not simply random text. It has roots in a piece of classical. </p>
 
-						</div>
-						<div className="single_property_price">
-							High Meadow Lane Mount Pleasant <span>$ 170,000</span>
-							<i className="fa fa-star"></i>
-							<i className="fa fa-star"></i>
-							<i className="fa fa-star"></i>
-							<i className="fa fa-star"></i>
-							<i className="fa fa-star"></i>
-						</div>
-					</div>
-				</div>
-				<div className="col-md-4 col-sm-12 col-xs-12">
-					<div className="single_property">
-						<img src="assets/img/property/6.jpg" className="img-fluid" alt="" />
-						<div className="single_property_description text-center">
-							<span><i className="fa fa-object-group"></i> 900 sq ft</span>
-							<span><i className="fa fa-bed"></i> 4 Badrooms</span>
-							<span><i className="fa fa-star-o"></i> 2 Baths</span>
-						</div>
-						<div className="single_property_content">
-							<h4><a href="#">White Maria Street</a></h4>
-							<p>Lorem Ipsum is not simply random text. It has roots in a piece of classical. </p>
+// 						</div>
+// 						<div className="single_property_price">
+// 							High Meadow Lane Mount Pleasant <span>$ 170,000</span>
+// 							<i className="fa fa-star"></i>
+// 							<i className="fa fa-star"></i>
+// 							<i className="fa fa-star"></i>
+// 							<i className="fa fa-star"></i>
+// 							<i className="fa fa-star"></i>
+// 						</div>
+// 					</div>
+// 				</div>
+// 				<div className="col-md-4 col-sm-12 col-xs-12">
+// 					<div className="single_property">
+// 						<img src="assets/img/property/3.jpg" className="img-fluid" alt="" />
+// 						<div className="single_property_description text-center">
+// 							<span><i className="fa fa-object-group"></i> 900 sq ft</span>
+// 							<span><i className="fa fa-bed"></i> 4 Badrooms</span>
+// 							<span><i className="fa fa-star-o"></i> 2 Baths</span>
+// 						</div>
+// 						<div className="single_property_content">
+// 							<h4><a href="#">Brighton Circle Road</a></h4>
+// 							<p>Lorem Ipsum is not simply random text. It has roots in a piece of classical. </p>
 
-						</div>
-						<div className="single_property_price">
-							High Meadow Lane Mount Pleasant <span>$ 170,000</span>
-							<i className="fa fa-star"></i>
-							<i className="fa fa-star"></i>
-							<i className="fa fa-star"></i>
-							<i className="fa fa-star"></i>
-							<i className="fa fa-star"></i>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-    </>
-  )
-}
+// 						</div>
+// 						<div className="single_property_price">
+// 							High Meadow Lane Mount Pleasant <span>$ 170,000</span>
+// 							<i className="fa fa-star"></i>
+// 							<i className="fa fa-star"></i>
+// 							<i className="fa fa-star"></i>
+// 							<i className="fa fa-star"></i>
+// 							<i className="fa fa-star"></i>
+// 						</div>
+// 					</div>
+// 				</div>
+// 				<div className="col-md-4 col-sm-12 col-xs-12">
+// 					<div className="single_property">
+// 						<img src="assets/img/property/4.jpg" className="img-fluid" alt="" />
+// 						<div className="single_property_description text-center">
+// 							<span><i className="fa fa-object-group"></i> 900 sq ft</span>
+// 							<span><i className="fa fa-bed"></i> 4 Badrooms</span>
+// 							<span><i className="fa fa-star-o"></i> 2 Baths</span>
+// 						</div>
+// 						<div className="single_property_content">
+// 							<h4><a href="#">Lynn Ogden Lane</a></h4>
+// 							<p>Lorem Ipsum is not simply random text. It has roots in a piece of classical. </p>
 
-export default Property
+// 						</div>
+// 						<div className="single_property_price">
+// 							High Meadow Lane Mount Pleasant <span>$ 170,000</span>
+// 							<i className="fa fa-star"></i>
+// 							<i className="fa fa-star"></i>
+// 							<i className="fa fa-star"></i>
+// 							<i className="fa fa-star"></i>
+// 							<i className="fa fa-star"></i>
+// 						</div>
+// 					</div>
+// 				</div>
+// 				<div className="col-md-4 col-sm-12 col-xs-12">
+// 					<div className="single_property">
+// 						<img src="assets/img/property/5.jpg" className="img-fluid" alt="" />
+// 						<div className="single_property_description text-center">
+// 							<span><i className="fa fa-object-group"></i> 900 sq ft</span>
+// 							<span><i className="fa fa-bed"></i> 4 Badrooms</span>
+// 							<span><i className="fa fa-star-o"></i> 2 Baths</span>
+// 						</div>
+// 						<div className="single_property_content">
+// 							<h4><a href="#">2045 B Street</a></h4>
+// 							<p>Lorem Ipsum is not simply random text. It has roots in a piece of classical. </p>
+
+// 						</div>
+// 						<div className="single_property_price">
+// 							High Meadow Lane Mount Pleasant <span>$ 170,000</span>
+// 							<i className="fa fa-star"></i>
+// 							<i className="fa fa-star"></i>
+// 							<i className="fa fa-star"></i>
+// 							<i className="fa fa-star"></i>
+// 							<i className="fa fa-star"></i>
+// 						</div>
+// 					</div>
+// 				</div>
+// 				<div className="col-md-4 col-sm-12 col-xs-12">
+// 					<div className="single_property">
+// 						<img src="assets/img/property/6.jpg" className="img-fluid" alt="" />
+// 						<div className="single_property_description text-center">
+// 							<span><i className="fa fa-object-group"></i> 900 sq ft</span>
+// 							<span><i className="fa fa-bed"></i> 4 Badrooms</span>
+// 							<span><i className="fa fa-star-o"></i> 2 Baths</span>
+// 						</div>
+// 						<div className="single_property_content">
+// 							<h4><a href="#">White Maria Street</a></h4>
+// 							<p>Lorem Ipsum is not simply random text. It has roots in a piece of classical. </p>
+
+// 						</div>
+// 						<div className="single_property_price">
+// 							High Meadow Lane Mount Pleasant <span>$ 170,000</span>
+// 							<i className="fa fa-star"></i>
+// 							<i className="fa fa-star"></i>
+// 							<i className="fa fa-star"></i>
+// 							<i className="fa fa-star"></i>
+// 							<i className="fa fa-star"></i>
+// 						</div>
+// 					</div>
+// 				</div>
+// 			</div>
+// 		</div>
+// 	</section>
+
+// 	<section className="template_property section-padding">
+// 		<div className="container">
+// 			<div className="section-title  text-center wow zoomIn">
+// 				<h2>Latest for Rent</h2>
+// 				<div></div>
+// 			</div>
+// 			<div className="row">
+// 				<div className="col-md-4 col-sm-12 col-xs-12">
+// 					<div className="single_property">
+// 						<img src="assets/img/property/1.jpg" className="img-fluid" alt="" />
+// 						<div className="single_property_description text-center">
+// 							<span><i className="fa fa-object-group"></i> 900 sq ft</span>
+// 							<span><i className="fa fa-bed"></i> 4 Badrooms</span>
+// 							<span><i className="fa fa-star-o"></i> 2 Baths</span>
+// 						</div>
+// 						<div className="single_property_content">
+// 							<h4><a href="#">Lodgeville Road</a></h4>
+// 							<p>Lorem Ipsum is not simply random text. It has roots in a piece of classical. </p>
+
+// 						</div>
+// 						<div className="single_property_price">
+// 							High Meadow Lane Mount Pleasant <span>$ 170,000</span>
+// 							<i className="fa fa-star"></i>
+// 							<i className="fa fa-star"></i>
+// 							<i className="fa fa-star"></i>
+// 							<i className="fa fa-star"></i>
+// 							<i className="fa fa-star"></i>
+// 						</div>
+// 					</div>
+// 				</div>
+// 				<div className="col-md-4 col-sm-12 col-xs-12">
+// 					<div className="single_property">
+// 						<img src="assets/img/property/2.jpg" className="img-fluid" alt="" />
+// 						<div className="single_property_description text-center">
+// 							<span><i className="fa fa-object-group"></i> 900 sq ft</span>
+// 							<span><i className="fa fa-bed"></i> 4 Badrooms</span>
+// 							<span><i className="fa fa-star-o"></i> 2 Baths</span>
+// 						</div>
+// 						<div className="single_property_content">
+// 							<h4><a href="#">Rinehart Road</a></h4>
+// 							<p>Lorem Ipsum is not simply random text. It has roots in a piece of classical. </p>
+
+// 						</div>
+// 						<div className="single_property_price">
+// 							High Meadow Lane Mount Pleasant <span>$ 170,000</span>
+// 							<i className="fa fa-star"></i>
+// 							<i className="fa fa-star"></i>
+// 							<i className="fa fa-star"></i>
+// 							<i className="fa fa-star"></i>
+// 							<i className="fa fa-star"></i>
+// 						</div>
+// 					</div>
+// 				</div>
+// 				<div className="col-md-4 col-sm-12 col-xs-12">
+// 					<div className="single_property">
+// 						<img src="assets/img/property/3.jpg" className="img-fluid" alt="" />
+// 						<div className="single_property_description text-center">
+// 							<span><i className="fa fa-object-group"></i> 900 sq ft</span>
+// 							<span><i className="fa fa-bed"></i> 4 Badrooms</span>
+// 							<span><i className="fa fa-star-o"></i> 2 Baths</span>
+// 						</div>
+// 						<div className="single_property_content">
+// 							<h4><a href="#">Brighton Circle Road</a></h4>
+// 							<p>Lorem Ipsum is not simply random text. It has roots in a piece of classical. </p>
+
+// 						</div>
+// 						<div className="single_property_price">
+// 							High Meadow Lane Mount Pleasant <span>$ 170,000</span>
+// 							<i className="fa fa-star"></i>
+// 							<i className="fa fa-star"></i>
+// 							<i className="fa fa-star"></i>
+// 							<i className="fa fa-star"></i>
+// 							<i className="fa fa-star"></i>
+// 						</div>
+// 					</div>
+// 				</div>
+// 				<div className="col-md-4 col-sm-12 col-xs-12">
+// 					<div className="single_property">
+// 						<img src="assets/img/property/4.jpg" className="img-fluid" alt="" />
+// 						<div className="single_property_description text-center">
+// 							<span><i className="fa fa-object-group"></i> 900 sq ft</span>
+// 							<span><i className="fa fa-bed"></i> 4 Badrooms</span>
+// 							<span><i className="fa fa-star-o"></i> 2 Baths</span>
+// 						</div>
+// 						<div className="single_property_content">
+// 							<h4><a href="#">Lynn Ogden Lane</a></h4>
+// 							<p>Lorem Ipsum is not simply random text. It has roots in a piece of classical. </p>
+
+// 						</div>
+// 						<div className="single_property_price">
+// 							High Meadow Lane Mount Pleasant <span>$ 170,000</span>
+// 							<i className="fa fa-star"></i>
+// 							<i className="fa fa-star"></i>
+// 							<i className="fa fa-star"></i>
+// 							<i className="fa fa-star"></i>
+// 							<i className="fa fa-star"></i>
+// 						</div>
+// 					</div>
+// 				</div>
+// 				<div className="col-md-4 col-sm-12 col-xs-12">
+// 					<div className="single_property">
+// 						<img src="assets/img/property/5.jpg" className="img-fluid" alt="" />
+// 						<div className="single_property_description text-center">
+// 							<span><i className="fa fa-object-group"></i> 900 sq ft</span>
+// 							<span><i className="fa fa-bed"></i> 4 Badrooms</span>
+// 							<span><i className="fa fa-star-o"></i> 2 Baths</span>
+// 						</div>
+// 						<div className="single_property_content">
+// 							<h4><a href="#">2045 B Street</a></h4>
+// 							<p>Lorem Ipsum is not simply random text. It has roots in a piece of classical. </p>
+
+// 						</div>
+// 						<div className="single_property_price">
+// 							High Meadow Lane Mount Pleasant <span>$ 170,000</span>
+// 							<i className="fa fa-star"></i>
+// 							<i className="fa fa-star"></i>
+// 							<i className="fa fa-star"></i>
+// 							<i className="fa fa-star"></i>
+// 							<i className="fa fa-star"></i>
+// 						</div>
+// 					</div>
+// 				</div>
+// 				<div className="col-md-4 col-sm-12 col-xs-12">
+// 					<div className="single_property">
+// 						<img src="assets/img/property/6.jpg" className="img-fluid" alt="" />
+// 						<div className="single_property_description text-center">
+// 							<span><i className="fa fa-object-group"></i> 900 sq ft</span>
+// 							<span><i className="fa fa-bed"></i> 4 Badrooms</span>
+// 							<span><i className="fa fa-star-o"></i> 2 Baths</span>
+// 						</div>
+// 						<div className="single_property_content">
+// 							<h4><a href="#">White Maria Street</a></h4>
+// 							<p>Lorem Ipsum is not simply random text. It has roots in a piece of classical. </p>
+
+// 						</div>
+// 						<div className="single_property_price">
+// 							High Meadow Lane Mount Pleasant <span>$ 170,000</span>
+// 							<i className="fa fa-star"></i>
+// 							<i className="fa fa-star"></i>
+// 							<i className="fa fa-star"></i>
+// 							<i className="fa fa-star"></i>
+// 							<i className="fa fa-star"></i>
+// 						</div>
+// 					</div>
+// 				</div>
+// 			</div>
+// 		</div>
+// 	</section>
+//     </>
+//   )
+// }
+
+// export default Property
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

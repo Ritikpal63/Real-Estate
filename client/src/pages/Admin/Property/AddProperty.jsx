@@ -82,7 +82,7 @@ export default function AddProperty() {
           value={form.title}
           onChange={handleChange}
           placeholder="Property Name"
-          className="w-full bg-gray-100 rounded-xl px-4 py-3 outline-none"
+          className="w-full bg-gray-100 rounded-xl px-4 py-3 outline-none mb-3"
         />
 
         <input
@@ -90,14 +90,14 @@ export default function AddProperty() {
           value={form.location}
           onChange={handleChange}
           placeholder="Location"
-          className="w-full bg-gray-100 rounded-xl px-4 py-3 outline-none"
+          className="w-full bg-gray-100 rounded-xl px-4 py-3 outline-none mb-3"
         />
 
         <select
           name="type"
           value={form.type}
           onChange={handleChange}
-          className="w-full bg-gray-100 rounded-xl px-4 py-3 outline-none"
+          className="w-full bg-gray-100 rounded-xl px-4 py-3 outline-none mb-3"
         >
           <option value="">Select Property Type</option>
           <option value="Villa">Villa</option>
@@ -111,7 +111,7 @@ export default function AddProperty() {
           value={form.amenities}
           onChange={handleChange}
           placeholder="Amenities (comma separated)"
-          className="w-full bg-gray-100 rounded-xl px-4 py-3 outline-none"
+          className="w-full bg-gray-100 rounded-xl px-4 py-3 outline-none mb-3"
         />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -161,7 +161,7 @@ export default function AddProperty() {
           onChange={handleChange}
           placeholder="Price"
           min="0"
-          className="w-full bg-gray-100 rounded-xl px-4 py-3 outline-none"
+          className="w-full bg-gray-100 rounded-xl px-4 py-3 outline-none mb-3"
         />
 
         <textarea
@@ -170,7 +170,7 @@ export default function AddProperty() {
           onChange={handleChange}
           rows={5}
           placeholder="About Property"
-          className="w-full bg-gray-100 rounded-xl px-4 py-3 outline-none"
+          className="w-full bg-gray-100 rounded-xl px-4 py-3 outline-none mb-3"
         />
 
         <ImageUploader onImageSelect={setImageFile} />

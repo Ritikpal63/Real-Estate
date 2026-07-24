@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axiosInstance from "../../../utils/axiosConfig";
+import Section from "../../../components/Section";
 
 
 export default function PropertyView() {
@@ -35,8 +36,12 @@ export default function PropertyView() {
     }
   };
 
-  return (
-    <div className="max-w-7xl mx-auto px-3 sm:px-6 py-4 sm:py-8">
+  return (<>
+    <Section title={"View Property"}/>
+    <div className="flex flex-col lg:flex-row">
+        <AdminAsideSection />
+        <div className="flex-1 w-full min-w-0 bg-gray-50">
+          <div className="max-w-7xl mx-auto px-3 sm:px-6 py-4 sm:py-8">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
         <div>
@@ -175,5 +180,9 @@ export default function PropertyView() {
         </div>
       )}
     </div>
+        </div>
+      </div>
+    
+    </>
   );
 }

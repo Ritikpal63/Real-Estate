@@ -21,9 +21,9 @@ sequelize
 app.use(
   cors({
     origin: [
-      "https://real-estate-sand-five.vercel.app",
+     process.env.CLIENT_URL,
       "http://localhost:5173",
-    ],
+    ].filter(Boolean),
     credentials: true,
   }),
 );

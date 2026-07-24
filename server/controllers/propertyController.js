@@ -1,18 +1,17 @@
 const PropertyModel = require('../models/propertyModel');
 const fs = require("fs");
+const pool = require('../config/database')
 const path = require("path");
 
 class PropertyController{
 
 
-// GET /api/properties
 static getAllProperties = async (req, res) => {
   try {
     const [rows] = await pool.query(
       "SELECT * FROM properties ORDER BY id DESC"
     );
 
-    // Convert image filename into a full accessible URL
     const data = rows.map((row) => ({
       ...row,
       image: row.image
@@ -27,7 +26,6 @@ static getAllProperties = async (req, res) => {
   }
 };
 
-// GET /api/properties/:id
 static getPropertyById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -53,7 +51,6 @@ static getPropertyById = async (req, res) => {
   }
 };
 
-// POST /api/properties
 static createProperty = async (req, res) => {
   try {
     const {
@@ -106,7 +103,6 @@ static createProperty = async (req, res) => {
   }
 };
 
-// PUT /api/properties/:id
 static updateProperty = async (req, res) => {
   try {
     const { id } = req.params;
@@ -134,7 +130,6 @@ static updateProperty = async (req, res) => {
 
     let image = existingRows[0].image;
 
-    // If a new image was uploaded, replace the old one
     if (req.file) {
       if (image) {
         const oldPath = path.join(__dirname, "..", "uploads", image);
@@ -171,7 +166,6 @@ static updateProperty = async (req, res) => {
   }
 };
 
-// DELETE /api/properties/:id
 static deleteProperty = async (req, res) => {
   try {
     const { id } = req.params;
@@ -185,7 +179,6 @@ static deleteProperty = async (req, res) => {
       return res.status(404).json({ message: "Property not found" });
     }
 
-    // Remove the image file from disk if it exists
     const image = existingRows[0].image;
     if (image) {
       const imagePath = path.join(__dirname, "..", "uploads", image);

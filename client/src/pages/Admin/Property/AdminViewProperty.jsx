@@ -1,6 +1,9 @@
 import React from "react";
 import Section from "../../../components/Section";
 import AdminAsideSection from "../AdminAsideSection";
+import axiosInstance from "../../../utils/axiosConfig";
+import { useState } from "react";
+import { useEffect } from "react";
 
 const AdminViewProperty = () => {
   const [property, setProperty] = useState([]);

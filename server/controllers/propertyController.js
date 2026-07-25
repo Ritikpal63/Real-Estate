@@ -72,26 +72,7 @@ class PropertyController {
 
       const image = req.file ? req.file.filename : null;
 
-      // const [result] = await pool.query(
-      //   `INSERT INTO properties
-      //     (title, location, type, amenities, size, year, bedroom, bathroom, description, image, price)
-      //    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-      //   [
-      //     title,
-      //     location,
-      //     type,
-      //     amenities || null,
-      //     size || null,
-      //     year || null,
-      //     bedroom || 0,
-      //     bathroom || 0,
-      //     description || null,
-      //     image,
-      //     price || 0,
-      //   ]
-      // );
-
-      const result = await PropertyModel.createProperty(
+      const property = await PropertyModel.createProperty(
         title,
         location,
         type,
@@ -107,7 +88,8 @@ class PropertyController {
 
       res.status(201).json({
         message: "Property created successfully",
-        id: result.insertId,
+        id: property.id,
+        property,
       });
     } catch (err) {
       console.error("createProperty error:", err);

@@ -91,7 +91,7 @@ const Footer = () => {
 		</div>
         </div>
 		<hr />
-		<p>NCRSpaceConnect</p>
+		<p className="text-center text-light">NCRSpaceConnect</p>
 	</footer>
     </>
   )

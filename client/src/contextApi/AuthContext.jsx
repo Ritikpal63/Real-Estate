@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect, useCallback } from "react";
-import axiosInstance from "../utils/axiosConfig"; // apna actual path confirm kar lena
+import axiosInstance from "../utils/axiosConfig";
 
 export const AuthContext = createContext();
 
@@ -9,11 +9,10 @@ export const AuthProvider = ({ children }) => {
   const [authLoading, setAuthLoading] = useState(true);
   const [authError, setAuthError] = useState("");
 
-  // App load hote hi check karo cookie/token se user logged in hai ya nahi
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const res = await axiosInstance.get("/api/auth/me", {
+        const res = await axiosInstance.get("/auth/me", {
           withCredentials: true,
         });
         setUser(res.data.user);
@@ -32,7 +31,7 @@ export const AuthProvider = ({ children }) => {
     setAuthLoading(true);
     setAuthError("");
     try {
-      const res = await axiosInstance.post("/api/auth/login", credentials, {
+      const res = await axiosInstance.post("/login", credentials, {
         withCredentials: true,
       });
       setUser(res.data.user);
@@ -50,15 +49,13 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      await axiosInstance.post("/api/auth/logout", {}, { withCredentials: true });
+      await axiosInstance.post("/auth/logout", {}, { withCredentials: true });
     } finally {
       setUser(null);
       setIsAdmin(false);
     }
   };
 
-  // Stable reference rakhne ke liye useCallback — Login.jsx ke useEffect deps me
-  // use ho raha hai, isliye ye function re-render pe dobara create nahi hoga
   const isAuthenticated = useCallback(() => {
     return !!user;
   }, [user]);

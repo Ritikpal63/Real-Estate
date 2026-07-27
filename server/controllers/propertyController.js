@@ -17,7 +17,7 @@ class PropertyController {
           : null,
       }));
 
-      res.status(200).json(data);
+      res.status(200).json({ success: true, data });
     } catch (err) {
       console.error("getAllProperties error:", err);
       res.status(500).json({ message: "Failed to fetch properties" });

@@ -90,6 +90,8 @@ const Footer = () => {
 				</div>
 		</div>
         </div>
+		<hr />
+		<p>NCRSpaceConnect</p>
 	</footer>
     </>
   )

@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import { usePost } from "../../../contextApi/PostContext";
-import { useAuth } from "../../../contextApi/AuthContext";
+// import { useAuth } from "../../../contextApi/AuthContext";
+import { useAuth } from "../../../contextApi/useAuth";
 
 
 const UploadBlogPage = () => {

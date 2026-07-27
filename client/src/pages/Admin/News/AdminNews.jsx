@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 import Section from "../../../components/Section";
 import AdminAsideSection from "../AdminAsideSection";
 import axiosInstance from "../../../utils/axiosConfig";
-import { useAuth } from "../../../contextApi/AuthContext";
+// import { useAuth } from "../../../contextApi/AuthContext";
+import {useAuth}  from "../../../contextApi/useAuth";
 
 const AdminNews = () => {
   const navigate = useNavigate();

@@ -1,7 +1,7 @@
 // src/utils/axiosConfig.js
 import axios from 'axios';
 const axiosInstance = axios.create({
-  baseURL: 'https://real-estate-1-x62z.onrender.com/api' || import.meta.env.VITE_API_URL || '/api',
+  baseURL: 'http://localhost:8000/api' || import.meta.env.VITE_API_URL || '/api',
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
@@ -25,7 +25,6 @@ axiosInstance.interceptors.request.use(
   }
 );
 
-// Response interceptor - Handle token expiration
 axiosInstance.interceptors.response.use(
   (response) => {
     return response;
@@ -33,7 +32,6 @@ axiosInstance.interceptors.response.use(
   (error) => {
     console.error('Response error:', error.response?.status, error.response?.data);
     
-    // If token expired (401)
     if (error.response?.status === 401) {
       console.warn('⚠️ Token expired or invalid');
       localStorage.removeItem('token');

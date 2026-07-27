@@ -1,291 +1,83 @@
-import React, { createContext, useState, useContext, useEffect } from "react";
-import axios from "axios";
-import axiosInstance from "../utils/axiosConfig";
+import { createContext, useState, useEffect, useCallback } from "react";
+import axiosInstance from "../utils/axiosConfig"; // apna actual path confirm kar lena
 
-
-const AuthContext = createContext();
-
-export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error("useAuth must be used within AuthProvider");
-  }
-  return context;
-};
+export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [token, setToken] = useState(null);
-  const [authLoading, setAuthLoading] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [authLoading, setAuthLoading] = useState(true);
   const [authError, setAuthError] = useState("");
 
-  // Check for existing token on mount
+  // App load hote hi check karo cookie/token se user logged in hai ya nahi
   useEffect(() => {
-    const storedToken = localStorage.getItem("token");
-    const storedUser = localStorage.getItem("user");
-
-    if (storedToken && storedUser) {
+    const checkAuth = async () => {
       try {
-        setToken(storedToken);
-        setUser(JSON.parse(storedUser));
-        axios.defaults.headers.common["Authorization"] =
-          `Bearer ${storedToken}`;
-      } catch (error) {
-        console.error("Error parsing stored user:", error);
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
+        const res = await axiosInstance.get("/api/auth/me", {
+          withCredentials: true,
+        });
+        setUser(res.data.user);
+        setIsAdmin(res.data.user?.role === "admin");
+      } catch (err) {
+        setUser(null);
+        setIsAdmin(false);
+      } finally {
+        setAuthLoading(false);
       }
-    }
+    };
+    checkAuth();
   }, []);
 
   const login = async (credentials) => {
     setAuthLoading(true);
     setAuthError("");
-
     try {
-      const response = await axiosInstance.post("/auth/login", credentials);
-      console.log("Login response:", response.data);
-
-      if (response.data.success) {
-        const token =
-          response.data.token ||
-          response.data.data?.token ||
-          response.data.accessToken;
-
-        const userData =
-          response.data.user || response.data.data?.user || response.data.data;
-
-        if (token) {
-          localStorage.setItem("token", token);
-          setToken(token);
-
-          localStorage.setItem("user", JSON.stringify(userData));
-          setUser(userData);
-
-          // Set default authorization header
-          axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-
-          setAuthLoading(false);
-          return true;
-        } else {
-          setAuthError("No token received from server");
-          setAuthLoading(false);
-          return false;
-        }
-      } else {
-        setAuthError(response.data.message || "Login failed");
-        setAuthLoading(false);
-        return false;
-      }
-    } catch (error) {
-      console.error("Login error:", error);
-
-      if (error.response) {
-        setAuthError(error.response.data?.message || "Login failed");
-      } else if (error.request) {
-        setAuthError("Cannot connect to server. Please check your connection.");
-      } else {
-        setAuthError("An error occurred. Please try again.");
-      }
-
-      setAuthLoading(false);
+      const res = await axiosInstance.post("/api/auth/login", credentials, {
+        withCredentials: true,
+      });
+      setUser(res.data.user);
+      setIsAdmin(res.data.user?.role === "admin");
+      return true;
+    } catch (err) {
+      setAuthError(
+        err.response?.data?.message || "Login failed. Please try again."
+      );
       return false;
+    } finally {
+      setAuthLoading(false);
     }
   };
 
- const register = async (userData) => {
-    setAuthLoading(true);
-    setAuthError('');
-    
+  const logout = async () => {
     try {
-      const response = await await axiosInstance.post("/auth/register", userData);
-      console.log('Registration response:', response.data);
-      
-      if (response.data.success) {
-        // Extract token if auto-login after registration
-        const token = response.data.token || response.data.data?.token;
-        const user = response.data.user || response.data.data?.user;
-        
-        if (token) {
-          localStorage.setItem('token', token);
-          localStorage.setItem('user', JSON.stringify(user));
-          setUser(user);
-          setToken(token);
-          axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        }
-        
-        setAuthLoading(false);
-        return true;
-      } else {
-        setAuthError(response.data.message || 'Registration failed');
-        setAuthLoading(false);
-        return false;
-      }
-    } catch (error) {
-      console.error('Registration error:', error);
-      
-      if (error.response) {
-        setAuthError(error.response.data?.message || 'Registration failed');
-      } else if (error.request) {
-        setAuthError('Cannot connect to server');
-      } else {
-        setAuthError('An error occurred. Please try again.');
-      }
-      
-      setAuthLoading(false);
-      return false;
+      await axiosInstance.post("/api/auth/logout", {}, { withCredentials: true });
+    } finally {
+      setUser(null);
+      setIsAdmin(false);
     }
   };
 
+  // Stable reference rakhne ke liye useCallback — Login.jsx ke useEffect deps me
+  // use ho raha hai, isliye ye function re-render pe dobara create nahi hoga
+  const isAuthenticated = useCallback(() => {
+    return !!user;
+  }, [user]);
 
-  // Logout function
-  const logout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    setToken(null);
-    setUser(null);
-    delete axios.defaults.headers.common["Authorization"];
-  };
-
-  // Check if user is authenticated
-  const isAuthenticated = () => {
-    return !!token && !!user;
-  };
-  const isAdmin = user?.role === "admin";
-
-  const value = {
-    user,
-    token,
-    login,
-    register,
-    logout,
-    isAdmin,
-    authLoading,
-    authError,
-    setAuthError,
-    isAuthenticated,
-  };
-
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider
+      value={{
+        user,
+        setUser,
+        isAdmin,
+        authLoading,
+        authError,
+        setAuthError,
+        login,
+        logout,
+        isAuthenticated,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
 };
-
-// // In your AuthContext.js
-// const register = async (userData) => {
-//   setAuthLoading(true);
-//   setAuthError('');
-
-//   try {
-//     const response = await axios.post('http://localhost:5000/api/auth/register', userData);
-
-//     if (response.data.success) {
-//       const token = response.data.token || response.data.data?.token;
-//       const user = response.data.user || response.data.data?.user;
-
-//       if (token) {
-//         localStorage.setItem('token', token);
-//         localStorage.setItem('user', JSON.stringify(user));
-//         setUser(user);
-//         setToken(token);
-//         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-//       }
-
-//       setAuthLoading(false);
-//       return true;
-//     } else {
-//       setAuthError(response.data.message || 'Registration failed');
-//       setAuthLoading(false);
-//       return false;
-//     }
-//   } catch (error) {
-//     console.error('Registration error:', error);
-//     setAuthError(error.response?.data?.message || 'Registration failed');
-//     setAuthLoading(false);
-//     return false;
-//   }
-// };
-
-// // Then in your Register component use:
-// const { register } = useAuth();
-
-// const handleSubmit = async (e) => {
-//   e.preventDefault();
-//   // ... validation
-//   const success = await register(userData);
-//   if (success) {
-//     navigate('/admin/dashboard');
-//   }
-// };
-
-// import { createContext, useContext, useEffect, useState } from "react";
-
-// const AuthContext = createContext();
-
-// const getStoredUser = () => {
-//   const stored = localStorage.getItem("realestate_user");
-//   return stored ? JSON.parse(stored) : null;
-// };
-
-// export function AuthProvider({ children }) {
-//   const [user, setUser] = useState(getStoredUser);
-//   const [authLoading, setAuthLoading] = useState(false);
-//   const [authError, setAuthError] = useState("");
-
-//   useEffect(() => {
-//     if (user) {
-//       localStorage.setItem("realestate_user", JSON.stringify(user));
-//     } else {
-//       localStorage.removeItem("realestate_user");
-//     }
-//   }, [user]);
-
-//   const login = async ({ email, password }) => {
-//     setAuthError("");
-//     setAuthLoading(true);
-
-//     try {
-//       await new Promise((resolve) => setTimeout(resolve, 300));
-
-//       if (email === "ritikpal227@gmail.com" && password === "admin123") {
-//         const admin = { email, name: "Admin", role: "admin" };
-//         setUser(admin);
-//         return true;
-//       }
-
-//       setAuthError("Invalid admin credentials");
-//       return false;
-//     } finally {
-//       setAuthLoading(false);
-//     }
-//   };
-
-//   const logout = () => {
-//     setUser(null);
-//     setAuthError("");
-//   };
-
-//   const isAdmin = user?.role === "admin";
-
-//   return (
-//     <AuthContext.Provider
-//       value={{
-//         user,
-//         isAdmin,
-//         authLoading,
-//         authError,
-//         login,
-//         logout,
-//         setAuthError,
-//       }}
-//     >
-//       {children}
-//     </AuthContext.Provider>
-//   );
-// }
-
-// export function useAuth() {
-//   const context = useContext(AuthContext);
-//   if (!context) {
-//     throw new Error("useAuth must be used within AuthProvider");
-//   }
-//   return context;
-// }

@@ -11,8 +11,8 @@ import {
   X,
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
-import { useAuth } from "../../contextApi/AuthContext";
-
+// import { useAuth } from "../../contextApi/AuthContext";
+import { useAuth } from "../../contextApi/useAuth";
 const AdminAsideSection = () => {
   const { pathname } = useLocation();
   const { logout } = useAuth();

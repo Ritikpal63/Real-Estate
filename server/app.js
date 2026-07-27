@@ -18,16 +18,16 @@ const app = express();
 //   process.env.CLIENT_URL, // set this in Vercel env vars to your prod domain
 // ].filter(Boolean);
 
-app.use(
-  cors({
-    origin: [
-     process.env.CLIENT_URL,
-      "http://localhost:5173",
-    ].filter(Boolean),
-    credentials: true,
-  }),
-);
-
+// app.use(
+//   cors({
+//     origin: [
+//      process.env.CLIENT_URL,
+//       "http://localhost:5173",
+//     ].filter(Boolean),
+//     credentials: true,
+//   }),
+// );
+app.use(cors()); // Enable CORS for all origins (for testing purposes)
 // app.use(
 //   cors({
 //     origin: allowedOrigins,

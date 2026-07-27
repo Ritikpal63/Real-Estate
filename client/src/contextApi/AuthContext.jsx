@@ -1,3 +1,4 @@
+// src/contextApi/AuthContext.jsx
 import { createContext, useState, useEffect, useCallback } from "react";
 import axiosInstance from "../utils/axiosConfig";
 
@@ -11,13 +12,17 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const checkAuth = async () => {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        setAuthLoading(false);
+        return;
+      }
       try {
-        const res = await axiosInstance.get("/auth/me", {
-          withCredentials: true,
-        });
+        const res = await axiosInstance.get("/auth/me");
         setUser(res.data.user);
         setIsAdmin(res.data.user?.role === "admin");
       } catch (err) {
+        localStorage.removeItem("token");
         setUser(null);
         setIsAdmin(false);
       } finally {
@@ -31,9 +36,15 @@ export const AuthProvider = ({ children }) => {
     setAuthLoading(true);
     setAuthError("");
     try {
-      const res = await axiosInstance.post("/login", credentials, {
-        withCredentials: true,
-      });
+      const res = await axiosInstance.post("/auth/login", credentials);
+
+      if (!res.data.token) {
+        console.error("Login response me token nahi mila:", res.data.user);
+        setAuthError("Server se token nahi mila. Backend response check karo.");
+        return false;
+      }
+
+      localStorage.setItem("token", res.data.token);
       setUser(res.data.user);
       setIsAdmin(res.data.user?.role === "admin");
       return true;
@@ -47,18 +58,32 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const logout = async () => {
+  const register = async (userData) => {
+    setAuthLoading(true);
+    setAuthError("");
     try {
-      await axiosInstance.post("/auth/logout", {}, { withCredentials: true });
+      const res = await axiosInstance.post("/auth/register", userData);
+      localStorage.setItem("token", res.data.token);
+      setUser(res.data.user);
+      setIsAdmin(res.data.user?.role === "admin");
+      return true;
+    } catch (err) {
+      setAuthError(
+        err.response?.data?.message || "Registration failed. Please try again."
+      );
+      return false;
     } finally {
-      setUser(null);
-      setIsAdmin(false);
+      setAuthLoading(false);
     }
   };
 
-  const isAuthenticated = useCallback(() => {
-    return !!user;
-  }, [user]);
+  const logout = () => {
+    localStorage.removeItem("token");
+    setUser(null);
+    setIsAdmin(false);
+  };
+
+  const isAuthenticated = useCallback(() => !!user, [user]);
 
   return (
     <AuthContext.Provider
@@ -70,6 +95,7 @@ export const AuthProvider = ({ children }) => {
         authError,
         setAuthError,
         login,
+        register,
         logout,
         isAuthenticated,
       }}

@@ -1,14 +1,14 @@
 // src/utils/axiosConfig.js
 import axios from "axios";
 
-const baseURL = import.meta.env.DEV
-  ? "/api"
-  : import.meta.env.VITE_API_URL
-    ? `${import.meta.env.VITE_API_URL}/api`
-    : (console.error("⚠️ VITE_API_URL is not set in production!"), "/api");
+// const baseURL = import.meta.env.DEV
+//   ? "/api"
+//   : import.meta.env.VITE_API_URL
+//     ? `${import.meta.env.VITE_API_URL}/api`
+//     : (console.error("⚠️ VITE_API_URL is not set in production!"), "/api");
 
 const axiosInstance = axios.create({
-  baseURL,
+  baseURL: import.meta.env.VITE_API_URL,
   timeout: 10000,
   headers: {
     "Content-Type": "application/json",

@@ -15,7 +15,7 @@ export default function PropertyView() {
       try {
         setLoading(true);
         const res = await axiosInstance.get("/property");
-        setProperties(res.data);
+        setProperties(res.data.data);
       } catch (err) {
         setError(err.message || "Something went wrong");
       } finally {

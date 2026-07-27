@@ -6,16 +6,17 @@ const Property = () => {
   const [properties, setProperties] = useState([]);
 
   useEffect(() => {
-    axiosInstance
-      .get("/property")
-      .then((res) => {
-        const data = Array.isArray(res.data) ? res.data : res.data?.data || [];
-        setProperties(data);
-      })
-      .catch((err) => {
+    const fetchProperties = async () => {
+      try {
+        const res = await axiosInstance.get("/property");
+        setProperties(res.data.data);
+      } catch (err) {
         console.error("Property fetch error:", err);
         setProperties([]);
-      });
+      }
+    };
+
+    fetchProperties();
   }, []);
 
   return (

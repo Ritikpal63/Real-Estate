@@ -16,6 +16,7 @@ class PropertyController {
           ? `${req.protocol}://${req.get("host")}/uploads/${row.image}`
           : null,
       }));
+      
 
       res.status(200).json({ success: true, data });
     } catch (err) {

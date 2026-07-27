@@ -66,7 +66,6 @@ const Team = () => {
           </div>
           <div className="row text-center">
             {displayedTeam?.map((item) => {
-              console.log("Pic: ", item.image)
               return (
                 <div key={item.id} className="col-lg-3 col-sm-3 col-xs-12">
                   <div className="single_team">

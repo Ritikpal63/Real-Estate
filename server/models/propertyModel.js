@@ -11,8 +11,8 @@ class PropertyModel{
     const { title, content, summary, category, image, author } = data;
     const [result] = await pool.query(
      `INSERT INTO properties
-        (title, location, type, amenities, size, year, bedroom, bathroom, description, image, price)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        (title, location, type, amenities, size, year, bedroom, bathroom, description, image, price, created_at)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())`,
       [
         title,
         location,

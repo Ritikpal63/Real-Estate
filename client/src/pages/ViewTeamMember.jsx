@@ -5,7 +5,7 @@ import AdminAsideSection from "./Admin/AdminAsideSection";
 
 
 
-const TeamMember = () => {
+const ViewTeamMember = () => {
   const [team, setTeam] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -50,4 +50,4 @@ const TeamMember = () => {
   );
 };
 
-export default TeamMember;
+export default ViewTeamMember;

@@ -34,25 +34,25 @@ const Team = () => {
       id: 1,
       name: "Rahul Sharma",
       designation: "Founder & CEO",
-      image: "/assets/img/team/team-1.jpg",
+      image: "/assets/img/team/1.jpg",
     },
     {
       id: 2,
       name: "Priya Patel",
       designation: "Head of Operations",
-      image: "/assets/img/team/team-2.jpg",
+      image: "/assets/img/team/2.jpg",
     },
     {
       id: 3,
       name: "Amit Singh",
       designation: "Real Estate Consultant",
-      image: "/assets/img/team/team-3.jpg",
+      image: "/assets/img/team/3.jpg",
     },
     {
       id: 4,
       name: "Neha Gupta",
       designation: "Marketing Director",
-      image: "/assets/img/team/team-4.jpg",
+      image: "/assets/img/team/4.jpg",
     },
   ];
     const displayedTeam = team && team.length > 0 ? team : teamMember;
@@ -69,7 +69,7 @@ const Team = () => {
               return (
                 <div key={item.id} className="col-lg-3 col-sm-3 col-xs-12">
                   <div className="single_team">
-                    <img src={item.image} className="img-fluid" alt="" />
+                    <img src={item.image} className="w-full h-auto" alt={item.name} />
                     <h3>{item.name}</h3>
                     <p>{item.designation}</p>
                     <ul className="list-inline">

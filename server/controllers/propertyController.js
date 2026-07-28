@@ -13,7 +13,7 @@ class PropertyController {
       const data = rows.map((row) => ({
         ...row,
         image: row.image
-          ? `${req.protocol}://${req.get("host")}/uploads/${row.image}`
+          ? `${row.image}`
           : null,
       }));
       

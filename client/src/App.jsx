@@ -28,8 +28,10 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import NewsDetailPage from "./components/NewsDetailPage";
 import AllNews from "./components/AllNews";
-import TeamMember from "./pages/TeamMember";
+import ViewTeamMember from "./pages/ViewTeamMember";
 import AdminViewProperty from "./pages/Admin/Property/AdminViewProperty";
+import AddTeam from "./pages/Admin/Team/AddTeam";
+import AddGallery from "./pages/Admin/Gallery/AddGallery";
 
 
 
@@ -64,12 +66,14 @@ const App = () => {
               </RequireAdmin>
             }
           >
-            <Route path="allteam" element={<TeamMember />} />
+            <Route path="allteam" element={<ViewTeamMember />} />
             <Route index element={<AdminHome />} />
             <Route path="addblog" element={<BlogUpload />} />
             <Route path="addproperty" element={<AddPropertyPage />} /> 
             <Route path="addnews" element={<AdminNews />} />
             <Route path="viewproperty" element={<AdminViewProperty />} />
+            <Route path="addteam" element={<AddTeam />} />
+            <Route path='addgallery' element={<AddGallery />} />
           </Route>
           <Route path="/not-authorized" element={<NotAuthorizedPage />} />
           <Route path="/*" element={<NotfoundPage />} />

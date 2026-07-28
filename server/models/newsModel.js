@@ -21,7 +21,7 @@ class NewsModel {
   static async create(data) {
     const { title, content, summary, category, image, author } = data;
     const [result] = await pool.query(
-      "INSERT INTO news (title, content, summary, category, image, author) VALUES (?, ?, ?, ?, ?, ?)",
+      "INSERT INTO news (title, content, summary, category, image, author, created_at) VALUES (?, ?, ?, ?, ?, ?, NOW())",
       [
         title,
         content,

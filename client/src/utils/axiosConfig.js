@@ -8,7 +8,7 @@ import axios from "axios";
 //     : (console.error("⚠️ VITE_API_URL is not set in production!"), "/api");
 
 const axiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: "http://localhost:8000/api" || import.meta.env.VITE_API_URL,
   timeout: 10000,
   headers: {
     "Content-Type": "application/json",

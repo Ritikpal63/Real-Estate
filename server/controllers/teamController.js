@@ -27,19 +27,60 @@ class TeamController {
       });
     }
   }
-  static async getAllTeam(req, res){
+  static async getAllTeam(req, res) {
     try {
-      const allTeam = await TeamModel.getAll()
-    res.json({
-      success:true,
-      data:allTeam,
-      count:allTeam.length
-    })
+      const allTeam = await TeamModel.getAll();
+      res.json({
+        success: true,
+        data: allTeam,
+        count: allTeam.length,
+      });
     } catch (error) {
       console.error("Error fetching team:", error);
       res.status(500).json({
         success: false,
         message: "Failed to fetch team",
+        error: error.message,
+      });
+    }
+  }
+  static async addTeam(req, res) {
+    try {
+      const {
+        name,
+        designation,
+        email,
+        phone,
+        facebook,
+        instagram,
+        twitter,
+        about,
+      } = req.body;
+
+      const image = req.file ? req.file.filename : null;
+
+      const addedTeamMember = await TeamModel.add(
+        name,
+        designation,
+        email,
+        phone,
+        facebook,
+        instagram,
+        twitter,
+        about,
+        image,
+      );
+
+      res.json({
+        success: true,
+        message: "Team member added successfully",
+        data: addedTeamMember,
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({
+        success: false,
+        message: "Failed to add team member",
         error: error.message,
       });
     }

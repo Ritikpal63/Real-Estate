@@ -62,9 +62,9 @@ app.use("/api/auth", authRoutes);
 const teamRoutes = require('./routes/teamRoutes');
 app.use('/api/team', teamRoutes)
 
-// app.get('/api/health', (req, res) => {
-//   res.json({ status: 'OK', message: 'Server is running' });
-// });
+const galleryRoutes = require('./routes/galleryRoutes');
+app.use('/api/gallery', galleryRoutes)
+
 
 app.use((err, req, res, next) => {
   console.error(err.stack);

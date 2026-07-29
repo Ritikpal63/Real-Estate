@@ -9,6 +9,7 @@ import {
   LogOut,
   Menu,
   X,
+  Image,
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 // import { useAuth } from "../../contextApi/AuthContext";
@@ -28,6 +29,7 @@ const AdminAsideSection = () => {
     { type: "link", path: "/admin/addblog", label: "Add Blog Post", icon: PlusCircle },
     { type: "link", path: "/admin/addnews", label: "Add News Article", icon: PlusCircle },
     { type: "link", path: "/admin/addgallery", label: "Add Gallery Album", icon: PlusCircle },
+    { type: "link", path: "/admin/viewgallery", label: "View Gallery", icon: Image },
   ];
 
   const logoutHandle = () => logout();

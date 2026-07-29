@@ -32,6 +32,7 @@ import ViewTeamMember from "./pages/ViewTeamMember";
 import AdminViewProperty from "./pages/Admin/Property/AdminViewProperty";
 import AddTeam from "./pages/Admin/Team/AddTeam";
 import AddGallery from "./pages/Admin/Gallery/AddGallery";
+import AdminViewGallery from "./pages/Admin/Gallery/AdminViewGallery";
 
 
 
@@ -74,6 +75,7 @@ const App = () => {
             <Route path="viewproperty" element={<AdminViewProperty />} />
             <Route path="addteam" element={<AddTeam />} />
             <Route path='addgallery' element={<AddGallery />} />
+            <Route path='viewgallery' element={<AdminViewGallery />} />
           </Route>
           <Route path="/not-authorized" element={<NotAuthorizedPage />} />
           <Route path="/*" element={<NotfoundPage />} />

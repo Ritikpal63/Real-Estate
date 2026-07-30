@@ -39,7 +39,14 @@ const Navbar = () => {
               About
             </Link>
 
-            <div className="relative group inline-block">
+            <Link
+              to="/property"
+              className="text-white hover:text-green-400 transition-colors duration-300 text-sm font-medium"
+            >
+              Properties
+            </Link>
+
+            {/* <div className="relative group inline-block">
               <button className="text-white hover:text-green-400 transition-colors duration-300 text-sm font-medium focus:outline-none flex items-center gap-1">
                 Property
                 <svg
@@ -64,13 +71,13 @@ const Navbar = () => {
                   Properties
                 </Link>
                 <Link
-                  to="/property-details"
+                  to="/property/:id"
                   className="block px-4 py-2 hover:bg-gray-100 transition-colors"
                 >
                   Property Detail
                 </Link>
               </div>
-            </div>
+            </div> */}
 
             <Link
               to="/gallery"

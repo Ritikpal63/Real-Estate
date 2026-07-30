@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import axiosInstance from '../utils/axiosConfig'
+import axiosInstance from "../utils/axiosConfig";
 import Section from "../components/Section";
 import AdminAsideSection from "../pages/Admin/AdminAsideSection";
 
@@ -44,25 +44,32 @@ export default function ViewTeamMember() {
             <div className="flex items-center justify-between mb-6">
               <div>
                 <h2 className="text-2xl font-semibold">Team Members</h2>
-                <p className="text-gray-500 mt-1">Manage team member profiles.</p>
+                <p className="text-gray-500 mt-1">
+                  Manage team member profiles.
+                </p>
               </div>
-              <Link
-                to="/admin/addteam"
-              >
-                <span className="bg-[#374256] text-lg text-light rounded-lg px-4 py-2">+ Add Team Member</span>
+              <Link to="/admin/addteam">
+                <span className="bg-[#374256] text-lg text-light rounded-lg px-4 py-2">
+                  + Add Team Member
+                </span>
               </Link>
             </div>
 
             {loading && (
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
                 {[1, 2, 3, 4].map((n) => (
-                  <div key={n} className="bg-gray-100 rounded-2xl h-48 animate-pulse" />
+                  <div
+                    key={n}
+                    className="bg-gray-100 rounded-2xl h-48 animate-pulse"
+                  />
                 ))}
               </div>
             )}
 
             {!loading && error && (
-              <div className="bg-red-50 text-red-600 rounded-xl px-4 py-3 text-sm">{error}</div>
+              <div className="bg-red-50 text-red-600 rounded-xl px-4 py-3 text-sm">
+                {error}
+              </div>
             )}
 
             {!loading && !error && items.length === 0 && (
@@ -78,12 +85,23 @@ export default function ViewTeamMember() {
                     key={item.id}
                     className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden relative"
                   >
-                    <div className="h-50 w-full bg-gray-100 overflow-hidden">
+                    {/* <div className="h-50 w-full bg-gray-100 overflow-hidden">
                       <img src={item.image} alt={item.title} className="h-[300px] object-cover" />
+                    </div> */}
+                    <div className="aspect-[4/4] w-full overflow-hidden">
+                      <img
+                        src={item.image}
+                        alt={item.title}
+                        className="w-full h-full object-cover"
+                      />
                     </div>
                     <div className="p-3">
-                      <h3 className="text-sm font-semibold text-gray-800 truncate">{item.title}</h3>
-                      <span className="text-xs text-gray-500 capitalize">{item.category}</span>
+                      <h4 className="text-sm font-semibold text-gray-800 truncate">
+                        {item.name}
+                      </h4>
+                      <span className="text-sm text-gray-500 capitalize">
+                        {item.designation}
+                      </span>
                     </div>
                     <button
                       onClick={() => handleDelete(item.id)}

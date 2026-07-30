@@ -107,7 +107,7 @@ const AdminNews = () => {
       console.error("Error saving news:", error);
       if (error.response?.status === 401) {
         alert("Your session has expired. Please login again.");
-        navigate("/admin/login");
+        navigate("/login");
       } else {
         alert(error.response?.data?.message || "Failed to save news.");
       }

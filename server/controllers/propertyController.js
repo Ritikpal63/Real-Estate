@@ -12,12 +12,14 @@ class PropertyController {
 
       const [rows] = await pool.query(
         "SELECT * FROM properties ORDER BY id DESC LIMIT ? OFFSET ?",
-        [limit, offset]
+        [limit, offset],
       );
 
       const data = rows.map((row) => ({
         ...row,
-        image: row.image ? `${row.image}` : null,
+        image: row.image
+          ? `${req.protocol}://${req.get("host")}/uploads/${row.image}`
+          : null,
       }));
 
       res.status(200).json({ success: true, data });

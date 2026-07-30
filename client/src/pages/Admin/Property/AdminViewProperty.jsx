@@ -65,7 +65,7 @@ export default function PropertyView() {
                 </select>
 
                 <Link
-                  to="/admin/add-property"
+                  to="/admin/addproperty"
                   className="bg-[#374256] text-white text-sm rounded-lg px-4 py-2 whitespace-nowrap"
                 >
                   + Add Property

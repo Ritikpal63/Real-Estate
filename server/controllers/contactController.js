@@ -17,18 +17,23 @@ class ContactController {
   static async getContact(req, res) {
     try {
       const total = await ContactModel.getCount();
-      
+
       res.json({
         success: true,
         pagination: {
           total,
-        }
+        },
       });
-      
     } catch (err) {
       console.error(err);
       res.status(500).json({ error: "Something went wrong" });
     }
+  }
+  static async getAllContacts(req, res) {
+    const [rows] = await pool.query(
+      "SELECT * FROM contacts ORDER BY created_at DESC",
+    );
+    res.json({ success: true, data: rows });
   }
 }
 module.exports = ContactController;

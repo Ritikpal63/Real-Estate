@@ -52,7 +52,7 @@ const App = () => {
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/blogpost" element={<BlogpostPage />} />
           <Route path="/property" element={<PropertyPage />} />
-          <Route path="/property-details" element={<PropertyDetailPage />} />
+          <Route path="/property/:id" element={<PropertyDetailPage />} />
           <Route path="agent-profile" element={<AgentprofilePage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/faq" element={<FaqPage />} />

@@ -15,7 +15,7 @@ const authenticate = (req, res, next) => {
     const token = authHeader.split(' ')[1];
     
     // Verify token
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key');
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
     next();
   } catch (error) {

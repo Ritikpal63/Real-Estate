@@ -6,11 +6,22 @@ import Section from "../../../components/Section";
 import ImageUploader from "../Property/ImageUploader";
 import axiosInstance from "../../../utils/axiosConfig";
 
-const CATEGORIES = ["bedroom", "bathroom", "kitchen", "garage", "basement", "exterior"];
+const CATEGORIES = [
+  "bedroom",
+  "bathroom",
+  "kitchen",
+  "garage",
+  "basement",
+  "exterior",
+];
 
 const AddGallery = () => {
   const navigate = useNavigate();
-  const [form, setForm] = useState({ title: "", category: "bedroom", description: "" });
+  const [form, setForm] = useState({
+    title: "",
+    category: "bedroom",
+    description: "",
+  });
   const [imageFile, setImageFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -29,17 +40,25 @@ const AddGallery = () => {
 
     try {
       setLoading(true);
-      const formData = new FormData();
-      Object.entries(form).forEach(([key, value]) => formData.append(key, value));
-      formData.append("image", imageFile);
-      console.log("Form Data:", formData.get("title"), formData.get("category"), formData.get("description"), formData.get("image"));
 
-      await axiosInstance.post("/gallery", formData);
+      const formData = new FormData();
+      Object.entries(form).forEach(([key, value]) =>
+        formData.append(key, value),
+      );
+      formData.append("image", imageFile);
+
+      await axiosInstance.post("/gallery", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       toast.success("Gallery item added!");
       navigate("/admin/viewgallery");
     } catch (err) {
       console.error(err);
-      setError(err.response?.data?.message || "Failed to add gallery item. Try again.");
+      setError(
+        err.response?.data?.message || "Failed to add gallery item. Try again.",
+      );
     } finally {
       setLoading(false);
     }
@@ -54,7 +73,9 @@ const AddGallery = () => {
           <div className="max-w-3xl mx-auto px-3 sm:px-6 py-4 sm:py-8">
             <div className="mb-6">
               <h2 className="text-2xl font-semibold">Add Gallery Item</h2>
-              <p className="text-gray-500 mt-1">Upload a photo for the property gallery.</p>
+              <p className="text-gray-500 mt-1">
+                Upload a photo for the property gallery.
+              </p>
             </div>
 
             {error && (

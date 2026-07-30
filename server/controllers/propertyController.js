@@ -6,17 +6,19 @@ const path = require("path");
 class PropertyController {
   static getAllProperties = async (req, res) => {
     try {
+      const limit = parseInt(req.query.limit) || 10;
+      const page = parseInt(req.query.page) || 1;
+      const offset = (page - 1) * limit;
+
       const [rows] = await pool.query(
-        "SELECT * FROM properties ORDER BY id DESC",
+        "SELECT * FROM properties ORDER BY id DESC LIMIT ? OFFSET ?",
+        [limit, offset]
       );
 
       const data = rows.map((row) => ({
         ...row,
-        image: row.image
-          ? `${row.image}`
-          : null,
+        image: row.image ? `${row.image}` : null,
       }));
-      
 
       res.status(200).json({ success: true, data });
     } catch (err) {

@@ -10,7 +10,10 @@ class TeamModel {
     ]);
     return rows;
   }
-
+  static async getById(id) {
+    const [rows] = await pool.query("SELECT * FROM team WHERE id = ?", [id]);
+    return rows[0];
+  }
 
 
   static async getAll() {
@@ -51,6 +54,10 @@ class TeamModel {
     );
 
     return result.id;
+  }
+  static async delete(id) {
+    const [result] = await pool.query("DELETE FROM team WHERE id = ?", [id]);
+    return result.affectedRows > 0;
   }
 }
 module.exports = TeamModel;

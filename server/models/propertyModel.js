@@ -1,4 +1,5 @@
 const pool = require('../config/database')
+const {v4: uuidv4} = require('uuid')
 
 class PropertyModel{
     static async getById(id) {
@@ -7,28 +8,43 @@ class PropertyModel{
   }
 
 
-    static async createProperty(data) {
-    const { title, content, summary, category, image, author } = data;
-    const [result] = await pool.query(
-     `INSERT INTO properties
-        (title, location, type, amenities, size, year, bedroom, bathroom, description, image, price, created_at)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())`,
-      [
-        title,
-        location,
-        type,
-        amenities || null,
-        size || null,
-        year || null,
-        bedroom || 0,
-        bathroom || 0,
-        description || null,
-        image,
-        price || 0,
-      ]
-    );
-    // return this.getById(result.insertId);
-  }
+   static async createProperty(
+  title,
+  location,
+  type,
+  amenities,
+  size,
+  year,
+  bedroom,
+  bathroom,
+  description,
+  image,
+  price
+) {
+  const id = uuidv4();
+
+  await pool.query(
+    `INSERT INTO properties
+      (id, title, location, type, amenities, size, year, bedroom, bathroom, description, image, price, created_at)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())`,
+    [
+      id,
+      title,
+      location,
+      type,
+      amenities,
+      size,
+      year,
+      bedroom,
+      bathroom,
+      description,
+      image,
+      price,
+    ]
+  );
+
+  return this.getById(id);
+}
 
 
   static async getCount() {

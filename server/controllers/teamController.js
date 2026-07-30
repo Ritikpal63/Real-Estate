@@ -85,5 +85,27 @@ class TeamController {
       });
     }
   }
+  static async deleteTeamMember(req, res) {
+    try {
+      const { id } = req.params;
+      
+      // Check if team member exists
+      const existing = await TeamModel.getById(id);
+      console.log("Existing Team Member", existing)
+      if (!existing) {
+        return res.status(404).json({ success: false, message: 'Team member not found' });
+      }
+      
+      await TeamModel.delete(id);
+      
+      res.json({ 
+        success: true, 
+        message: 'Team member deleted successfully' 
+      });
+    } catch (error) {
+      console.error('Error deleting team member:', error);
+      res.status(500).json({ success: false, message: 'Failed to delete team member', error: error.message });
+    }
+  }
 }
 module.exports = TeamController;

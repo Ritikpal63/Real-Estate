@@ -26,18 +26,18 @@ class GalleryModel {
   static async create(data) {
     const { title, category, image, description } = data;
     const id = uuidv4();
-    const [result] = await pool.query(
+    await pool.query(
       "INSERT INTO gallery (id, title, category, image, description, created_at) VALUES (?, ?, ?, ?, ?, NOW())",
-      [id, title, category || "general", image, description || null]
+      [id, title, category || "bedroom", image, description || null]
     );
-    return this.getById(result.id);
+    return this.getById(id);
   }
 
   static async update(id, data) {
     const { title, category, image, description } = data;
     await pool.query(
       "UPDATE gallery SET title = ?, category = ?, image = ?, description = ? WHERE id = ?",
-      [title, category || "general", image, description || null, id]
+      [title, category || "bedroom", image, description || null, id]
     );
     return this.getById(id);
   }

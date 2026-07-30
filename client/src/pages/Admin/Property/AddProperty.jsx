@@ -48,9 +48,13 @@ export default function AddProperty() {
         formData.append("image", imageFile);
       }
 
-      await axiosInstance.post("/property", formData);
+     await axiosInstance.post("/property", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
-      navigate("/admin/property");
+      navigate("/admin/viewproperty");
     } catch (err) {
       console.error(err);
       setError(

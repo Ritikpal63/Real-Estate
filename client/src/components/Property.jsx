@@ -8,7 +8,9 @@ const Property = () => {
   useEffect(() => {
     const fetchProperties = async () => {
       try {
-        const res = await axiosInstance.get("/property");
+        const res = await axiosInstance.get("/property", {
+          params: { limit: 6, page: 1 },
+        });
         setProperties(res.data.data);
       } catch (err) {
         console.error("Property fetch error:", err);
@@ -26,13 +28,20 @@ const Property = () => {
           {properties.map((p) => (
             <div className="col-md-4 col-sm-12 col-xs-12" key={p.id}>
               <div className="single_property">
-                <img src={p.image || "/assets/img/property/1.jpg"} className="img-fluid" alt={p.title} />
+                <img
+                  src={p.image || "/assets/img/property/1.jpg"}
+                  className="img-fluid"
+                  alt={p.title}
+                />
                 <div className="single_property_content">
-                  <h4><Link to={`/property/${p.id}`}>{p.title}</Link></h4>
+                  <h4>
+                    <Link to={`/property/${p.id}`}>{p.title}</Link>
+                  </h4>
                   <p>{p.location}</p>
                 </div>
                 <div className="single_property_price">
-                  {p.location} <span>${Number(p.price || 0).toLocaleString()}</span>
+                  {p.location}{" "}
+                  <span>${Number(p.price || 0).toLocaleString()}</span>
                 </div>
               </div>
             </div>
@@ -44,13 +53,6 @@ const Property = () => {
 };
 
 export default Property;
-
-
-
-
-
-
-
 
 // import React from 'react'
 
@@ -359,21 +361,3 @@ export default Property;
 // }
 
 // export default Property
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

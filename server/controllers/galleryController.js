@@ -56,13 +56,14 @@ class GalleryController {
       if (!title) {
         return res.status(400).json({ success: false, message: "Title is required" });
       }
-    //   if (!req.file) {
-    //     return res.status(400).json({ success: false, message: "Image is required" });
-    //   }
+      if (!req.file) {
+        return res.status(400).json({ success: false, message: "Image is required" });
+      }
+
     const image = req.file ? req.file.filename : null;
       const item = await GalleryModel.create({
         title,
-        category: category || "general",
+        category: category || "bedroom",
         image,
         description,
       });

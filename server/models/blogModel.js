@@ -1,0 +1,29 @@
+const { v4: uuidv4 } = require("uuid");
+const pool = require("../config/database");
+
+class BlogModel {
+    static async getById(id) {
+    const [rows] = await pool.query("SELECT * FROM blogs WHERE id = ?", [
+      id,
+    ]);
+    return rows[0];
+  }
+  static async create(data) {
+    const { title, content, imageUrl } = data;
+    const id = uuidv4();
+    const [result] = await pool.query(
+      "INSERT INTO blogs (id, title, content, image, created_at) VALUES (?, ?, ?, ?, NOW())",
+      [id, title, content, imageUrl],
+    );
+    return this.getById(id)
+  }
+  static async getAll() {
+    const [rows] = await pool.query("SELECT * FROM blogs");
+    return rows;
+  }
+    static async delete(id) {
+    const [result] = await pool.query("DELETE FROM blogs WHERE id = ?", [id]);
+    return result.affectedRows > 0;
+  }
+}
+module.exports = BlogModel;

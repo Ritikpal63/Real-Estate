@@ -26,7 +26,7 @@ const AdminAsideSection = () => {
     { type: "link", path: "/admin/viewproperty", label: "View Properties", icon: Building2 },
     // { type: "link", path: "/admin/addteam", label: "Add Team Member", icon: UserPlus },
     { type: "link", path: "/admin/allteam", label: "View Team", icon: Users },
-    { type: "link", path: "/admin/addblog", label: "Add Blog Post", icon: PlusCircle },
+    { type: "link", path: "/admin/viewblogs", label: "View Blog Posts", icon: PlusCircle },
     { type: "link", path: "/admin/addnews", label: "Add News Article", icon: PlusCircle },
     // { type: "link", path: "/admin/addgallery", label: "Add Gallery Album", icon: PlusCircle },
     { type: "link", path: "/admin/viewgallery", label: "View Gallery", icon: Image },

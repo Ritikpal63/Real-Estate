@@ -1,238 +1,152 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { usePost } from "../contextApi/PostContext";
+import React, { useEffect, useState } from "react";
+import axiosInstance from "../utils/axiosConfig";
+import BlogCard from "./BlogCard";
 
-   
+const LIMIT = 9;
 
-const Blog = () => {
-  const {posts } = usePost();
+const AllBlogs = () => {
+  const [blogs, setBlogs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
 
-	const blogContent = [
-		{id:1, image:"assets/img/blog/blog-1.jpg", heading:"Team you want to work with mistake runners", content:"Lorem ipsum dolor, sit amet consectetur adipisicing elit. Impedit non molestiae rerum ut eos omnis et distinctio nulla! Harum magni tenetur obcaecati alias rerum, pariatur voluptas, dolorum, cum a vitae corporis impedit vel ea" },
-		{id:2, image:"assets/img/blog/blog-2.jpg", heading:"Lights winged seasons fish abundantly evening", content:"Lorem ipsum dolor, sit amet consectetur adipisicing elit. Impedit non molestiae rerum ut eos omnis et distinctio nulla! Harum magni tenetur obcaecati alias rerum, pariatur voluptas, dolorum, cum a vitae corporis impedit vel ea" },
-		{id:3, image:"assets/img/blog/blog-3.jpg", heading:"Winged moved stars, food creature seed night", content:"Lorem ipsum dolor, sit amet consectetur adipisicing elit. Impedit non molestiae rerum ut eos omnis et distinctio nulla! Harum magni tenetur obcaecati alias rerum, pariatur voluptas, dolorum, cum a vitae corporis impedit vel ea" },
-	]
+  const totalPages = Math.max(1, Math.ceil(total / LIMIT));
+
+  const getBlogs = async (pageNum) => {
+    try {
+      setLoading(true);
+      setError(null);
+      const offset = (pageNum - 1) * LIMIT;
+      const res = await axiosInstance.get("/blogs", {
+        params: { limit: LIMIT, offset },
+      });
+      if (res.data.success) {
+        setBlogs(res.data.data);
+        setTotal(res.data.pagination?.total || 0);
+      } else {
+        setError(res.data.message || "Failed to fetch blogs");
+      }
+    } catch (err) {
+      setError(
+        err.response?.data?.message ||
+          "Cannot connect to server. Please check if backend is running."
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getBlogs(page);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [page]);
+
+  const goToPage = (p) => {
+    if (p < 1 || p > totalPages || p === page) return;
+    setPage(p);
+  };
+
+  // Build page numbers with ellipsis for large page counts, e.g. 1 2 3 ... 8
+  const getPageNumbers = () => {
+    const pages = [];
+    const windowSize = 1; // pages shown around current page
+
+    for (let p = 1; p <= totalPages; p++) {
+      if (
+        p === 1 ||
+        p === totalPages ||
+        (p >= page - windowSize && p <= page + windowSize)
+      ) {
+        pages.push(p);
+      } else if (pages[pages.length - 1] !== "...") {
+        pages.push("...");
+      }
+    }
+    return pages;
+  };
+
   return (
-    <>
-	<section className='blog-page section-padding'>
-		<div className="container">
-			<div className="row">
-				<div className='col-lg-8 col-sm-12 col-xs-12'>
-					{posts.map((item) => (
-                    <div key={item.id} className="single_blog_page">
-                      {item.image && (
-                        <img src={item.image} alt={item.title} className="img-fluid"  />
-                      )}
-                      <h2>
-						<Link>{item.title}</Link>
-					  </h2>
-                      <p>
-                        {item.content}
-                      </p>
-					  <Link className="single_blog_page_btn" to="blog-post.html">Read More</Link>
-                      {/* <small className="text-secondary">ID: {item.id}</small> */}
-                    </div>
-                  ))}
-					{blogContent.map((item)=>{
-						return <div key={item.id} className='single_blog_page'>
-							<img src={item.image} className='img-fluid' alt="" />
-							<h2>
-								<Link>{item.heading}</Link>
-							</h2>
-							<p>{item.content}</p>
-							<Link className="single_blog_page_btn" to="blog-post.html">Read More</Link>
-						</div>
-					})}
-				</div>
-				<div className="col-lg-4 col-sm-12 col-xs-12">
-					<div className="blog_search">
-						<input type="text" className="form-control" placeholder="Type & Press Enter" />
-					</div>
-					<div className="latest_blog">
-						<h4 className="blog_sidebar_title">Most read</h4>
-						<div className="single_latest_blog">
-							<Link to="#">
-								<h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vitae risus nec dui
-									venenatis dignissim.</h4>
-							</Link>
-						</div>
-						<div className="single_latest_blog">
-							<Link to="#">
-								<h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vitae risus nec dui
-									venenatis dignissim.</h4>
-							</Link>
-						</div>
-						<div className="single_latest_blog">
-							<Link to="#">
-								<h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vitae risus nec dui
-									venenatis dignissim.</h4>
-							</Link>
-						</div>
-						<div className="single_latest_blog">
-							<Link to="#">
-								<h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vitae risus nec dui
-									venenatis dignissim.</h4>
-							</Link>
-						</div>
-					</div>
-					<div className="categories">
-						<h4 className="blog_sidebar_title">Categories</h4>
-						<ul>
-							<li><Link to="#"><i className="ti-arrow-right"></i> Photography</Link></li>
-							<li><Link to="#"><i className="ti-arrow-right"></i> Business</Link></li>
-							<li><Link to="#"><i className="ti-arrow-right"></i> Responsive Design</Link></li>
-							<li><Link to="#"><i className="ti-arrow-right"></i> Web Design</Link></li>
-							<li><Link to="#"><i className="ti-arrow-right"></i> Branding</Link></li>
-							<li><Link to="#"><i className="ti-arrow-right"></i> Marketing</Link></li>
-						</ul>
-					</div>
-					<div className="advertisement_post">
-						<h4 className="blog_sidebar_title">Advertisement</h4>
-						<Link to="#"><img src="assets/img/blog/banner_3.jpg" className="img-responsive" alt="" /></Link>
-					</div>
-					<div className="video_post">
-						<h4 className="blog_sidebar_title">Video Widget</h4>
-						<iframe src="https://player.vimeo.com/video/62026718"></iframe>
-					</div>
-					<div className="tag">
-						<h4 className="blog_sidebar_title">Tag cloud</h4>
-						<Link to="#">Design</Link>
-						<Link to="#">Development</Link>
-						<Link to="#">Seo</Link>
-						<Link to="#">Responsive</Link>
-						<Link to="#">Photopgraphy</Link>
-						<Link to="#">How to build</Link>
-						<Link to="#">All project</Link>
-						<Link to="#">Clean Design</Link>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-    {/* <section className="blog-page section-padding">
-		<div className="container">
-			<div className="row">
-				<div className="col-lg-8 col-sm-12 col-xs-12">
-					<div className="single_blog_page">
-						<Link to="blog.html"><img src="assets/img/blog/blog-1.jpg" className="img-fluid" alt="image" /></Link>
-						<h2><Link to="blog-post.html">Team you want to work with mistake runners</Link></h2>
-						<span><Link to="#">Leave a Comment</Link></span> <span><Link to="#"> Product Design</Link> </span>
-						<span> By <Link to="#">theme_ocean</Link> </span>
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vitae risus nec dui venenatis
-							dignissim. Aenean vitae metus in augue pretium ultrices. Fusce vitae risus nec dui venenatis
-							dignissim. Aenean vitae metus in augue pretium ultrices.</p>
-						<Link className="single_blog_page_btn" to="blog-post.html">Read More</Link>
-					</div>
-					<div className="single_blog_page">
-						<Link to="blog.html"><img src="assets/img/blog/blog-2.jpg" className="img-fluid" alt="image" /></Link>
-						<h2><Link to="blog-post.html">Lights winged seasons fish abundantly evening</Link></h2>
-						<span><Link to="#">Leave a Comment</Link></span> <span><Link to="#"> Product Design</Link> </span>
-						<span> By <Link to="#">theme_ocean</Link> </span>
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vitae risus nec dui venenatis
-							dignissim. Aenean vitae metus in augue pretium ultrices. Fusce vitae risus nec dui venenatis
-							dignissim. Aenean vitae metus in augue pretium ultrices.</p>
-						<Link className="single_blog_page_btn" to="blog-post.html">Read More</Link>
-					</div>
-					<div className="single_blog_page">
-						<Link to="blog.html"><img src="assets/img/blog/blog-3.jpg" className="img-fluid" alt="image" /></Link>
-						<h2><Link to="blog-post.html">Winged moved stars, food creature seed night</Link></h2>
-						<span><Link to="#">Leave a Comment</Link></span> <span><Link to="#"> Product Design</Link> </span>
-						<span> By <Link to="#">theme_ocean</Link> </span>
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vitae risus nec dui venenatis
-							dignissim. Aenean vitae metus in augue pretium ultrices. Fusce vitae risus nec dui venenatis
-							dignissim. Aenean vitae metus in augue pretium ultrices.</p>
-						<Link className="single_blog_page_btn" to="blog-post.html">Read More</Link>
-					</div>
-					
-					<div id="pagination">
-						<nav>
-							<ul className="pagination blog_pagination">
-								<li>
-									<Link to="#" aria-label="Previous">
-										<span aria-hidden="true">&laquo;</span>
-									</Link>
-								</li>
-								<li><Link to="#">1</Link></li>
-								<li><Link to="#">2</Link></li>
-								<li><Link to="#">3</Link></li>
-								<li><Link to="#">4</Link></li>
-								<li><Link to="#">5</Link></li>
-								<li>
-									<Link to="#" aria-label="Next">
-										<span aria-hidden="true">&raquo;</span>
-									</Link>
-								</li>
-							</ul>
-						</nav>
-					</div>
-				</div>
-				<div className="col-lg-4 col-sm-12 col-xs-12">
-					<div className="blog_search">
-						<input type="text" className="form-control" placeholder="Type & Press Enter" />
-					</div>
-					<div className="latest_blog">
-						<h4 className="blog_sidebar_title">Most read</h4>
-						<div className="single_latest_blog">
-							<Link to="#">
-								<h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vitae risus nec dui
-									venenatis dignissim.</h4>
-							</Link>
-						</div>
-						<div className="single_latest_blog">
-							<Link to="#">
-								<h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vitae risus nec dui
-									venenatis dignissim.</h4>
-							</Link>
-						</div>
-						<div className="single_latest_blog">
-							<Link to="#">
-								<h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vitae risus nec dui
-									venenatis dignissim.</h4>
-							</Link>
-						</div>
-						<div className="single_latest_blog">
-							<Link to="#">
-								<h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vitae risus nec dui
-									venenatis dignissim.</h4>
-							</Link>
-						</div>
-					</div>
-					<div className="categories">
-						<h4 className="blog_sidebar_title">Categories</h4>
-						<ul>
-							<li><Link to="#"><i className="ti-arrow-right"></i> Photography</Link></li>
-							<li><Link to="#"><i className="ti-arrow-right"></i> Business</Link></li>
-							<li><Link to="#"><i className="ti-arrow-right"></i> Responsive Design</Link></li>
-							<li><Link to="#"><i className="ti-arrow-right"></i> Web Design</Link></li>
-							<li><Link to="#"><i className="ti-arrow-right"></i> Branding</Link></li>
-							<li><Link to="#"><i className="ti-arrow-right"></i> Marketing</Link></li>
-						</ul>
-					</div>
-					<div className="advertisement_post">
-						<h4 className="blog_sidebar_title">Advertisement</h4>
-						<Link to="#"><img src="assets/img/blog/banner_3.jpg" className="img-responsive" alt="" /></Link>
-					</div>
-					<div className="video_post">
-						<h4 className="blog_sidebar_title">Video Widget</h4>
-						<iframe src="https://player.vimeo.com/video/62026718"></iframe>
-					</div>
-					<div className="tag">
-						<h4 className="blog_sidebar_title">Tag cloud</h4>
-						<Link to="#">Design</Link>
-						<Link to="#">Development</Link>
-						<Link to="#">Seo</Link>
-						<Link to="#">Responsive</Link>
-						<Link to="#">Photopgraphy</Link>
-						<Link to="#">How to build</Link>
-						<Link to="#">All project</Link>
-						<Link to="#">Clean Design</Link>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section> */}
-    </>
-  )
-}
+    <section className="py-16 bg-gray-50">
+      <div className="container mx-auto px-4">
+        {loading && (
+          <div className="flex justify-center py-20">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-500" />
+          </div>
+        )}
 
-export default Blog
+        {!loading && error && (
+          <div className="max-w-xl mx-auto text-center bg-red-50 border border-red-200 text-red-600 rounded-lg px-6 py-4">
+            <p>{error}</p>
+            <button
+              onClick={() => getBlogs(page)}
+              className="mt-3 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors"
+            >
+              Retry
+            </button>
+          </div>
+        )}
+
+        {!loading && !error && (
+          <>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {blogs.length === 0 ? (
+                <p className="col-span-full text-center text-gray-400 py-10">
+                  No blog posts yet.
+                </p>
+              ) : (
+                blogs.map((item) => <BlogCard key={item.id} item={item} />)
+              )}
+            </div>
+
+            {totalPages > 1 && (
+              <div className="flex justify-center items-center gap-2 mt-10">
+                <button
+                  onClick={() => goToPage(page - 1)}
+                  disabled={page === 1}
+                  className="px-3 py-2 rounded-lg border text-sm font-medium disabled:opacity-40 disabled:cursor-not-allowed hover:bg-gray-100"
+                >
+                  Prev
+                </button>
+
+                {getPageNumbers().map((p, idx) =>
+                  p === "..." ? (
+                    <span key={`dots-${idx}`} className="px-2 text-gray-400">
+                      …
+                    </span>
+                  ) : (
+                    <button
+                      key={p}
+                      onClick={() => goToPage(p)}
+                      className={`w-9 h-9 rounded-lg text-sm font-medium transition-colors ${
+                        p === page
+                          ? "bg-[#374256] text-white"
+                          : "border hover:bg-gray-100 text-gray-700"
+                      }`}
+                    >
+                      {p}
+                    </button>
+                  )
+                )}
+
+                <button
+                  onClick={() => goToPage(page + 1)}
+                  disabled={page === totalPages}
+                  className="px-3 py-2 rounded-lg border text-sm font-medium disabled:opacity-40 disabled:cursor-not-allowed hover:bg-gray-100"
+                >
+                  Next
+                </button>
+              </div>
+            )}
+
+            <p className="text-center text-sm text-gray-400 mt-3">
+              Page {page} of {totalPages} · {total} posts
+            </p>
+          </>
+        )}
+      </div>
+    </section>
+  );
+};
+
+export default AllBlogs;

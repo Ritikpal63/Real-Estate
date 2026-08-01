@@ -37,6 +37,7 @@ import ServiceList from "./pages/Admin/Services/ServiceList";
 import AddService from "./pages/Admin/Services/AddService";
 import EditService from "./pages/Admin/Services/EditService";
 import AllServices from "./pages/AllServices";
+import AdminBlog from "./pages/Admin/Blog/AdminBlog";
 
 const App = () => {
   return (
@@ -72,6 +73,7 @@ const App = () => {
             <Route path="allteam" element={<ViewTeamMember />} />
             <Route index element={<AdminHome />} />
             <Route path="addblog" element={<BlogUpload />} />
+            <Route path="viewblogs" element={<AdminBlog />} />
             <Route path="addproperty" element={<AddPropertyPage />} />
             <Route path="addnews" element={<AdminNews />} />
             <Route path="viewproperty" element={<AdminViewProperty />} />

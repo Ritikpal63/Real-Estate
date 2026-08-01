@@ -1,74 +1,72 @@
-import React, {useState} from 'react'
-import { usePost } from "../../../contextApi/PostContext";
-// import { useAuth } from "../../../contextApi/AuthContext";
-import { useAuth } from "../../../contextApi/useAuth";
+import React, { useState, useEffect } from 'react'
+import axiosInstance from "../../../utils/axiosConfig";
+import ImageUploader from './ImageUploader';
+import { useNavigate } from "react-router-dom";
 
 
 const UploadBlogPage = () => {
-    const { addPost, setLoading, loading, setError, error, clearError, posts } =
-    usePost();
-  const { user } = useAuth();
-  const [formData, setFormData] = useState({
+  const navigate = useNavigate();
+  const [form, setForm] = useState({
     title: "",
     content: "",
-    image: null,
-  });
+  })
   const [preview, setPreview] = useState(null);
   const [success, setSuccess] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [posts, setPosts] = useState([]);
+  const [imageFile, setImageFile] = useState(null);
+
+  const clearError = () => {
+    setError("");
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    setFormData((prev) => ({
-      ...prev,
-      image: file,
-    }));
-    setPreview(file ? URL.createObjectURL(file) : null);
-  };
 
   const postSubmitHandler = async (e) => {
     e.preventDefault();
-    clearError();
-    setSuccess("");
+    setError("");
 
-    if (!formData.title || !formData.content || !formData.image) {
-      setError("Please fill all fields including image");
+    if (!form.title || !form.content) {
+      setError("Please fill in all fields.");
       return;
     }
 
     try {
       setLoading(true);
 
-      const newPost = {
-        id: Date.now(),
-        title: formData.title,
-        content: formData.content,
-        image: preview,
-        excerpt: formData.content.slice(0, 120),
-        createdAt: new Date().toLocaleString(),
-      };
+      const formData = new FormData();
+      Object.entries(form).forEach(([key, value]) => {
+        formData.append(key, value);
+      });
+      if (imageFile) {
+        formData.append("image", imageFile);
+      }
 
-      addPost(newPost);
-      setSuccess("Post uploaded successfully!");
-      setFormData({ title: "", content: "", image: null });
-      setPreview(null);
+      console.log("Form Data:", formData);
+      await axiosInstance.post("/blogs", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      navigate("/admin");
     } catch (err) {
-      setError("Error uploading post");
       console.error(err);
+      setError(
+        err.response?.data?.message || "Failed to add blog. Try again."
+      );
     } finally {
       setLoading(false);
     }
   };
   return (
     <div>
-        <div className="container-fluid py-4">
+      <div className="container-fluid py-4">
         <div className="row px-4">
           <div className="col-xl-7 mb-4">
             <div className="card shadow-sm border-0">
@@ -77,11 +75,11 @@ const UploadBlogPage = () => {
                   <div>
                     <p className="text-uppercase text-secondary mb-1">Admin panel</p>
                     <h3 className="mb-0">Create a new post</h3>
-                    <p className="text-muted mb-0">
+                    {/* <p className="text-muted mb-0">
                       Logged in as <strong>{user?.name || user?.email}</strong>
-                    </p>
+                    </p> */}
                   </div>
-                  <span className="badge fs-4">{posts.length} posts</span>
+                  {/* <span className="badge fs-4">{posts.length} posts</span> */}
                 </div>
 
                 {error && <div className="alert alert-danger">{error}</div>}
@@ -93,7 +91,7 @@ const UploadBlogPage = () => {
                     <input
                       type="text"
                       name="title"
-                      value={formData.title}
+                      value={form.title}
                       onChange={handleChange}
                       disabled={loading}
                       className="form-control form-control-lg border-2"
@@ -105,7 +103,7 @@ const UploadBlogPage = () => {
                     <label className="form-label text-secondary">Post content</label>
                     <textarea
                       name="content"
-                      value={formData.content}
+                      value={form.content}
                       onChange={handleChange}
                       disabled={loading}
                       rows="6"
@@ -116,14 +114,8 @@ const UploadBlogPage = () => {
 
                   <div className="mb-3">
                     <label className="form-label text-secondary">Feature image</label>
-                    <input
-                      type="file"
-                      name="image"
-                      accept="image/*"
-                      onChange={handleImageChange}
-                      disabled={loading}
-                      className="form-control"
-                    />
+                    <ImageUploader onImageSelect={setImageFile} />
+
                   </div>
 
                   <button
@@ -142,11 +134,11 @@ const UploadBlogPage = () => {
             <div className="card shadow-sm border-0 mb-4">
               <div className="card-body p-4">
                 <h5 className="mb-3">Post preview</h5>
-                {preview ? (
+                {imageFile ? (
                   <div className="mb-3 rounded overflow-hidden border">
                     <img
-                      src={preview}
-                      alt="Preview"
+                      src={imageFile}
+                      alt="imageFile"
                       className="img-fluid"
                       style={{ width: "100%", height: "240px", objectFit: "cover" }}
                     />
@@ -203,7 +195,7 @@ const UploadBlogPage = () => {
             </div>
           </div>
         </div>
-        </div>
+      </div>
     </div>
   )
 }

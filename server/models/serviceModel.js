@@ -2,9 +2,7 @@ const pool = require("../config/database");
 const { v4: uuidv4 } = require("uuid");
 
 class ServiceModel {
-  // ============================
-  // Get All Services (With Pagination)
-  // ============================
+
   static async getAll(limit = 4, offset = 0) {
     const [rows] = await pool.query(
       `
@@ -19,9 +17,7 @@ class ServiceModel {
     return rows;
   }
 
-  // ============================
-  // Get All Services (No Limit)
-  // ============================
+
   static async getAllServices() {
     const [rows] = await pool.query(`
       SELECT *
@@ -32,9 +28,7 @@ class ServiceModel {
     return rows;
   }
 
-  // ============================
-  // Get Service By Id
-  // ============================
+
   static async getById(id) {
     const [rows] = await pool.query(
       `
@@ -49,9 +43,6 @@ class ServiceModel {
     return rows[0];
   }
 
-  // ============================
-  // Create Service
-  // ============================
   static async create(service) {
     const id = uuidv4();
 
@@ -86,9 +77,6 @@ class ServiceModel {
     return await this.getById(id);
   }
 
-  // ============================
-  // Update Service
-  // ============================
   static async update(id, service) {
     const { title, slug, description, icon, status, display_order } = service;
 
@@ -110,9 +98,7 @@ class ServiceModel {
     return result;
   }
 
-  // ============================
-  // Delete Service
-  // ============================
+
   static async delete(id) {
     const [result] = await pool.query(
       `

@@ -56,7 +56,7 @@ gap-5
           icon={<FaBuilding />}
         />
 
-        <StatsCard title="Users" value={stats.totalUsers} icon={<FaUsers />} />
+        <StatsCard title="Blogs" value={stats.totalBlogs} icon={<FaUsers />} />
 
         <StatsCard
           title="Services"

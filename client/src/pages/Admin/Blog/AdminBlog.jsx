@@ -51,9 +51,8 @@ const AdminBlog = () => {
     const fetchBlogs = async () => {
         try {
             setLoading(true);
-            // FIX: sahi endpoint "/blogs/allblogs" hai ("/blogs/all" exist nahi karta,
-            // isliye list load hi nahi ho rahi thi)
-            const response = await axiosInstance.get("/blogs/all");
+            const response = await axiosInstance.get("/blogs");
+            console.log("Response",response.data.data)
             const data = response.data.data || [];
             setBlogs(data);
             setFilteredBlogs(data);
@@ -106,8 +105,6 @@ const AdminBlog = () => {
         }
     };
 
-    // FIX: pehle "setForm" (jo exist hi nahi karta) call ho raha tha -> typing crash/no-op
-    // ho jaati thi. Ab sahi setter "setFormData" use ho raha hai.
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
@@ -137,10 +134,6 @@ const AdminBlog = () => {
             }
 
             let response;
-            // FIX: pehle yahan hamesha POST call hota tha, chahe tu Edit kar raha ho —
-            // isliye Update dabane par ek NAYA blog ban jaata tha (duplicate), purana
-            // wahi ka wahi reh jaata tha. Ab isEditing/editId check karke sahi PUT/POST
-            // call hoti hai.
             if (isEditing) {
                 response = await axiosInstance.put(`/blogs/${editId}`, newFormData, {
                     headers: { "Content-Type": "multipart/form-data" },
@@ -152,9 +145,6 @@ const AdminBlog = () => {
             }
 
             if (response.data.success) {
-                // FIX: pehle yahan navigate("/admin") ho jaata tha — updated list dikhti
-                // hi nahi thi, isliye lagta tha values change hi nahi hui. Ab list turant
-                // refresh hoti hai aur wahi page pe confirmation dikhta hai.
                 await fetchBlogs();
                 resetForm();
                 toast.success(

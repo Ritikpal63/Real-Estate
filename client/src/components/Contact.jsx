@@ -1,6 +1,38 @@
-import React from "react";
+import { useState, useEffect } from "react";
+// import "./ContactPopup.css";
+import axiosInstance from "../utils/axiosConfig";
+import { toast } from "react-toastify"; 
 
 const Contact = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+
+
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      await axiosInstance.post("/contact", formData);
+      toast.success("Message sent successfully!");
+    } catch (err) {
+      console.error(err);
+      toast.error("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+      setFormData({ name: "", email: "", message: "" });
+    }
+  };
+
   return (
     <>
       <section className="contact-area section-padding">
@@ -15,14 +47,15 @@ const Contact = () => {
                 <div className="contact">
                   <form
                     id="contact-form"
-                    method="post"
-                    encType="multipart/form-data"
+                    onClick={handleSubmit}
                   >
                     <div className="row">
                       <div className="form-group col-md-6">
                         <input
                           type="text"
                           name="name"
+                          value={formData.name}
+                          onChange={handleChange}
                           className="form-control"
                           placeholder="Name"
                           required="required"
@@ -32,6 +65,8 @@ const Contact = () => {
                         <input
                           type="email"
                           name="email"
+                          value={formData.email}
+                          onChange={handleChange}
                           className="form-control"
                           placeholder="Email"
                           required="required"
@@ -50,6 +85,8 @@ const Contact = () => {
                         <textarea
                           rows="6"
                           name="message"
+                          value={formData.message}
+                          onChange={handleChange}
                           className="form-control"
                           placeholder="Your Message"
                           required="required"
@@ -77,17 +114,17 @@ const Contact = () => {
                 <div className="single_address">
                   <i className="fa fa-rocket color-one"></i>
                   <h4>Our Location</h4>
-                  <p>2369 Robinson Lane Jackson, OH 45640</p>
+                  <p>D 80 Vypaar Marg Sector 2 Noida 201301</p>
                 </div>
                 <div className="single_address">
                   <i className="fa fa-phone color-two"></i>
                   <h4>Call us on</h4>
-                  <p>(+1) 216-328-7141 </p>
+                  <p>(+91) 9911819708 </p>
                 </div>
                 <div className="single_address single_address_mbnone">
                   <i className="fa fa-envelope color-three"></i>
                   <h4>Send message</h4>
-                  <p>admin@example.com</p>
+                  <p>info@ncrspaceconnect.com</p>
                 </div>
               </div>
             </div>
@@ -100,7 +137,7 @@ const Contact = () => {
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d218.96948051169332!2d77.31849866045475!3d28.584422558740314!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce50ca7c756cf%3A0x47139b540aea0eda!2sDigital%20Vyapaar!5e0!3m2!1sen!2sin!4v1784359416275!5m2!1sen!2sin"
           width="600"
           height="450"
-          style={{border:"0"}}
+          style={{ border: "0" }}
           allowFullScreen=""
           loading="lazy"
           referrerPolicy="strict-origin-when-cross-origin"

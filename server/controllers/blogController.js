@@ -22,7 +22,8 @@ class BlogController {
   static async getAllBlogs(req, res) {
     try {
       const blogs = await BlogModel.getAll();
-      return res.status(200).json({ success: true, data: blogs });
+      const total = await BlogModel.getCount();
+      return res.status(200).json({ success: true, data: blogs, pagination: { total } });
     } catch (error) {
       console.error(error);
       return res
@@ -32,13 +33,17 @@ class BlogController {
   }
   static async getByIdBlog(req, res) {
     try {
-      const blogs = await BlogModel.getById();
-      return res.status(200).json({ success: true, data: blogs });
+      const { id } = req.params;
+      const blog = await BlogModel.getById(id);
+      
+      if (!blog) {
+        return res.status(404).json({ success: false, message: 'Blog not found' });
+      }
+      
+      res.json({ success: true, data: blog });
     } catch (error) {
-      console.error(error);
-      return res
-        .status(500)
-        .json({ success: false, message: "Internal server error" });
+      console.error('Error fetching blog:', error);
+      res.status(500).json({ success: false, message: 'Failed to fetch blog', error: error.message });
     }
   }
     static async deleteBlog(req, res) {

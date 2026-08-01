@@ -2,10 +2,8 @@ const { v4: uuidv4 } = require("uuid");
 const pool = require("../config/database");
 
 class BlogModel {
-    static async getById(id) {
-    const [rows] = await pool.query("SELECT * FROM blogs WHERE id = ?", [
-      id,
-    ]);
+  static async getById(id) {
+    const [rows] = await pool.query("SELECT * FROM blogs WHERE id = ?", [id]);
     return rows[0];
   }
   static async create(data) {
@@ -37,6 +35,10 @@ class BlogModel {
       ],
     );
     return result.affectedRows > 0 ? this.getById(id) : null;
+  }
+  static async getCount() {
+    const [rows] = await pool.query("SELECT COUNT(*) as total FROM blogs");
+    return rows[0].total;
   }
 }
 module.exports = BlogModel;

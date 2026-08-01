@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import "./ContactPopup.css";
 import axiosInstance from "../utils/axiosConfig";
-import { toast } from "react-toastify"; // sirf toast import karo, ToastContainer nahi
+import { toast } from "react-toastify"; 
 
 export default function ContactPopup() {
   const [isOpen, setIsOpen] = useState(false);

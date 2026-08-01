@@ -38,6 +38,7 @@ import AddService from "./pages/Admin/Services/AddService";
 import EditService from "./pages/Admin/Services/EditService";
 import AllServices from "./pages/AllServices";
 import AdminBlog from "./pages/Admin/Blog/AdminBlog";
+import BlogDetails from "./pages/Admin/Blog/BlogDetails";
 
 const App = () => {
   return (
@@ -62,6 +63,7 @@ const App = () => {
           <Route path="/news/:id" element={<NewsDetailPage />} />
           <Route path="/news/allnews" element={<AllNews />} />
           <Route path="/allservice" element={<AllServices />} />
+          <Route path="/blog/:id" element={<BlogDetails />} />
           <Route
             path="/admin"
             element={

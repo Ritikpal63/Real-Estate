@@ -2,6 +2,7 @@ const PropertyModel = require("../models/propertyModel");
 const ServiceModel = require("../models/serviceModel");
 const GalleryModel = require("../models/galleryModel");
 const ContactModel = require("../models/contactModel");
+const BlogModel = require("../models/blogModel");
 
 exports.getDashboardStats = async (req, res) => {
   try {
@@ -12,6 +13,7 @@ exports.getDashboardStats = async (req, res) => {
     const totalGallery = await GalleryModel.getCount();
 
     const totalLeads = await ContactModel.getCount();
+    const totalBlogs = await BlogModel.getCount();
 
     const recentProperties = await PropertyModel.find()
       .sort({ created_at: -1 })
@@ -28,6 +30,7 @@ exports.getDashboardStats = async (req, res) => {
         totalServices,
         totalGallery,
         totalLeads,
+        totalBlogs,
       },
 
       recentProperties,

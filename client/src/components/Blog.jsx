@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axiosInstance from "../utils/axiosConfig";
 import BlogCard from "./BlogCard";
 
@@ -11,35 +11,58 @@ const AllBlogs = () => {
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
 
+  const requestId = useRef(0);
+
   const totalPages = Math.max(1, Math.ceil(total / LIMIT));
 
   const getBlogs = async (pageNum) => {
+    const currentRequest = ++requestId.current;
     try {
       setLoading(true);
       setError(null);
-      const offset = (pageNum - 1) * LIMIT;   
+      const offset = (pageNum - 1) * LIMIT;
       const res = await axiosInstance.get("/blogs", {
         params: { limit: LIMIT, offset },
       });
+
+      // Ignore this response if a newer request has already started
+      if (currentRequest !== requestId.current) return;
+
       if (res.data.success) {
-        setBlogs(res.data.data);
-        setTotal(res.data.pagination?.total || 0);
+        const data = res.data.data || [];
+        const seen = new Set();
+        const unique = data.filter((item) => {
+          if (seen.has(item.id)) return false;
+          seen.add(item.id);
+          return true;
+        });
+        setBlogs(data);
+        setTotal(Number(res.data.pagination?.total) || 0);
       } else {
+        setBlogs([]);
         setError(res.data.message || "Failed to fetch blogs");
       }
     } catch (err) {
-      setError(
-        err.response?.data?.message ||
-          "Cannot connect to server. Please check if backend is running."
-      );
+      if (currentRequest !== requestId.current) return;
+      setBlogs([]);
+      if (err.response) {
+        setError(
+          `${err.response.data?.message || "Server error"} (status ${err.response.status})`
+        );
+      } else if (err.request) {
+        setError("Cannot connect to server. Please check if backend is running.");
+      } else {
+        setError("Something went wrong while loading blogs.");
+      }
     } finally {
-      setLoading(false);
+      if (currentRequest === requestId.current) setLoading(false);
     }
   };
 
   useEffect(() => {
     getBlogs(page);
     window.scrollTo({ top: 0, behavior: "smooth" });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
   const goToPage = (p) => {
@@ -118,11 +141,10 @@ const AllBlogs = () => {
                     <button
                       key={p}
                       onClick={() => goToPage(p)}
-                      className={`w-9 h-9 rounded-lg text-sm font-medium transition-colors ${
-                        p === page
-                          ? "bg-[#374256] text-white"
-                          : "border hover:bg-gray-100 text-gray-700"
-                      }`}
+                      className={`w-9 h-9 rounded-lg text-sm font-medium transition-colors ${p === page
+                        ? "bg-[#374256] text-white"
+                        : "border hover:bg-gray-100 text-gray-700"
+                        }`}
                     >
                       {p}
                     </button>

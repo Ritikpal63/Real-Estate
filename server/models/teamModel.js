@@ -32,5 +32,9 @@ class TeamModel {
     const [result] = await pool.query("DELETE FROM team WHERE id = ?", [id]);
     return result.affectedRows > 0;
   }
+  static async getCount() {
+    const [rows] = await pool.query("SELECT COUNT(*) as total FROM team");
+    return rows[0].total;
+  }
 }
 module.exports = TeamModel;

@@ -124,6 +124,10 @@ class ServiceModel {
 
     return result;
   }
+  static async getCount() {
+    const [rows] = await pool.query("SELECT COUNT(*) as total FROM services");
+    return rows[0].total;
+  }
 }
 
 module.exports = ServiceModel;

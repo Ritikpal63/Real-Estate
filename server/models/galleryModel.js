@@ -9,6 +9,10 @@ class GalleryModel {
     );
     return rows;
   }
+  static async getCount() {
+    const [rows] = await pool.query("SELECT COUNT(*) as total FROM gallery");
+    return rows[0].total;
+  }
 
   static async getById(id) {
     const [rows] = await pool.query("SELECT * FROM gallery WHERE id = ?", [id]);

@@ -2,7 +2,6 @@
 // app.js ke top me
 // const { sequelize } = require("./models");
 
-
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
@@ -40,18 +39,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-
-
-
 // Routes
 
+const contactRoutes = require("./routes/contactRoutes");
+app.use("/api/contact", contactRoutes);
 
-
-const contactRoutes = require('./routes/contactRoutes')
-app.use('/api/contact', contactRoutes)
-
-const propertyRoutes = require('./routes/propertyRoutes');
-app.use('/api/property', propertyRoutes)
+const propertyRoutes = require("./routes/propertyRoutes");
+app.use("/api/property", propertyRoutes);
 
 const newsRoutes = require("./routes/newsRoutes");
 app.use("/api/news", newsRoutes);
@@ -59,17 +53,19 @@ app.use("/api/news", newsRoutes);
 const authRoutes = require("./routes/auth.routes");
 app.use("/api/auth", authRoutes);
 
-const teamRoutes = require('./routes/teamRoutes');
-app.use('/api/team', teamRoutes)
+const teamRoutes = require("./routes/teamRoutes");
+app.use("/api/team", teamRoutes);
 
-const galleryRoutes = require('./routes/galleryRoutes');
-app.use('/api/gallery', galleryRoutes)
+const galleryRoutes = require("./routes/galleryRoutes");
+app.use("/api/gallery", galleryRoutes);
 
-const serviceRoutes = require('./routes/serviceRoutes');
+const serviceRoutes = require("./routes/serviceRoutes");
 app.use("/api/services", serviceRoutes);
 
-// Error handling middleware
+const adminRoutes = require("./routes/adminRoutes");
+app.use("/api/admin", adminRoutes);
 
+// Error handling middleware
 
 app.use((err, req, res, next) => {
   console.error(err.stack);

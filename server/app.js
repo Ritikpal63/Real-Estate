@@ -65,6 +65,11 @@ app.use('/api/team', teamRoutes)
 const galleryRoutes = require('./routes/galleryRoutes');
 app.use('/api/gallery', galleryRoutes)
 
+const serviceRoutes = require('./routes/serviceRoutes');
+app.use("/api/services", serviceRoutes);
+
+// Error handling middleware
+
 
 app.use((err, req, res, next) => {
   console.error(err.stack);

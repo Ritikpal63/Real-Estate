@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import axiosInstance from "../utils/axiosConfig";
 import { Link } from "react-router-dom";
+const IMAGE = "/assets/img/team/1.jpg"
 const Team = () => {
   const [team, setTeam] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -67,9 +68,9 @@ const Team = () => {
           <div className="row text-center">
             {displayedTeam?.map((item) => {
               return (
-                <div key={item.id} className="col-lg-3 col-sm-3 col-xs-12">
+                <div key={item.id} className="col-lg-3 col-sm-3 col-xs-12 hover:scale-105 transition-transform duration-300">
                   <div className="single_team">
-                    <img src={item.image} className="w-full h-auto" alt={item.name} />
+                    <img src={ item.image} className="w-full h-auto" alt={item.name} />
                     <h3>{item.name}</h3>
                     <p>{item.designation}</p>
                     <ul className="list-inline">

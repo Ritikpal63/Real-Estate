@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import axiosInstance from "../utils/axiosConfig"
 
 const PORTFOLIO_DATA = [
   { id: 1, image: "/assets/img/portfolio/1.jpg", title: "Your Dream House", tags: ["bathroom", "kitchen", "garage"] },
@@ -12,33 +13,57 @@ const PORTFOLIO_DATA = [
   { id: 9, image: "/assets/img/portfolio/9.jpg", title: "Your Dream House", tags: ["bedroom", "basement"] },
 ]
 
-const Portfolio = () => {
+const Gallery = () => {
   const [activeFilter, setActiveFilter] = useState('all')
+  const [galleryItems, setGalleryItems] = useState([])
 
-  const filteredItems = activeFilter === 'all' 
-    ? PORTFOLIO_DATA 
-    : PORTFOLIO_DATA.filter(item => item.tags.includes(activeFilter))
+  useEffect(() => {
+    let mounted = true
+    const getAllGallery = async () => {
+      try {
+        const response = await axiosInstance.get('/gallery')
+        // Expecting API to return { data: [...] } or similar
+        const items = response?.data?.data ?? response?.data ?? []
+        if (mounted) setGalleryItems(Array.isArray(items) ? items : [])
+      } catch (error) {
+        console.error('Error fetching gallery:', error)
+        // keep fallback data if fetch fails
+      }
+    }
+
+    getAllGallery()
+
+    return () => { mounted = false }
+  }, [])
+
+  const dataSource = galleryItems.length ? galleryItems : PORTFOLIO_DATA
 
   const filterCategories = ['all', 'bedroom', 'bathroom', 'kitchen', 'garage', 'basement']
 
+  const filteredItems = activeFilter === 'all'
+    ? dataSource
+    : dataSource.filter(item => {
+        const tags = item.tags || item.tag || []
+        return Array.isArray(tags) ? tags.includes(activeFilter) : false
+      })
+
   return (
     <>
-      {/* <Section title={"Gallery"} /> */}
       <section id="gallery" className="works_area">
         <div className="container">
           <div className="section-title text-center wow zoomIn">
             <h2>Gallery</h2>
             <div></div>
           </div>
-          
+
           <div className="col-lg-12 text-center">
             <ul className="portfolio-filters">
               {filterCategories.map(category => (
-                <li 
+                <li
                   key={category}
-                  className={`filter ${activeFilter === category ? 'active' : ''}`} 
+                  className={`filter ${activeFilter === category ? 'active' : ''}`}
                   onClick={() => setActiveFilter(category)}
-                  style={{ cursor: 'pointer' }} >
+                  style={{ cursor: 'pointer' }}>
                   {category.charAt(0).toUpperCase() + category.slice(1)}
                 </li>
               ))}
@@ -71,5 +96,4 @@ const Portfolio = () => {
   )
 }
 
-export default Portfolio
-
+export default Gallery

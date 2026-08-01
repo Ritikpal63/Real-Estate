@@ -179,7 +179,7 @@ const NewsDetailPage = () => {
               </span>
             </Link>
 
-            <nav className="hidden md:flex items-center gap-6">
+            <nav className="hidden md:flex flex items-center gap-6">
               {NAV_LINKS.map(({ label, icon: Icon, to }) => (
                 <Link
                   key={label}

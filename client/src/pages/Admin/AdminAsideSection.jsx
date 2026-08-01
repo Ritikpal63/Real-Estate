@@ -22,14 +22,17 @@ const AdminAsideSection = () => {
   const navItems = [
     { type: "link", path: "/admin", label: "Dashboard", icon: LayoutDashboard },
     { type: "category", label: "MANAGEMENT" },
-    { type: "link", path: "/admin/addproperty", label: "Add Property", icon: PlusCircle },
+    // { type: "link", path: "/admin/addproperty", label: "Add Property", icon: PlusCircle },
     { type: "link", path: "/admin/viewproperty", label: "View Properties", icon: Building2 },
-    { type: "link", path: "/admin/addteam", label: "Add Team Member", icon: UserPlus },
+    // { type: "link", path: "/admin/addteam", label: "Add Team Member", icon: UserPlus },
     { type: "link", path: "/admin/allteam", label: "View Team", icon: Users },
     { type: "link", path: "/admin/addblog", label: "Add Blog Post", icon: PlusCircle },
     { type: "link", path: "/admin/addnews", label: "Add News Article", icon: PlusCircle },
-    { type: "link", path: "/admin/addgallery", label: "Add Gallery Album", icon: PlusCircle },
+    // { type: "link", path: "/admin/addgallery", label: "Add Gallery Album", icon: PlusCircle },
     { type: "link", path: "/admin/viewgallery", label: "View Gallery", icon: Image },
+    { type: "link", path: "/admin/services", label: "View Services", icon: Image },
+    // { type: "link", path: "/admin/addservices", label: "Add Service", icon: PlusCircle },
+    // { type: "link", path: "/admin/editservices/:id", label: "Edit Services", icon: Image },
   ];
 
   const logoutHandle = () => logout();

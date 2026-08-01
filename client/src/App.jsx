@@ -33,9 +33,10 @@ import AdminViewProperty from "./pages/Admin/Property/AdminViewProperty";
 import AddTeam from "./pages/Admin/Team/AddTeam";
 import AddGallery from "./pages/Admin/Gallery/AddGallery";
 import AdminViewGallery from "./pages/Admin/Gallery/AdminViewGallery";
-
-
-
+import ServiceList from "./pages/Admin/Services/ServiceList";
+import AddService from "./pages/Admin/Services/AddService";
+import EditService from "./pages/Admin/Services/EditService";
+import AllServices from "./pages/AllServices";
 
 const App = () => {
   return (
@@ -59,6 +60,7 @@ const App = () => {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/news/:id" element={<NewsDetailPage />} />
           <Route path="/news/allnews" element={<AllNews />} />
+          <Route path="/allservice" element={<AllServices />} />
           <Route
             path="/admin"
             element={
@@ -70,12 +72,15 @@ const App = () => {
             <Route path="allteam" element={<ViewTeamMember />} />
             <Route index element={<AdminHome />} />
             <Route path="addblog" element={<BlogUpload />} />
-            <Route path="addproperty" element={<AddPropertyPage />} /> 
+            <Route path="addproperty" element={<AddPropertyPage />} />
             <Route path="addnews" element={<AdminNews />} />
             <Route path="viewproperty" element={<AdminViewProperty />} />
             <Route path="addteam" element={<AddTeam />} />
-            <Route path='addgallery' element={<AddGallery />} />
-            <Route path='viewgallery' element={<AdminViewGallery />} />
+            <Route path="addgallery" element={<AddGallery />} />
+            <Route path="viewgallery" element={<AdminViewGallery />} />
+            <Route path="services" element={<ServiceList />} />
+            <Route path="addservices" element={<AddService />} />
+            <Route path="editservices/:id" element={<EditService />} />
           </Route>
           <Route path="/not-authorized" element={<NotAuthorizedPage />} />
           <Route path="/*" element={<NotfoundPage />} />

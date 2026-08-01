@@ -85,6 +85,12 @@ const Navbar = () => {
             >
               Gallery
             </Link>
+            <Link
+              to="/allservice"
+              className="text-white hover:text-green-400 transition-colors duration-300 text-sm font-medium"
+            >
+              Services
+            </Link>
 
             <div className="relative group inline-block">
               <button className="text-white hover:text-green-400 transition-colors duration-300 text-sm font-medium focus:outline-none flex items-center gap-1">

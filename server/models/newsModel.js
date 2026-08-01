@@ -1,5 +1,7 @@
 // models/newsModel.js
 const pool = require("../config/database");
+const {v4: uuidv4} = require('uuid')
+
 
 class NewsModel {
   // Get all news
@@ -19,10 +21,12 @@ class NewsModel {
 
   // Create news
   static async create(data) {
+    const id = uuidv4();
     const { title, content, summary, category, image, author } = data;
     const [result] = await pool.query(
-      "INSERT INTO news (title, content, summary, category, image, author, created_at) VALUES (?, ?, ?, ?, ?, ?, NOW())",
+      "INSERT INTO news (id, title, content, summary, category, image, author, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, NOW())",
       [
+        id,
         title,
         content,
         summary || null,

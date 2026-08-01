@@ -66,7 +66,7 @@ export default function PropertyView() {
 
                 <Link
                   to="/admin/addproperty"
-                  className="bg-[#374256] text-white text-sm rounded-lg px-4 py-2 whitespace-nowrap"
+                  className="bg-blue-500 text-green text-md rounded-lg px-4 py-2 whitespace-nowrap"
                 >
                   + Add Property
                 </Link>
@@ -157,16 +157,16 @@ export default function PropertyView() {
                       </div>
 
                       {/* Actions */}
-                      <div className="flex items-center gap-2 mt-4 mt-auto pt-3">
+                      <div className="flex justify-around items-center">
                         <Link
-                          to={`/admin/property/${property.id}`}
-                          className="flex-1 text-center text-xs sm:text-sm bg-gray-100 hover:bg-gray-200 transition rounded-lg py-2"
+                          to={`/property/${property.id}`}
+                          className="flex-1 text-center text-xs sm:text-sm bg-gray-100 hover:bg-gray-200 transition rounded-lg py-2 bg-green-600"
                         >
                           See Details
                         </Link>
                         <Link
                           to={`/admin/property/${property.id}/edit`}
-                          className="flex-1 text-center text-xs sm:text-sm bg-[#374256] hover:opacity-90 transition text-white rounded-lg py-2"
+                          className="bg-blue-500 text-green text-md rounded-lg px-4 py-2 whitespace-nowrap"
                         >
                           Edit
                         </Link>

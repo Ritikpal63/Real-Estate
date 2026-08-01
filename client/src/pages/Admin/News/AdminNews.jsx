@@ -5,13 +5,15 @@ import Section from "../../../components/Section";
 import AdminAsideSection from "../AdminAsideSection";
 import axiosInstance from "../../../utils/axiosConfig";
 // import { useAuth } from "../../../contextApi/AuthContext";
-import {useAuth}  from "../../../contextApi/useAuth";
+import { useAuth } from "../../../contextApi/useAuth";
 
 const AdminNews = () => {
   const navigate = useNavigate();
   const { token, isAuthenticated } = useAuth();
   const [news, setNews] = useState([]);
+  const [filteredNews, setFilteredNews] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState("");
   const [formData, setFormData] = useState({
     title: "",
     content: "",
@@ -35,7 +37,9 @@ const AdminNews = () => {
   const fetchNews = async () => {
     try {
       const response = await axiosInstance.get("/news/allnews");
-      setNews(response.data.data || []);
+      const data = response.data.data || [];
+      setNews(data);
+      setFilteredNews(data);
       setLoading(false);
     } catch (error) {
       console.error("Error fetching news:", error);
@@ -44,6 +48,17 @@ const AdminNews = () => {
       }
       setLoading(false);
     }
+  };
+  const handleSearch = (value) => {
+    setSearch(value);
+    if (!value.trim()) {
+      setFilteredNews(news);
+      return;
+    }
+    const result = news.filter((article) =>
+      article.title.toLowerCase().includes(value.toLowerCase()),
+    );
+    setFilteredNews(result);
   };
 
   const handleDelete = async (id) => {
@@ -322,8 +337,15 @@ const AdminNews = () => {
             ) : (
               <>
                 {/* MOBILE + TABLET: Card view */}
+                <input
+                  type="text"
+                  placeholder="Search Service..."
+                  value={search}
+                  onChange={(e) => handleSearch(e.target.value)}
+                  className="w-full border rounded-lg p-2 mb-4 lg:hidden"
+                />
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:hidden">
-                  {news.map((article) => {
+                  {filteredNews.map((article) => {
                     const styles = {
                       General: { bg: "bg-slate-100", text: "text-slate-600" },
                       "Market Trends": {
@@ -433,8 +455,15 @@ const AdminNews = () => {
                 </div>
 
                 {/* DESKTOP: Table view */}
+                <input
+                  type="text"
+                  placeholder="Search Service..."
+                  value={search}
+                  onChange={(e) => handleSearch(e.target.value)}
+                  className="w-full border rounded-lg p-2 mb-4 lg:block hidden"
+                />
                 <div className="hidden lg:block bg-white rounded-xl shadow-lg overflow-hidden">
-                  <div className="h-[500px] overflow-y-auto adminNews">
+                  <div className="h-[750px] overflow-y-auto adminNews">
                     <table className="w-full">
                       <thead className="bg-gray-50 sticky top-0">
                         <tr>
@@ -453,7 +482,7 @@ const AdminNews = () => {
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-gray-200">
-                        {news.map((article) => (
+                        {filteredNews.map((article) => (
                           <tr key={article.id} className="hover:bg-gray-50">
                             <td className="px-6 py-4 max-w-xs">
                               <div className="text-sm font-medium text-gray-900 truncate">
@@ -474,9 +503,9 @@ const AdminNews = () => {
                               <div className="flex gap-3">
                                 <button
                                   onClick={() => handleEdit(article)}
-                                  className="text-blue-600 hover:text-blue-800 transition-colors"
+                                  className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-red-700"
                                 >
-                                  <svg
+                                  {/* <svg
                                     className="w-5 h-5"
                                     fill="none"
                                     stroke="currentColor"
@@ -488,13 +517,14 @@ const AdminNews = () => {
                                       strokeWidth="2"
                                       d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
                                     />
-                                  </svg>
+                                  </svg> */}
+                                  Edit
                                 </button>
                                 <button
                                   onClick={() => handleDelete(article.id)}
-                                  className="text-red-600 hover:text-red-800 transition-colors"
+                                  className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
                                 >
-                                  <svg
+                                  {/* <svg
                                     className="w-5 h-5"
                                     fill="none"
                                     stroke="currentColor"
@@ -506,7 +536,8 @@ const AdminNews = () => {
                                       strokeWidth="2"
                                       d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
                                     />
-                                  </svg>
+                                  </svg> */}
+                                  Delete
                                 </button>
                               </div>
                             </td>

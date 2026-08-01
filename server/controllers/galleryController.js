@@ -1,22 +1,16 @@
 const GalleryModel = require("../models/galleryModel");
-const fs = require("fs");
-const path = require("path");
+const { toDisplayImageUrl } = require("../utils/imageUrl");
 
 const withFullImageUrl = (req, item) => ({
   ...item,
-  image: item.image
-    ? `${req.protocol}://${req.get("host")}/uploads/${item.image}`
-    : null,
+  image: toDisplayImageUrl(req, item.image),
 });
 
 class GalleryController {
   static getAll = async (req, res) => {
     try {
       const items = await GalleryModel.getAll();
-      res.status(200).json({
-        success: true,
-        data: items.map((item) => withFullImageUrl(req, item)),
-      });
+      res.status(200).json({ success: true, data: items.map((item) => withFullImageUrl(req, item)) });
     } catch (err) {
       console.error("getAll gallery error:", err);
       res.status(500).json({ success: false, message: "Failed to fetch gallery" });
@@ -26,10 +20,7 @@ class GalleryController {
   static getByCategory = async (req, res) => {
     try {
       const items = await GalleryModel.getByCategory(req.params.category);
-      res.status(200).json({
-        success: true,
-        data: items.map((item) => withFullImageUrl(req, item)),
-      });
+      res.status(200).json({ success: true, data: items.map((item) => withFullImageUrl(req, item)) });
     } catch (err) {
       console.error("getByCategory gallery error:", err);
       res.status(500).json({ success: false, message: "Failed to fetch gallery" });
@@ -39,9 +30,7 @@ class GalleryController {
   static getById = async (req, res) => {
     try {
       const item = await GalleryModel.getById(req.params.id);
-      if (!item) {
-        return res.status(404).json({ success: false, message: "Gallery item not found" });
-      }
+      if (!item) return res.status(404).json({ success: false, message: "Gallery item not found" });
       res.status(200).json({ success: true, data: withFullImageUrl(req, item) });
     } catch (err) {
       console.error("getById gallery error:", err);
@@ -52,21 +41,11 @@ class GalleryController {
   static create = async (req, res) => {
     try {
       const { title, category, description } = req.body;
+      if (!title) return res.status(400).json({ success: false, message: "Title is required" });
+      if (!req.file) return res.status(400).json({ success: false, message: "Image is required" });
 
-      if (!title) {
-        return res.status(400).json({ success: false, message: "Title is required" });
-      }
-      if (!req.file) {
-        return res.status(400).json({ success: false, message: "Image is required" });
-      }
-
-    const image = req.file ? req.file.filename : null;
-      const item = await GalleryModel.create({
-        title,
-        category: category || "bedroom",
-        image,
-        description,
-      });
+      const image = req.file.path; // full Cloudinary URL
+      const item = await GalleryModel.create({ title, category: category || "bedroom", image, description });
 
       res.status(201).json({ success: true, message: "Gallery item created", data: withFullImageUrl(req, item) });
     } catch (err) {
@@ -81,18 +60,10 @@ class GalleryController {
       const { title, category, description } = req.body;
 
       const existing = await GalleryModel.getById(id);
-      if (!existing) {
-        return res.status(404).json({ success: false, message: "Gallery item not found" });
-      }
+      if (!existing) return res.status(404).json({ success: false, message: "Gallery item not found" });
 
       let image = existing.image;
-      if (req.file) {
-        if (image) {
-          const oldPath = path.join(__dirname, "..", "uploads", image);
-          if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
-        }
-        image = req.file.filename;
-      }
+      if (req.file) image = req.file.path;
 
       const updated = await GalleryModel.update(id, {
         title: title || existing.title,
@@ -112,14 +83,7 @@ class GalleryController {
     try {
       const { id } = req.params;
       const existing = await GalleryModel.getById(id);
-      if (!existing) {
-        return res.status(404).json({ success: false, message: "Gallery item not found" });
-      }
-
-      if (existing.image) {
-        const imagePath = path.join(__dirname, "..", "uploads", existing.image);
-        if (fs.existsSync(imagePath)) fs.unlinkSync(imagePath);
-      }
+      if (!existing) return res.status(404).json({ success: false, message: "Gallery item not found" });
 
       await GalleryModel.delete(id);
       res.status(200).json({ success: true, message: "Gallery item deleted" });
@@ -129,5 +93,4 @@ class GalleryController {
     }
   };
 }
-
 module.exports = GalleryController;

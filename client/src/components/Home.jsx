@@ -155,11 +155,11 @@ const Home = () => {
       <marquee
         behavior="scroll"
         direction="left"
-        className="bg-red-500 text-white py-2 px-4 text-lg font-semibold"
+        className="bg-gray-500 text-yellow-400 py-2 px-4 text-lg font-semibold mt-2"
       >
         {homeNews.slice(0, 3).map((newsItem) => (
-          <span key={newsItem._id || newsItem.id} className="mr-10">
-            🔴 ~{newsItem.title}
+          <span key={newsItem.id} className="mr-10">
+            🔴 ~ {newsItem.title}
           </span>
         ))}
       </marquee>

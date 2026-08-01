@@ -1,4 +1,5 @@
 const ContactModel = require("../models/contactModel");
+const pool = require("../config/database"); 
 
 class ContactController {
   static async postContact(req, res) {

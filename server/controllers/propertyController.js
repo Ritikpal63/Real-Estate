@@ -1,7 +1,6 @@
 const PropertyModel = require("../models/propertyModel");
-const fs = require("fs");
 const pool = require("../config/database");
-const path = require("path");
+const { toDisplayImageUrl } = require("../utils/imageUrl");
 
 class PropertyController {
   static getAllProperties = async (req, res) => {
@@ -17,9 +16,7 @@ class PropertyController {
 
       const data = rows.map((row) => ({
         ...row,
-        image: row.image
-          ? `${req.protocol}://${req.get("host")}/uploads/${row.image}`
-          : null,
+        image: toDisplayImageUrl(req, row.image),
       }));
 
       res.status(200).json({ success: true, data });
@@ -32,9 +29,7 @@ class PropertyController {
   static getPropertyById = async (req, res) => {
     try {
       const { id } = req.params;
-      const [rows] = await pool.query("SELECT * FROM properties WHERE id = ?", [
-        id,
-      ]);
+      const [rows] = await pool.query("SELECT * FROM properties WHERE id = ?", [id]);
 
       if (rows.length === 0) {
         return res.status(404).json({ message: "Property not found" });
@@ -42,9 +37,7 @@ class PropertyController {
 
       const property = {
         ...rows[0],
-        image: rows[0].image
-          ? `${req.protocol}://${req.get("host")}/uploads/${rows[0].image}`
-          : null,
+        image: toDisplayImageUrl(req, rows[0].image),
       };
 
       res.status(200).json(property);
@@ -57,44 +50,26 @@ class PropertyController {
   static createProperty = async (req, res) => {
     try {
       const {
-        title,
-        location,
-        type,
-        amenities,
-        size,
-        year,
-        bedroom,
-        bathroom,
-        description,
-        price,
+        title, location, type, amenities, size, year,
+        bedroom, bathroom, description, price,
       } = req.body;
 
       if (!title || !location || !type) {
-        return res
-          .status(400)
-          .json({ message: "Title, location and type are required" });
+        return res.status(400).json({ message: "Title, location and type are required" });
       }
 
-      const image = req.file ? req.file.filename : null;
+      // With CloudinaryStorage: req.file.path = full secure URL, req.file.filename = public_id
+      const image = req.file ? req.file.path : null;
 
       const property = await PropertyModel.createProperty(
-        title,
-        location,
-        type,
-        amenities || null,
-        size || null,
-        year || null,
-        bedroom || 0,
-        bathroom || 0,
-        description || null,
-        image,
-        price || 0,
+        title, location, type, amenities || null, size || null, year || null,
+        bedroom || 0, bathroom || 0, description || null, image, price || 0,
       );
 
       res.status(201).json({
         message: "Property created successfully",
         id: property.id,
-        property,
+        property: { ...property, image: toDisplayImageUrl(req, property.image) },
       });
     } catch (err) {
       console.error("createProperty error:", err);
@@ -106,35 +81,19 @@ class PropertyController {
     try {
       const { id } = req.params;
       const {
-        title,
-        location,
-        type,
-        amenities,
-        size,
-        year,
-        bedroom,
-        bathroom,
-        description,
-        price,
+        title, location, type, amenities, size, year,
+        bedroom, bathroom, description, price,
       } = req.body;
 
-      const [existingRows] = await pool.query(
-        "SELECT * FROM properties WHERE id = ?",
-        [id],
-      );
-
+      const [existingRows] = await pool.query("SELECT * FROM properties WHERE id = ?", [id]);
       if (existingRows.length === 0) {
         return res.status(404).json({ message: "Property not found" });
       }
 
+      // Cloudinary-hosted images don't need local fs cleanup — just swap the stored URL
       let image = existingRows[0].image;
-
       if (req.file) {
-        if (image) {
-          const oldPath = path.join(__dirname, "..", "uploads", image);
-          if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
-        }
-        image = req.file.filename;
+        image = req.file.path;
       }
 
       await pool.query(
@@ -142,20 +101,8 @@ class PropertyController {
         title = ?, location = ?, type = ?, amenities = ?, size = ?,
         year = ?, bedroom = ?, bathroom = ?, description = ?, image = ?, price = ?
        WHERE id = ?`,
-        [
-          title,
-          location,
-          type,
-          amenities || null,
-          size || null,
-          year || null,
-          bedroom || 0,
-          bathroom || 0,
-          description || null,
-          image,
-          price || 0,
-          id,
-        ],
+        [title, location, type, amenities || null, size || null, year || null,
+         bedroom || 0, bathroom || 0, description || null, image, price || 0, id],
       );
 
       res.status(200).json({ message: "Property updated successfully" });
@@ -168,22 +115,13 @@ class PropertyController {
   static deleteProperty = async (req, res) => {
     try {
       const { id } = req.params;
-
-      const [existingRows] = await pool.query(
-        "SELECT * FROM properties WHERE id = ?",
-        [id],
-      );
+      const [existingRows] = await pool.query("SELECT * FROM properties WHERE id = ?", [id]);
 
       if (existingRows.length === 0) {
         return res.status(404).json({ message: "Property not found" });
       }
 
-      const image = existingRows[0].image;
-      if (image) {
-        const imagePath = path.join(__dirname, "..", "uploads", image);
-        if (fs.existsSync(imagePath)) fs.unlinkSync(imagePath);
-      }
-
+      // No local file to unlink anymore — image lives on Cloudinary
       await pool.query("DELETE FROM properties WHERE id = ?", [id]);
 
       res.status(200).json({ message: "Property deleted successfully" });

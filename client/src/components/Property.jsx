@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axiosInstance from "../utils/axiosConfig";
 
+const FALLBACK_IMG = "/assets/img/property/1.jpg";
+
 const Property = () => {
   const [properties, setProperties] = useState([]);
 
@@ -29,7 +31,7 @@ const Property = () => {
             <div className="col-md-4 col-sm-12 col-xs-12" key={p.id}>
               <div className="single_property">
                 <img
-                  src={p.image || "/assets/img/property/1.jpg"}
+                  src={p.image || FALLBACK_IMG}
                   className="img-fluid"
                   alt={p.title}
                 />

@@ -15,6 +15,7 @@ export default function AdminViewGallery() {
         setLoading(true);
         const res = await axiosInstance.get("/gallery");
         setItems(res.data.data);
+        console.log("Gallery items:", res.data.data);
       } catch (err) {
         setError(err.message || "Something went wrong");
       } finally {
@@ -48,7 +49,7 @@ export default function AdminViewGallery() {
               </div>
               <Link
                 to="/admin/addgallery"
-                className="bg-[#374256] text-white text-sm rounded-lg px-4 py-2"
+                className="bg-blue-500 text-md rounded-lg px-4 py-2"
               >
                 + Add Photo
               </Link>

@@ -1,0 +1,129 @@
+const pool = require("../config/database");
+const { v4: uuidv4 } = require("uuid");
+
+class ServiceModel {
+  // ============================
+  // Get All Services (With Pagination)
+  // ============================
+  static async getAll(limit = 4, offset = 0) {
+    const [rows] = await pool.query(
+      `
+      SELECT *
+      FROM services
+      ORDER BY display_order ASC, created_at DESC
+      LIMIT ? OFFSET ?
+      `,
+      [Number(limit), Number(offset)],
+    );
+
+    return rows;
+  }
+
+  // ============================
+  // Get All Services (No Limit)
+  // ============================
+  static async getAllServices() {
+    const [rows] = await pool.query(`
+      SELECT *
+      FROM services
+      ORDER BY display_order ASC, created_at DESC
+    `);
+
+    return rows;
+  }
+
+  // ============================
+  // Get Service By Id
+  // ============================
+  static async getById(id) {
+    const [rows] = await pool.query(
+      `
+      SELECT *
+      FROM services
+      WHERE id = ?
+      LIMIT 1
+      `,
+      [id],
+    );
+
+    return rows[0];
+  }
+
+  // ============================
+  // Create Service
+  // ============================
+  static async create(service) {
+    const id = uuidv4();
+
+    const {
+      title,
+      slug,
+      description,
+      icon,
+      status = "active",
+      display_order = 0,
+    } = service;
+
+    await pool.query(
+      `
+      INSERT INTO services
+      (
+        id,
+        title,
+        slug,
+        description,
+        icon,
+        status,
+        display_order,
+        created_at
+      )
+      VALUES
+      (?, ?, ?, ?, ?, ?, ?, NOW())
+      `,
+      [id, title, slug, description, icon, status, display_order],
+    );
+
+    return await this.getById(id);
+  }
+
+  // ============================
+  // Update Service
+  // ============================
+  static async update(id, service) {
+    const { title, slug, description, icon, status, display_order } = service;
+
+    const [result] = await pool.query(
+      `
+      UPDATE services
+      SET
+        title = ?,
+        slug = ?,
+        description = ?,
+        icon = ?,
+        status = ?,
+        display_order = ?
+      WHERE id = ?
+      `,
+      [title, slug, description, icon, status, display_order, id],
+    );
+
+    return result;
+  }
+
+  // ============================
+  // Delete Service
+  // ============================
+  static async delete(id) {
+    const [result] = await pool.query(
+      `
+      DELETE FROM services
+      WHERE id = ?
+      `,
+      [id],
+    );
+
+    return result;
+  }
+}
+
+module.exports = ServiceModel;

@@ -1,5 +1,3 @@
-// import PropertyPreview from "../components/PropertyPreview";
-
 import Section from "../../components/Section";
 import AdminAsideSection from "./AdminAsideSection";
 import AddProperty from "./Property/AddProperty";

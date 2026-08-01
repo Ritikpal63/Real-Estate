@@ -17,7 +17,7 @@ const AllBlogs = () => {
     try {
       setLoading(true);
       setError(null);
-      const offset = (pageNum - 1) * LIMIT;
+      const offset = (pageNum - 1) * LIMIT;   
       const res = await axiosInstance.get("/blogs", {
         params: { limit: LIMIT, offset },
       });

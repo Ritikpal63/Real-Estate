@@ -25,5 +25,18 @@ class BlogModel {
     const [result] = await pool.query("DELETE FROM blogs WHERE id = ?", [id]);
     return result.affectedRows > 0;
   }
+    static async update(id, data) {
+    const { title, content, imageUrl} = data;
+    const [result] = await pool.query(
+      "UPDATE blogs SET title = ?, content = ?, image = ? WHERE id = ?",
+      [
+        title,
+        content,
+        imageUrl,
+        id,
+      ],
+    );
+    return result.affectedRows > 0 ? this.getById(id) : null;
+  }
 }
 module.exports = BlogModel;

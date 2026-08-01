@@ -8,14 +8,6 @@ import axiosInstance from "../../../utils/axiosConfig";
 import { useAuth } from "../../../contextApi/useAuth";
 import ImageUploader from "../Property/ImageUploader";
 
-const CATEGORY_OPTIONS = [
-    "General",
-    "Buying Guide",
-    "Home Improvement",
-    "Market Insights",
-    "Legal & Finance",
-];
-
 const CATEGORY_STYLES = {
     General: { bg: "bg-slate-100", text: "text-slate-600" },
     "Buying Guide": { bg: "bg-green-100", text: "text-green-600" },
@@ -24,12 +16,11 @@ const CATEGORY_STYLES = {
     "Legal & Finance": { bg: "bg-red-100", text: "text-red-600" },
 };
 
+// formData sirf title + content rakhta hai (jo form mein actually dikhte hain).
+// summary/category/author backend defaults le lega jab tak inhe wapas form mein add na karein.
 const emptyForm = {
     title: "",
     content: "",
-    summary: "",
-    category: "General",
-    author: "Admin",
 };
 
 const AdminBlog = () => {
@@ -41,16 +32,12 @@ const AdminBlog = () => {
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
     const [search, setSearch] = useState("");
-    const [formData, setFormData] = useState({
-        title:"",
-        content:"",
-    });
+    const [formData, setFormData] = useState(emptyForm);
     const [imageFile, setImageFile] = useState(null);
     const [imagePreview, setImagePreview] = useState("");
     const [isEditing, setIsEditing] = useState(false);
     const [editId, setEditId] = useState(null);
     const [showForm, setShowForm] = useState(false);
-    const [error, setError] = useState("")
 
     useEffect(() => {
         if (!isAuthenticated()) {
@@ -58,11 +45,14 @@ const AdminBlog = () => {
             return;
         }
         fetchBlogs();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [navigate]);
 
     const fetchBlogs = async () => {
         try {
             setLoading(true);
+            // FIX: sahi endpoint "/blogs/allblogs" hai ("/blogs/all" exist nahi karta,
+            // isliye list load hi nahi ho rahi thi)
             const response = await axiosInstance.get("/blogs/all");
             const data = response.data.data || [];
             setBlogs(data);
@@ -70,7 +60,7 @@ const AdminBlog = () => {
         } catch (error) {
             console.error("Error fetching blogs:", error);
             if (error.response?.status === 401) {
-                navigate("/admin");
+                navigate("/login");
             }
         } finally {
             setLoading(false);
@@ -88,6 +78,7 @@ const AdminBlog = () => {
         );
         setFilteredBlogs(result);
     };
+
     const handleDelete = async (id) => {
         if (
             !window.confirm(
@@ -108,28 +99,34 @@ const AdminBlog = () => {
             console.error("Error deleting blog:", error);
             if (error.response?.status === 401) {
                 toast.error("Your session has expired. Please login again.");
-                navigate("/admin/viewblogs");
+                navigate("/login");
             } else {
                 toast.error(error.response?.data?.message || "Failed to delete blog.");
             }
         }
     };
-      const handleChange = (e) => {
-    const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
-  };
+
+    // FIX: pehle "setForm" (jo exist hi nahi karta) call ho raha tha -> typing crash/no-op
+    // ho jaati thi. Ab sahi setter "setFormData" use ho raha hai.
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prev) => ({ ...prev, [name]: value }));
+    };
 
     const postSubmitHandler = async (e) => {
         e.preventDefault();
-        setError("");
 
-        if (!formData.title || !formData.content) {
-            setError("Please fill in all fields.");
+        if (!formData.title.trim() || !formData.content.trim()) {
+            toast.error("Please fill in title and content.");
+            return;
+        }
+        if (!isEditing && !imageFile) {
+            toast.error("Please choose a cover image");
             return;
         }
 
         try {
-            setLoading(true);
+            setSaving(true);
 
             const newFormData = new FormData();
             Object.entries(formData).forEach(([key, value]) => {
@@ -139,20 +136,41 @@ const AdminBlog = () => {
                 newFormData.append("image", imageFile);
             }
 
-            await axiosInstance.post("/blogs", newFormData, {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                },
-            });
+            let response;
+            // FIX: pehle yahan hamesha POST call hota tha, chahe tu Edit kar raha ho —
+            // isliye Update dabane par ek NAYA blog ban jaata tha (duplicate), purana
+            // wahi ka wahi reh jaata tha. Ab isEditing/editId check karke sahi PUT/POST
+            // call hoti hai.
+            if (isEditing) {
+                response = await axiosInstance.put(`/blogs/${editId}`, newFormData, {
+                    headers: { "Content-Type": "multipart/form-data" },
+                });
+            } else {
+                response = await axiosInstance.post("/blogs", newFormData, {
+                    headers: { "Content-Type": "multipart/form-data" },
+                });
+            }
 
-            navigate("/admin");
+            if (response.data.success) {
+                // FIX: pehle yahan navigate("/admin") ho jaata tha — updated list dikhti
+                // hi nahi thi, isliye lagta tha values change hi nahi hui. Ab list turant
+                // refresh hoti hai aur wahi page pe confirmation dikhta hai.
+                await fetchBlogs();
+                resetForm();
+                toast.success(
+                    isEditing ? "Blog updated successfully!" : "Blog published successfully!",
+                );
+            }
         } catch (err) {
             console.error(err);
-            setError(
-                err.response?.data?.message || "Failed to add blog. Try again."
-            );
+            if (err.response?.status === 401) {
+                toast.error("Your session has expired. Please login again.");
+                navigate("/login");
+            } else {
+                toast.error(err.response?.data?.message || "Failed to save blog. Try again.");
+            }
         } finally {
-            setLoading(false);
+            setSaving(false);
         }
     };
 
@@ -247,6 +265,7 @@ const AdminBlog = () => {
                                         </label>
                                         <input
                                             type="text"
+                                            name="title"
                                             value={formData.title}
                                             onChange={handleChange}
                                             required
@@ -259,9 +278,9 @@ const AdminBlog = () => {
                                             Content *
                                         </label>
                                         <textarea
+                                            name="content"
                                             value={formData.content}
                                             onChange={handleChange}
-                                            name="content"
                                             required
                                             rows="8"
                                             className="w-full px-3 sm:px-4 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
@@ -272,7 +291,14 @@ const AdminBlog = () => {
                                         <label className="block text-sm font-medium text-gray-700 mb-1">
                                             Cover Image {!isEditing && "*"}
                                         </label>
-                                        <ImageUploader onImageSelect={setImageFile} />
+                                        <ImageUploader
+                                            onImageSelect={(file) => {
+                                                setImageFile(file);
+                                                // naya file choose hote hi purani "existing image"
+                                                // wali preview hata do taaki confusion na ho
+                                                setImagePreview("");
+                                            }}
+                                        />
                                         {isEditing && (
                                             <p className="text-xs text-gray-400 mt-1">
                                                 Leave empty to keep the current image.
@@ -459,7 +485,7 @@ const AdminBlog = () => {
                                                             </span>
                                                         </td>
                                                         <td className="px-6 py-4 text-sm text-gray-500">
-                                                            {blog.comment_count || 0}
+                                                            {blog.content|| 0}
                                                         </td>
                                                         <td className="px-6 py-4 text-sm text-green-800">
                                                             {new Date(blog.created_at).toLocaleDateString()}

@@ -9,6 +9,8 @@ router.post('/',authenticate, isAdmin, upload.single('image'), BlogController.po
 router.get('/', BlogController.getByIdBlog);
 router.get('/all',  BlogController.getAllBlogs);
 router.delete('/:id', authenticate, isAdmin, BlogController.deleteBlog);
+router.put('/:id', authenticate, isAdmin, upload.single('image'), BlogController.update);
+
 
 
 

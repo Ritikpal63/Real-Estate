@@ -61,6 +61,43 @@ class BlogController {
       res.status(500).json({ success: false, message: 'Failed to delete blog', error: error.message });
     }
   }
+
+  static async update(req, res) {
+    try {
+      const { id } = req.params;
+      const { title, content } = req.body;
+      
+      // Check if news exists
+      const imageUrl = req.file ? req.file.path : undefined;
+      const existing = await BlogModel.getById(id);
+      if (!existing) {
+        return res.status(404).json({ success: false, message: 'Blog not found' });
+      }
+      
+      // Validation
+      if (!title || !content) {
+        return res.status(400).json({ 
+          success: false, 
+          message: 'Title and content are required' 
+        });
+      }
+      
+      const updated = await BlogModel.update(id, {
+        title,
+        content,
+        imageUrl
+      });
+      
+      res.json({ 
+        success: true, 
+        message: 'Blog updated successfully',
+        data: updated 
+      });
+    } catch (error) {
+      console.error('Error updating blog:', error);
+      res.status(500).json({ success: false, message: 'Failed to update blogs', error: error.message });
+    }
+  }
 }
 
 module.exports = BlogController;

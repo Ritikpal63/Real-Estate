@@ -9,6 +9,8 @@ export default function ViewTeamMember() {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [filteredTeam, setFilteredTeam] = useState([]);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     const fetchTeamMembers = async () => {
@@ -16,6 +18,7 @@ export default function ViewTeamMember() {
         setLoading(true);
         const res = await axiosInstance.get("/team/all");
         setItems(res.data.data);
+        setFilteredTeam(res.data.data);
       } catch (err) {
         setError(err.message || "Something went wrong");
       } finally {
@@ -24,6 +27,17 @@ export default function ViewTeamMember() {
     };
     fetchTeamMembers();
   }, []);
+  const handleSearch = (value) => {
+    setSearch(value);
+    if (!value.trim()) {
+      setFilteredTeam(items);
+      return;
+    }
+    const result = items.filter((item) =>
+      item.name?.toLowerCase().includes(value.toLowerCase()),
+    );
+    setFilteredTeam(result);
+  };
 
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this team member?")) return;
@@ -79,7 +93,14 @@ export default function ViewTeamMember() {
               </div>
             )}
 
-            {!loading && !error && items.length > 0 && (
+            {!loading && !error && items.length > 0 && (<>
+              <input
+                type="text"
+                placeholder="Search Name..."
+                value={search}
+                onChange={(e) => handleSearch(e.target.value)}
+                className="w-full border rounded-lg p-2 mb-4"
+              />
               <div className="hidden lg:block bg-white rounded-xl shadow-lg overflow-hidden">
                 <div className="h-[750px] overflow-y-auto adminNews">
                   <table className="w-full">
@@ -103,7 +124,7 @@ export default function ViewTeamMember() {
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-200">
-                      {items.map((p) => (
+                      {filteredTeam.map((p) => (
                         <tr key={p.id} className="hover:bg-gray-50">
                           <td className="px-6 py-4 max-w-xs">
                             <div className="flex items-center gap-3">
@@ -147,6 +168,7 @@ export default function ViewTeamMember() {
                   </table>
                 </div>
               </div>
+            </>
             )}
           </div>
         </div>

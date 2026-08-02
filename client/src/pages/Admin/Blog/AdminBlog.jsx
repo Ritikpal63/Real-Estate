@@ -441,6 +441,9 @@ const AdminBlog = () => {
                                                         Post
                                                     </th>
                                                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                        Title
+                                                    </th>
+                                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                                         Category
                                                     </th>
                                                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -460,14 +463,14 @@ const AdminBlog = () => {
                                                         <td className="px-6 py-4 max-w-xs">
                                                             <div className="flex items-center gap-3">
                                                                 <img
-                                                                    src={blog.image || "assets/img/blog/blog-1.jpg"}
+                                                                    src={blog.image}
                                                                     alt={blog.title}
                                                                     className="w-10 h-10 rounded-lg object-cover shrink-0"
                                                                 />
-                                                                <div className="text-sm font-medium text-gray-900 truncate">
-                                                                    {blog.title}
-                                                                </div>
                                                             </div>
+                                                        </td>
+                                                        <td className="px-6 py-4 text-md text-black font-semibold">
+                                                            {blog.title}
                                                         </td>
                                                         <td className="px-6 py-4">
                                                             <span className="text-xs font-semibold text-blue-600 bg-blue-50 px-3 py-1 rounded-full">

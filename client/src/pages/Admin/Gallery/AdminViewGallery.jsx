@@ -8,6 +8,8 @@ export default function AdminViewGallery() {
   const navigate = useNavigate();
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [filteredGallery, setFilteredGallery] = useState([]);
+  const [search, setSearch] = useState("");
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -16,7 +18,7 @@ export default function AdminViewGallery() {
         setLoading(true);
         const res = await axiosInstance.get("/gallery");
         setItems(res.data.data);
-        console.log("Gallery items:", res.data.data);
+        setFilteredGallery(res.data.data);
       } catch (err) {
         setError(err.message || "Something went wrong");
       } finally {
@@ -25,6 +27,17 @@ export default function AdminViewGallery() {
     };
     fetchGallery();
   }, []);
+  const handleSearch = (value) => {
+    setSearch(value);
+    if (!value.trim()) {
+      setFilteredGallery(items);
+      return;
+    }
+    const result = items.filter((article) =>
+      article.title?.toLowerCase().includes(value.toLowerCase()),
+    );
+    setFilteredGallery(result);
+  };
 
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this gallery item?")) return;
@@ -88,7 +101,14 @@ export default function AdminViewGallery() {
             )}
 
             {/* Property Grid */}
-            {!loading && !error && items.length > 0 && (
+            {!loading && !error && items.length > 0 && (<>
+              <input
+                type="text"
+                placeholder="Search Gallery..."
+                value={search}
+                onChange={(e) => handleSearch(e.target.value)}
+                className="w-full border rounded-lg p-2 mb-4"
+              />
               <div className="hidden lg:block bg-white rounded-xl shadow-lg overflow-hidden">
                 <div className="h-[750px] overflow-y-auto adminNews">
                   <table className="w-full">
@@ -112,7 +132,7 @@ export default function AdminViewGallery() {
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-200">
-                      {items.map((p) => (
+                      {filteredGallery.map((p) => (
                         <tr key={p.id} className="hover:bg-gray-50">
                           <td className="px-6 py-4 max-w-xs">
                             <div className="flex items-center gap-3">
@@ -156,6 +176,7 @@ export default function AdminViewGallery() {
                   </table>
                 </div>
               </div>
+            </>
             )}
           </div>
         </div>

@@ -42,6 +42,7 @@ import AllServices from "./pages/AllServices";
 import AdminBlog from "./pages/Admin/Blog/AdminBlog";
 import BlogDetails from "./pages/Admin/Blog/BlogDetails";
 import AllProperty from "./components/AllProperty";
+import EditGallery from "./pages/Admin/Gallery/EditGallery";
 
 const App = () => {
   return (
@@ -88,6 +89,7 @@ const App = () => {
             <Route path="addteam" element={<AddTeam />} />
             <Route path="team/:id/edit" element={<EditTeam />} />
             <Route path="addgallery" element={<AddGallery />} />
+            <Route path="gallery/:id/edit" element={<EditGallery />} />
             <Route path="viewgallery" element={<AdminViewGallery />} />
             <Route path="services" element={<ServiceList />} />
             <Route path="addservices" element={<AddService />} />

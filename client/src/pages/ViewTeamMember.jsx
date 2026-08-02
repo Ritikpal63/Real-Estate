@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axiosInstance from "../utils/axiosConfig";
 import Section from "../components/Section";
 import AdminAsideSection from "../pages/Admin/AdminAsideSection";
 
 export default function ViewTeamMember() {
+  const navigate = useNavigate();
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -79,46 +80,72 @@ export default function ViewTeamMember() {
             )}
 
             {!loading && !error && items.length > 0 && (
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-                {items.map((item) => (
-                  <div
-                    key={item.id}
-                    className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden relative"
-                  >
-                    {/* <div className="h-50 w-full bg-gray-100 overflow-hidden">
-                      <img src={item.image} alt={item.title} className="h-[300px] object-cover" />
-                    </div> */}
-                    <div className="aspect-[4/4] w-full overflow-hidden">
-                      <img
-                        src={item.image}
-                        alt={item.title}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <div className="p-3">
-                      <h4 className="text-sm font-semibold text-gray-800 truncate">
-                        {item.name}
-                      </h4>
-                      <span className="text-sm text-gray-500 capitalize">
-                        {item.designation}
-                      </span>
-                    </div>
-                    <button
-                      onClick={() => handleDelete(item.id)}
-                      className="absolute top-2 right-2 bg-white/90 hover:bg-red-500 hover:text-white text-red-500 rounded-full w-8 h-8 flex items-center justify-center text-sm shadow"
-                      title="Delete"
-                    >
-                      🗑
-                    </button>
-                    <Link
-                      to={`/admin/team/${item.id}/edit`}
-                      className="absolute top-2 right-12 bg-white/90 hover:bg-blue-500 hover:text-white text-blue-500 rounded-full w-8 h-8 flex items-center justify-center text-sm shadow"
-                      title="Edit"
-                    >
-                      ✎
-                    </Link>
-                  </div>
-                ))}
+              <div className="hidden lg:block bg-white rounded-xl shadow-lg overflow-hidden">
+                <div className="h-[750px] overflow-y-auto adminNews">
+                  <table className="w-full">
+                    <thead className="bg-gray-50 sticky top-0">
+                      <tr>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Post
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Designation
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Name
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Date
+                        </th>
+                        <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Actions
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-200">
+                      {items.map((p) => (
+                        <tr key={p.id} className="hover:bg-gray-50">
+                          <td className="px-6 py-4 max-w-xs">
+                            <div className="flex items-center gap-3">
+                              <img
+                                src={p.image}
+                                alt={p.name}
+                                className="w-10 h-10 rounded-lg object-cover shrink-0"
+                              />
+                            </div>
+                          </td>
+                          <td className="px-6 py-4">
+                            <span className="text-xs font-semibold text-blue-600 bg-blue-50 px-3 py-1 rounded-full">
+                              {p.designation}
+                            </span>
+                          </td>
+                          <td className="px-6 py-4 text-sm text-gray-500">
+                            {p.name || 0}
+                          </td>
+                          <td className="px-6 py-4 text-sm text-green-800">
+                            {new Date(p.created_at).toLocaleDateString()}
+                          </td>
+                          <td className="px-6 py-4">
+                            <div className="flex gap-3 justify-around">
+                              <button
+                                onClick={() => navigate(`/admin/team/${p.id}/edit`)}
+                                className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+                              >
+                                Edit
+                              </button>
+                              <button
+                                onClick={() => handleDelete(p.id)}
+                                className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
+                              >
+                                Delete
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             )}
           </div>

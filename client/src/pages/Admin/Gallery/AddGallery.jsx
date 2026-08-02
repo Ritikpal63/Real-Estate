@@ -68,7 +68,8 @@ const AddGallery = () => {
     <>
       <Section title={"Add Gallery"} />
       <div className="flex flex-col lg:flex-row">
-        <AdminAsideSection />
+        <AdminAsideSection />import axiosInstance from "../../../utils/axiosConfig";
+
         <div className="flex-1 w-full min-w-0 bg-gray-50">
           <div className="max-w-3xl mx-auto px-3 sm:px-6 py-4 sm:py-8">
             <div className="mb-6">

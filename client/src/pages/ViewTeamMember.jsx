@@ -49,7 +49,7 @@ export default function ViewTeamMember() {
                 </p>
               </div>
               <Link to="/admin/addteam">
-                <span className="bg-[#374256] text-lg text-light rounded-lg px-4 py-2">
+                <span className="bg-primary text-white rounded-lg px-4 py-3 text-md">
                   + Add Team Member
                 </span>
               </Link>

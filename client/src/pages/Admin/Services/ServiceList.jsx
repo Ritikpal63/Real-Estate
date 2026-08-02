@@ -125,7 +125,7 @@ const ServiceList = () => {
                 className="
                 mt-4
                 md:mt-0
-                bg-blue-600
+                bg-primary
                 text-white
                 px-5
                 py-2

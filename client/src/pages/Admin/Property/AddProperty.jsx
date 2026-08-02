@@ -26,6 +26,7 @@ export default function AddProperty() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
+
   };
 
   const handleSubmit = async (e) => {
@@ -53,6 +54,11 @@ export default function AddProperty() {
           "Content-Type": "multipart/form-data",
         },
       });
+      await axiosInstance.put(`/property/${id}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
 
       navigate("/admin/viewproperty");
     } catch (err) {

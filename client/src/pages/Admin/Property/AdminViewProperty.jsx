@@ -66,7 +66,7 @@ export default function PropertyView() {
 
                 <Link
                   to="/admin/addproperty"
-                  className="bg-blue-500 text-green text-md rounded-lg px-4 py-2 whitespace-nowrap"
+                  className="bg-primary text-white text-md rounded-lg px-4 py-2 whitespace-nowrap"
                 >
                   + Add Property
                 </Link>

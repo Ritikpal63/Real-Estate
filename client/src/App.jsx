@@ -77,6 +77,7 @@ const App = () => {
             <Route path="addblog" element={<BlogUpload />} />
             <Route path="viewblogs" element={<AdminBlog />} />
             <Route path="addproperty" element={<AddPropertyPage />} />
+            <Route path="property/:id" element={<AddPropertyPage />} />
             <Route path="addnews" element={<AdminNews />} />
             <Route path="viewproperty" element={<AdminViewProperty />} />
             <Route path="addteam" element={<AddTeam />} />

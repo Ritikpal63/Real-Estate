@@ -49,7 +49,7 @@ export default function AdminViewGallery() {
               </div>
               <Link
                 to="/admin/addgallery"
-                className="bg-blue-500 text-md rounded-lg px-4 py-2"
+                className="bg-primary text-white text-md rounded-lg px-4 py-2"
               >
                 + Add Photo
               </Link>

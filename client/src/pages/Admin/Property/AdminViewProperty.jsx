@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axiosInstance from "../../../utils/axiosConfig";
 import Section from "../../../components/Section";
 import AdminAsideSection from "../AdminAsideSection";
 
 export default function PropertyView() {
+  const navigate = useNavigate();
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -14,7 +15,12 @@ export default function PropertyView() {
     const fetchProperties = async () => {
       try {
         setLoading(true);
-        const res = await axiosInstance.get("/property");
+        const res = await axiosInstance.get("/property/all", {
+          params: {
+            limit: 50,
+            offset: 0,
+          },
+        });
         setProperties(res.data.data);
       } catch (err) {
         setError(err.message || "Something went wrong");
@@ -99,88 +105,75 @@ export default function PropertyView() {
 
             {/* Property Grid */}
             {!loading && !error && properties.length > 0 && (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                {properties.map((property) => (
-                  <div
-                    key={property.id}
-                    className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden flex flex-col"
-                  >
-                    {/* Image */}
-                    <div className="h-44 w-full bg-gray-100 overflow-hidden">
-                      {property.image ? (
-                        <img
-                          src={property.image}
-                          alt={property.title}
-                          className="h-full w-full object-cover"
-                        />
-                      ) : (
-                        <div className="h-full w-full flex items-center justify-center text-gray-400 text-sm">
-                          No Image
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Content */}
-                    <div className="p-4 flex flex-col flex-1">
-                      <h3 className="font-semibold text-gray-800 truncate">
-                        {property.title}
-                      </h3>
-
-                      <p className="text-sm text-gray-500 mt-1 line-clamp-2">
-                        {property.description}
-                      </p>
-
-                      <div className="flex items-center gap-4 text-xs text-gray-500 mt-3">
-                        <span className="flex items-center gap-1">
-                          📍 {property.location || "—"}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          🏠 {property.type || "—"}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          📐 {property.size ? `${property.size}m²` : "—"}
-                        </span>
-                      </div>
-
-                      <div className="flex items-center justify-between mt-3">
-                        <span className="font-semibold text-gray-800">
-                          ${Number(property.price || 0).toLocaleString()}
-                        </span>
-                        <div className="flex items-center gap-3 text-xs text-gray-500">
-                          <span className="flex items-center gap-1">
-                            🛏 {property.bedroom ?? 0}
-                          </span>
-                          <span className="flex items-center gap-1">
-                            🛁 {property.bathroom ?? 0}
-                          </span>
-                        </div>
-                      </div>
-
-                      {/* Actions */}
-                      <div className="flex justify-around items-center">
-                        <Link
-                          to={`/property/${property.id}`}
-                          className="flex-1 text-center text-xs sm:text-sm bg-gray-100 hover:bg-gray-200 transition rounded-lg py-2 bg-green-600"
-                        >
-                          See Details
-                        </Link>
-                        <Link
-                          to={`/admin/property/${property.id}/edit`}
-                          className="bg-blue-500 text-green text-md rounded-lg px-4 py-2 whitespace-nowrap"
-                        >
-                          Edit
-                        </Link>
-                        <button
-                          onClick={() => handleDelete(property.id)}
-                          className="text-xs sm:text-sm text-red-500 hover:text-red-600 px-2"
-                          title="Delete"
-                        >
-                          🗑
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                ))}
+              <div className="hidden lg:block bg-white rounded-xl shadow-lg overflow-hidden">
+                <div className="h-[750px] overflow-y-auto adminNews">
+                  <table className="w-full">
+                    <thead className="bg-gray-50 sticky top-0">
+                      <tr>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Post
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Type
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Title
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Date
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Actions
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-200">
+                      {properties.map((property) => (
+                        <tr key={property.id} className="hover:bg-gray-50">
+                          <td className="px-6 py-4 max-w-xs">
+                            <div className="flex items-center gap-3">
+                              <img
+                                src={property.image || "assets/img/blog/blog-1.jpg"}
+                                alt={property.title}
+                                className="w-10 h-10 rounded-lg object-cover shrink-0"
+                              />
+                              <div className="text-sm font-medium text-gray-900 truncate">
+                                {property.title}
+                              </div>
+                            </div>
+                          </td>
+                          <td className="px-6 py-4">
+                            <span className="text-xs font-semibold text-blue-600 bg-blue-50 px-3 py-1 rounded-full">
+                              {property.type || "N/A"}
+                            </span>
+                          </td>
+                          <td className="px-6 py-4 text-sm text-gray-500">
+                            {property.title || 0}
+                          </td>
+                          <td className="px-6 py-4 text-sm text-green-800">
+                            {new Date(property.created_at).toLocaleDateString()}
+                          </td>
+                          <td className="px-6 py-4">
+                            <div className="flex gap-3">
+                              <button
+                                onClick={() => navigate(`/admin/property/${property.id}/edit`)}
+                                className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+                              >
+                                Edit
+                              </button>
+                              <button
+                                onClick={() => handleDelete(property.id)}
+                                className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
+                              >
+                                Delete
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             )}
           </div>

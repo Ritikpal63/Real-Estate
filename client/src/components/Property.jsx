@@ -28,10 +28,10 @@ const Property = () => {
       <div className="container">
         <div className="row">
           {properties.map((p) => (
-            <div className="col-md-4 col-sm-12 col-xs-12" key={p.id}>
+            <div className="col-md-4 col-sm-12 col-xs-12 hover:cursor-pointer" key={p.id} onClick={() => window.location.href = `/property/${p.id}`}>
               <div className="single_property">
                 <img
-                  src={p.image || FALLBACK_IMG}
+                  src={p.image}
                   className="img-fluid"
                   alt={p.title}
                 />

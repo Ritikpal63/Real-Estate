@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 import Section from "../../../components/Section";
 import AdminAsideSection from "../AdminAsideSection";
 import axiosInstance from "../../../utils/axiosConfig";
-// import { useAuth } from "../../../contextApi/AuthContext";
 import { useAuth } from "../../../contextApi/useAuth";
+import ImageUploader from "../Property/ImageUploader";
 
 const AdminNews = () => {
   const navigate = useNavigate();
@@ -14,12 +14,12 @@ const AdminNews = () => {
   const [filteredNews, setFilteredNews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
+  const [imageFile, setImageFile] = useState(null);
   const [formData, setFormData] = useState({
     title: "",
     content: "",
     summary: "",
     category: "General",
-    image: "",
     author: "Admin",
   });
   const [isEditing, setIsEditing] = useState(false);
@@ -28,7 +28,7 @@ const AdminNews = () => {
 
   useEffect(() => {
     if (!isAuthenticated()) {
-      navigate("/admin/login");
+      navigate("/login");
       return;
     }
     fetchNews();
@@ -44,7 +44,7 @@ const AdminNews = () => {
     } catch (error) {
       console.error("Error fetching news:", error);
       if (error.response?.status === 401) {
-        navigate("/admin/login");
+        navigate("/login");
       }
       setLoading(false);
     }
@@ -76,7 +76,7 @@ const AdminNews = () => {
         if (error.response) {
           if (error.response.status === 401) {
             alert("Your session has expired. Please login again.");
-            navigate("/admin/login");
+            navigate("/login");
           } else {
             alert(error.response.data?.message || "Failed to delete news.");
           }
@@ -92,39 +92,76 @@ const AdminNews = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Validation
     if (!formData.title.trim()) {
       alert("Please enter a title");
       return;
     }
+
     if (!formData.content.trim()) {
       alert("Please enter content");
       return;
     }
 
     try {
+      const newFormData = new FormData();
+
+      Object.entries(formData).forEach(([key, value]) => {
+        newFormData.append(key, value);
+      });
+
+      if (imageFile) {
+        newFormData.append("image", imageFile);
+      }
+
       let response;
+
       if (isEditing) {
-        response = await axiosInstance.put(`/news/${editId}`, formData);
+        response = await axiosInstance.put(
+          `/news/${editId}`,
+          newFormData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
       } else {
-        response = await axiosInstance.post("/news", formData);
+        response = await axiosInstance.post(
+          "/news",
+          newFormData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
       }
 
       if (response.data.success) {
         await fetchNews();
         resetForm();
+
         alert(
           isEditing
             ? "News updated successfully!"
-            : "News created successfully!",
+            : "News created successfully!"
         );
+      } else {
+        alert(response.data.message || "Something went wrong.");
       }
     } catch (error) {
       console.error("Error saving news:", error);
+
       if (error.response?.status === 401) {
         alert("Your session has expired. Please login again.");
         navigate("/login");
       } else {
-        alert(error.response?.data?.message || "Failed to save news.");
+        alert(
+          error.response?.data?.message ||
+          error.message ||
+          "Failed to save news."
+        );
       }
     }
   };
@@ -150,9 +187,10 @@ const AdminNews = () => {
       content: "",
       summary: "",
       category: "General",
-      image: "",
       author: "Admin",
     });
+
+    setImageFile(null);
     setIsEditing(false);
     setEditId(null);
     setShowForm(false);
@@ -292,7 +330,7 @@ const AdminNews = () => {
                       <label className="block text-sm font-medium text-gray-700 mb-1">
                         Image URL
                       </label>
-                      <input
+                      {/* <input
                         type="text"
                         name="image"
                         value={formData.image}
@@ -301,7 +339,8 @@ const AdminNews = () => {
                         }
                         className="w-full px-3 sm:px-4 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
                         placeholder="https://example.com/image.jpg"
-                      />
+                      /> */}
+                      <ImageUploader onImageSelect={setImageFile} />
                     </div>
                   </div>
                   <div className="flex flex-col sm:flex-row gap-3 pt-2">

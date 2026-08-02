@@ -25,11 +25,35 @@ class PropertyController {
       res.status(500).json({ message: "Failed to fetch properties" });
     }
   };
+  static async getAll(req, res) {
+    try {
+      const {limit , offset} = req.query;
+      const data = await PropertyModel.getAll(parseInt(limit), parseInt(offset));
+      const total = await PropertyModel.getCount();
+
+      res.json({
+        success: true,
+        data: data,
+        pagination: {
+          total,
+        },
+      });
+    } catch (error) {
+      console.error("Error fetching properties:", error);
+      res.status(500).json({
+        success: false,
+        message: "Failed to fetch properties",
+        error: error.message,
+      });
+    }
+  }
 
   static getPropertyById = async (req, res) => {
     try {
       const { id } = req.params;
-      const [rows] = await pool.query("SELECT * FROM properties WHERE id = ?", [id]);
+      const [rows] = await pool.query("SELECT * FROM properties WHERE id = ?", [
+        id,
+      ]);
 
       if (rows.length === 0) {
         return res.status(404).json({ message: "Property not found" });
@@ -50,26 +74,48 @@ class PropertyController {
   static createProperty = async (req, res) => {
     try {
       const {
-        title, location, type, amenities, size, year,
-        bedroom, bathroom, description, price,
+        title,
+        location,
+        type,
+        amenities,
+        size,
+        year,
+        bedroom,
+        bathroom,
+        description,
+        price,
       } = req.body;
 
       if (!title || !location || !type) {
-        return res.status(400).json({ message: "Title, location and type are required" });
+        return res
+          .status(400)
+          .json({ message: "Title, location and type are required" });
       }
 
       // With CloudinaryStorage: req.file.path = full secure URL, req.file.filename = public_id
       const image = req.file ? req.file.path : null;
 
       const property = await PropertyModel.createProperty(
-        title, location, type, amenities || null, size || null, year || null,
-        bedroom || 0, bathroom || 0, description || null, image, price || 0,
+        title,
+        location,
+        type,
+        amenities || null,
+        size || null,
+        year || null,
+        bedroom || 0,
+        bathroom || 0,
+        description || null,
+        image,
+        price || 0,
       );
 
       res.status(201).json({
         message: "Property created successfully",
         id: property.id,
-        property: { ...property, image: toDisplayImageUrl(req, property.image) },
+        property: {
+          ...property,
+          image: toDisplayImageUrl(req, property.image),
+        },
       });
     } catch (err) {
       console.error("createProperty error:", err);
@@ -81,11 +127,22 @@ class PropertyController {
     try {
       const { id } = req.params;
       const {
-        title, location, type, amenities, size, year,
-        bedroom, bathroom, description, price,
+        title,
+        location,
+        type,
+        amenities,
+        size,
+        year,
+        bedroom,
+        bathroom,
+        description,
+        price,
       } = req.body;
 
-      const [existingRows] = await pool.query("SELECT * FROM properties WHERE id = ?", [id]);
+      const [existingRows] = await pool.query(
+        "SELECT * FROM properties WHERE id = ?",
+        [id],
+      );
       if (existingRows.length === 0) {
         return res.status(404).json({ message: "Property not found" });
       }
@@ -101,8 +158,20 @@ class PropertyController {
         title = ?, location = ?, type = ?, amenities = ?, size = ?,
         year = ?, bedroom = ?, bathroom = ?, description = ?, image = ?, price = ?
        WHERE id = ?`,
-        [title, location, type, amenities || null, size || null, year || null,
-         bedroom || 0, bathroom || 0, description || null, image, price || 0, id],
+        [
+          title,
+          location,
+          type,
+          amenities || null,
+          size || null,
+          year || null,
+          bedroom || 0,
+          bathroom || 0,
+          description || null,
+          image,
+          price || 0,
+          id,
+        ],
       );
 
       res.status(200).json({ message: "Property updated successfully" });
@@ -115,13 +184,15 @@ class PropertyController {
   static deleteProperty = async (req, res) => {
     try {
       const { id } = req.params;
-      const [existingRows] = await pool.query("SELECT * FROM properties WHERE id = ?", [id]);
+      const [existingRows] = await pool.query(
+        "SELECT * FROM properties WHERE id = ?",
+        [id],
+      );
 
       if (existingRows.length === 0) {
         return res.status(404).json({ message: "Property not found" });
       }
 
-      // No local file to unlink anymore — image lives on Cloudinary
       await pool.query("DELETE FROM properties WHERE id = ?", [id]);
 
       res.status(200).json({ message: "Property deleted successfully" });

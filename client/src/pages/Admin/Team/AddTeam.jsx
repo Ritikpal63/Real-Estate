@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import AdminAsideSection from '../AdminAsideSection'
 import Section from '../../../components/Section'
 import axiosInstance from "../../../utils/axiosConfig"
 
 const AddTeam = () => {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         name: "",
         designation: "",
@@ -61,6 +63,7 @@ const AddTeam = () => {
                 });
 
                 setImage(null);
+                navigate("/admin/allteam");
             }
         } catch (err) {
             alert(err.response?.data?.message || "Something went wrong");

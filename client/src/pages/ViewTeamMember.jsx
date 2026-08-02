@@ -74,7 +74,7 @@ export default function ViewTeamMember() {
 
             {!loading && !error && items.length === 0 && (
               <div className="bg-gray-50 rounded-xl px-4 py-10 text-center text-gray-500">
-                No gallery items yet. Click "+ Add Photo" to upload one.
+                No team members yet. Click "+ Add Team Member" to add one.
               </div>
             )}
 
@@ -110,6 +110,13 @@ export default function ViewTeamMember() {
                     >
                       🗑
                     </button>
+                    <Link
+                      to={`/admin/team/${item.id}/edit`}
+                      className="absolute top-2 right-12 bg-white/90 hover:bg-blue-500 hover:text-white text-blue-500 rounded-full w-8 h-8 flex items-center justify-center text-sm shadow"
+                      title="Edit"
+                    >
+                      ✎
+                    </Link>
                   </div>
                 ))}
               </div>

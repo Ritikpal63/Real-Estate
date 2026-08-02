@@ -1,7 +1,6 @@
 // models/newsModel.js
 const pool = require("../config/database");
-const {v4: uuidv4} = require('uuid')
-
+const { v4: uuidv4 } = require("uuid");
 
 class NewsModel {
   // Get all news
@@ -41,19 +40,29 @@ class NewsModel {
   // Update news
   static async update(id, data) {
     const { title, content, summary, category, image, author } = data;
-    const [result] = await pool.query(
-      "UPDATE news SET title = ?, content = ?, summary = ?, category = ?, image = ?, author = ? WHERE id = ?",
+
+    await pool.query(
+      `UPDATE news
+     SET
+       title=?,
+       content=?,
+       summary=?,
+       category=?,
+       image=?,
+       author=?
+     WHERE id=?`,
       [
         title,
         content,
         summary || null,
         category || "General",
-        image || null,
+        image,
         author || "Admin",
         id,
       ],
     );
-    return result.affectedRows > 0 ? this.getById(id) : null;
+
+    return this.getById(id);
   }
 
   // Delete news

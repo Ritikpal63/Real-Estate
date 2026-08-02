@@ -15,7 +15,7 @@ router.get('/:id', NewsController.getById);
 
 // Protected routes (admin only)
 router.post('/',  authenticate, isAdmin, upload.single("image"), NewsController.create);
-router.put('/:id', authenticate, isAdmin, NewsController.update);
+router.put('/:id', authenticate, isAdmin, upload.single("image"),   NewsController.update);
 router.delete('/:id', authenticate, isAdmin, NewsController.delete);
 
 module.exports = router;

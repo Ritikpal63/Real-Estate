@@ -3,7 +3,10 @@ const pool = require("../config/database");
 
 class TeamModel {
   static async getAllTeam(limit, offset) {
-    const [rows] = await pool.query("SELECT * FROM team ORDER BY created_at DESC  LIMIT ? OFFSET ?", [limit, offset]);
+    const [rows] = await pool.query(
+      "SELECT * FROM team ORDER BY created_at DESC  LIMIT ? OFFSET ?",
+      [limit, offset],
+    );
     return rows;
   }
 
@@ -17,15 +20,71 @@ class TeamModel {
     return rows;
   }
 
-  static async add(name, designation, email, phone, facebook, instagram, twitter, about, image) {
+  static async add(
+    name,
+    designation,
+    email,
+    phone,
+    facebook,
+    instagram,
+    twitter,
+    about,
+    image,
+  ) {
     const id = uuidv4();
     await pool.query(
       `INSERT INTO team
       (id, name, designation, email, phone, facebook, instagram, twitter, about, image, created_at)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())`,
-      [id, name, designation, email, phone, facebook, instagram, twitter, about, image],
+      [
+        id,
+        name,
+        designation,
+        email,
+        phone,
+        facebook,
+        instagram,
+        twitter,
+        about,
+        image,
+      ],
     );
     return this.getById(id); // ✅ full row back, not undefined result.id
+  }
+
+  static async update(
+    id,
+    {
+      name,
+      designation,
+      email,
+      phone,
+      facebook,
+      instagram,
+      twitter,
+      about,
+      image,
+    },
+  ) {
+    await pool.query(
+      `UPDATE team SET
+        name = ?, designation = ?, email = ?, phone = ?,
+        facebook = ?, instagram = ?, twitter = ?, about = ?, image = ?
+       WHERE id = ?`,
+      [
+        name,
+        designation,
+        email,
+        phone,
+        facebook,
+        instagram,
+        twitter,
+        about,
+        image,
+        id,
+      ],
+    );
+    return this.getById(id);
   }
 
   static async delete(id) {

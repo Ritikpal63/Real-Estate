@@ -7,6 +7,7 @@ const { isAdmin } = require("../middleware/isAdmin");
 const PropertyController = require("../controllers/propertyController");
 
 router.get("/", PropertyController.getAllProperties);
+router.get("/all", PropertyController.getAll);
 router.get("/:id", PropertyController.getPropertyById);
 
 router.post(

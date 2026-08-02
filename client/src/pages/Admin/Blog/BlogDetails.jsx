@@ -43,7 +43,7 @@ const BlogDetails = () => {
                 <h2 className="text-2xl font-bold text-red-600">{error}</h2>
 
                 <Link
-                    to="/blogs"
+                    to="/blog"
                     className="inline-block mt-5 bg-blue-600 text-white px-6 py-3 rounded-lg"
                 >
                     Back to Blogs

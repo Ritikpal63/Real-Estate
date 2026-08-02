@@ -164,6 +164,13 @@ class PropertyModel {
   static find() {
     return new PropertyQuery();
   }
+    static async getAll(limit = 50, offset = 0) {
+    const [rows] = await pool.query(
+      "SELECT * FROM properties ORDER BY created_at DESC LIMIT ? OFFSET ?",
+      [limit, offset],
+    );
+    return rows;
+  }
 }
 
 module.exports = PropertyModel;

@@ -29,7 +29,7 @@ const HomeServiceCard = () => {
     return <div className="text-center py-10">Loading Services...</div>;
   }
 
-  return (
+  return (<>
     <section
       className="
       w-full
@@ -86,10 +86,10 @@ const HomeServiceCard = () => {
           "
         >
           <Link
-            to="/services"
+            onClick={() => window.location.href = "/allservice"}
             className="
             inline-block
-            bg-blue-600
+            bg-primary
             text-white
             px-6
             py-3
@@ -103,6 +103,8 @@ const HomeServiceCard = () => {
         </div>
       </div>
     </section>
+
+  </>
   );
 };
 

@@ -13,7 +13,7 @@ import AgentprofilePage from "./pages/AgentprofilePage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import PropertyDetailPage from "./pages/PropertyDetailPage";
-import PropertyPage from "./pages/PropertyPage";
+// import PropertyPage from "./pages/PropertyPage";
 import FaqPage from "./pages/FaqPage";
 import BlogUpload from "./pages/Admin/BlogUpload";
 import NotAuthorizedPage from "./pages/NotAuthorizedPage";
@@ -30,7 +30,9 @@ import NewsDetailPage from "./components/NewsDetailPage";
 import AllNews from "./components/AllNews";
 import ViewTeamMember from "./pages/ViewTeamMember";
 import AdminViewProperty from "./pages/Admin/Property/AdminViewProperty";
+import EditProperty from "./pages/Admin/Property/EditProperty";
 import AddTeam from "./pages/Admin/Team/AddTeam";
+import EditTeam from "./pages/Admin/Team/EditTeam";
 import AddGallery from "./pages/Admin/Gallery/AddGallery";
 import AdminViewGallery from "./pages/Admin/Gallery/AdminViewGallery";
 import ServiceList from "./pages/Admin/Services/ServiceList";
@@ -39,6 +41,7 @@ import EditService from "./pages/Admin/Services/EditService";
 import AllServices from "./pages/AllServices";
 import AdminBlog from "./pages/Admin/Blog/AdminBlog";
 import BlogDetails from "./pages/Admin/Blog/BlogDetails";
+import AllProperty from "./components/AllProperty";
 
 const App = () => {
   return (
@@ -54,7 +57,8 @@ const App = () => {
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/blogpost" element={<BlogpostPage />} />
-          <Route path="/property" element={<PropertyPage />} />
+          {/* <Route path="/property" element={<PropertyPage />} /> */}
+          <Route path="/property" element={<AllProperty />} />
           <Route path="/property/:id" element={<PropertyDetailPage />} />
           <Route path="agent-profile" element={<AgentprofilePage />} />
           <Route path="/register" element={<RegisterPage />} />
@@ -78,9 +82,11 @@ const App = () => {
             <Route path="viewblogs" element={<AdminBlog />} />
             <Route path="addproperty" element={<AddPropertyPage />} />
             <Route path="property/:id" element={<AddPropertyPage />} />
+            <Route path="property/:id/edit" element={<EditProperty />} />
             <Route path="addnews" element={<AdminNews />} />
             <Route path="viewproperty" element={<AdminViewProperty />} />
             <Route path="addteam" element={<AddTeam />} />
+            <Route path="team/:id/edit" element={<EditTeam />} />
             <Route path="addgallery" element={<AddGallery />} />
             <Route path="viewgallery" element={<AdminViewGallery />} />
             <Route path="services" element={<ServiceList />} />

@@ -118,7 +118,7 @@ const LatestnewsPage = () => {
                     <div className="relative overflow-hidden h-48">
                       <Link to={`/news/${item.id}`}>
                         <img
-                          src={item.image || "assets/img/blog/blog-1.jpg"}
+                          src={item.image}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                           alt={item.title}
                           onError={(e) => {

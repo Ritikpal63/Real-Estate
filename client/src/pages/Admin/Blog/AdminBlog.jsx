@@ -52,7 +52,6 @@ const AdminBlog = () => {
         try {
             setLoading(true);
             const response = await axiosInstance.get("/blogs");
-            console.log("Response",response.data.data)
             const data = response.data.data || [];
             setBlogs(data);
             setFilteredBlogs(data);
@@ -168,9 +167,9 @@ const AdminBlog = () => {
         setFormData({
             title: blog.title,
             content: blog.content,
+            image: blog.image,
         });
-        setImageFile(null);
-        setImagePreview(blog.image || "");
+        setImageFile(blog.image);    
         setIsEditing(true);
         setEditId(blog.id);
         setShowForm(true);
@@ -282,24 +281,12 @@ const AdminBlog = () => {
                                             Cover Image {!isEditing && "*"}
                                         </label>
                                         <ImageUploader
-                                            onImageSelect={(file) => {
-                                                setImageFile(file);
-                                                // naya file choose hote hi purani "existing image"
-                                                // wali preview hata do taaki confusion na ho
-                                                setImagePreview("");
-                                            }}
+                                            onImageSelect={setImageFile}
                                         />
                                         {isEditing && (
                                             <p className="text-xs text-gray-400 mt-1">
                                                 Leave empty to keep the current image.
                                             </p>
-                                        )}
-                                        {imagePreview && (
-                                            <img
-                                                src={imagePreview}
-                                                alt="Preview"
-                                                className="mt-3 h-40 w-full sm:w-64 object-cover rounded-lg border"
-                                            />
                                         )}
                                     </div>
                                     <div className="flex flex-col sm:flex-row gap-3 pt-2">

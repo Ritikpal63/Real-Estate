@@ -73,8 +73,8 @@ class BlogController {
       const { title, content } = req.body;
       
       // Check if news exists
-      const imageUrl = req.file ? req.file.path : undefined;
       const existing = await BlogModel.getById(id);
+      const imageUrl = req.file ? req.file.path : existing.image; 
       if (!existing) {
         return res.status(404).json({ success: false, message: 'Blog not found' });
       }

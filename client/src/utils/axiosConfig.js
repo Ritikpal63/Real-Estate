@@ -38,9 +38,8 @@ axiosInstance.interceptors.response.use(
       localStorage.removeItem("user");
       delete axios.defaults.headers.common["Authorization"];
 
-      // Redirect to login page
-      if (window.location.pathname !== "/admin/login") {
-        window.location.href = "/admin/login";
+      if (window.location.pathname !== "/login") {
+        window.location.href = "/login";
       }
     }
     return Promise.reject(error);

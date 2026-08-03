@@ -1,0 +1,88 @@
+-- Active: 1785261634616@@127.0.0.1@3306@adminrealestate
+CREATE TABLE IF NOT EXISTS blogs (
+  id VARCHAR(36) NOT NULL,
+  title VARCHAR(100) NOT NULL,
+  content VARCHAR(255) NOT NULL,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  image VARCHAR(255) NOT NULL,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS properties (
+  id VARCHAR(36) NOT NULL,
+  title VARCHAR(50) NOT NULL,
+  location VARCHAR(50) NOT NULL,
+  type VARCHAR(50) NOT NULL,
+  amenities VARCHAR(100),
+  bedroom INT,
+  bathroom INT,
+  size INT,
+  year INT,
+  price INT,
+  description VARCHAR(255),
+  image VARCHAR(255) NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS news (
+  id VARCHAR(36) NOT NULL,
+  title VARCHAR(255) NOT NULL,
+  content TEXT NOT NULL,
+  summary VARCHAR(500),
+  category ENUM('General','Market Trends','Investment Tips','Property News','Legal Updates') DEFAULT 'General',
+  image VARCHAR(500),
+  author VARCHAR(100) DEFAULT 'Admin',
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS team (
+  id VARCHAR(36) NOT NULL,
+  name VARCHAR(255) NOT NULL,
+  designation VARCHAR(150),
+  email VARCHAR(150),
+  phone VARCHAR(20),
+  image VARCHAR(500),
+  facebook VARCHAR(255),
+  instagram VARCHAR(255),
+  twitter VARCHAR(255),
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  about VARCHAR(250),
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS services (
+  id CHAR(36) NOT NULL,
+  title VARCHAR(255) NOT NULL,
+  slug TEXT,
+  description TEXT NOT NULL,
+  icon VARCHAR(100) NOT NULL,
+  status ENUM('active','inactive') NOT NULL DEFAULT 'active',
+  display_order INT NOT NULL DEFAULT 0,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS gallery (
+  id VARCHAR(36) NOT NULL,
+  title VARCHAR(255),
+  image VARCHAR(500) NOT NULL,
+  category ENUM('bedroom','bathroom','kitchen','garage','basement','exterior') DEFAULT 'bedroom',
+  description VARCHAR(500),
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS contacts (
+  id VARCHAR(36) NOT NULL,
+  name VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL,
+  message TEXT,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  new_id VARCHAR(36),
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

@@ -1,4 +1,3 @@
-// backend/scripts/createAdmin.js
 const bcrypt = require('bcrypt');
 const db = require('../config/database');
 
@@ -7,7 +6,7 @@ const createAdmin = async () => {
     // Check if admin already exists
     await db.query(
       `CREATE TABLE IF NOT EXISTS users (
-        id INT AUTO_INCREMENT PRIMARY KEY,
+        id VARCHAR(36) NOT NULL PRIMARY KEY UUID(),
         username VARCHAR(255) NOT NULL UNIQUE,
         name VARCHAR(255) NOT NULL,
         email VARCHAR(255) NOT NULL UNIQUE,
@@ -18,7 +17,7 @@ const createAdmin = async () => {
     );
     const [existing] = await db.query(
       'SELECT * FROM users WHERE email = ?',
-      ['admin@realestate.local']
+      ['admin@realestate']
     );
     
     if (existing.length > 0) {
@@ -31,11 +30,11 @@ const createAdmin = async () => {
     const [result] = await db.query(
       `INSERT INTO users (username, name, email, password, role, created_at) 
        VALUES (?, ?, ?, ?, ?, NOW())`,
-      ['admin', 'Admin User', 'admin@realestate.local', hashedPassword, 'admin']
+      ['admin', 'Admin User', 'admin@realestate', hashedPassword, 'admin']
     );
     
     console.log('✅ Admin user created successfully!');
-    console.log('📧 Email: admin@realestate.local');
+    console.log('📧 Email: admin@realestate');
     console.log('🔑 Password: admin123');
     
   } catch (error) {

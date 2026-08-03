@@ -184,20 +184,19 @@ class PropertyModel {
     const [rows] = await pool.query(
       `SELECT id
      FROM property_views
-     WHERE property_id = ?
-     AND visitor_id = ?`,
+     WHERE property_id = ?`,
       [propertyId, visitorId],
     );
 
     return rows.length > 0;
   }
 
-  static async saveView(propertyId, visitorId, ip) {
+  static async saveView(propertyId, ip) {
     await pool.query(
       `INSERT INTO property_views
-    (property_id, visitor_id, ip_address)
-    VALUES (?,?,?)`,
-      [propertyId, visitorId, ip],
+    (property_id,  ip_address)
+    VALUES (?,?)`,
+      [propertyId, ip],
     );
   }
 

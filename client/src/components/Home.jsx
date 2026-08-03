@@ -4,28 +4,78 @@ import axiosInstance from "../utils/axiosConfig";
 
 const BackgroundCarousel = () => {
   const images = [
-    // "/assets/img/bg/NCR02.jpg",
-    // "/assets/img/bg/NCR05.jpg",
-    // "/assets/img/bg/NCR03.jpg",
+    "/assets/img/bg/NCR02.jpg",
+    "/assets/img/bg/NCR05.jpg",
+    "/assets/img/bg/NCR03.jpg",
     "/assets/img/bg/NCR04.jpg",
   ];
-  const [index, setIndex] = useState(0);
 
-  const prev = () => setIndex((i) => (i - 1 + images.length) % images.length);
-  const next = () => setIndex((i) => (i + 1) % images.length);
+
+  const slides = [...images, images[0]];
+  const [index, setIndex] = useState(0);
+  const [transition, setTransition] = useState(true);
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setIndex((prev) => prev + 1);
+    }, 3000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  const handleTransitionEnd = () => {
+    if (index === images.length) {
+      setTransition(false);
+      setIndex(0);
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          setTransition(true);
+        });
+      });
+    }
+  };
+
+  const prev = () => {
+    if (index === 0) {
+      setTransition(false);
+      setIndex(images.length);
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          setTransition(true);
+          setIndex(images.length - 1);
+        });
+      });
+    } else {
+      setIndex((prev) => prev - 1);
+    }
+  };
+   const next = () => {setIndex((prev) => prev + 1);};
 
   return (
     <div className="absolute inset-0 z-0 overflow-hidden">
-      {images.map((src, i) => (
+      <div className="absolute inset-0 overflow-hidden">
         <div
-          key={i}
-          className={`absolute inset-0 bg-center bg-cover transition-opacity duration-700 ease-in-out ${
-            i === index ? "opacity-100" : "opacity-0"
-          }`}
-          style={{ backgroundImage: `url(${src})` }}
-          aria-hidden={i !== index}
-        />
-      ))}
+          onTransitionEnd={handleTransitionEnd}
+          className="flex h-full"
+          style={{
+            width: `${slides.length * 100}%`,
+            transform: `translateX(-${index * (100 / slides.length)}%)`,
+            transition: transition ? "transform 700ms ease-in-out" : "none",
+          }}
+        >
+          {slides.map((src, i) => (
+            <div
+              key={i}
+              className="h-full bg-center bg-cover flex-shrink-0"
+              style={{
+                width: `${100 / slides.length}%`,
+                backgroundImage: `url(${src})`,
+              }}
+            />
+          ))}
+        </div>
+      </div>
 
       <button
         onClick={prev}
@@ -71,9 +121,8 @@ const BackgroundCarousel = () => {
           <button
             key={i}
             onClick={() => setIndex(i)}
-            className={`w-2 h-2 rounded-full transition-all duration-300 ${
-              i === index ? "bg-white w-6" : "bg-white/40 hover:bg-white/60"
-            }`}
+            className={`w-2 h-2 rounded-full transition-all duration-300 ${i === index ? "bg-white w-6" : "bg-white/40 hover:bg-white/60"
+              }`}
             aria-label={`Go to slide ${i + 1}`}
           />
         ))}
@@ -141,7 +190,7 @@ const Home = () => {
                   About Us
                 </Link>
                 <Link
-                  to="/gallery"
+                  to="/property"
                   className="px-5 sm:px-8 py-3 sm:py-4 text-base sm:text-lg md:text-xl font-semibold text-light bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-2xl wow bounceIn"
                   data-wow-delay=".8s"
                 >

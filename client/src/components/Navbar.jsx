@@ -92,7 +92,7 @@ const Navbar = () => {
               Services
             </Link>
 
-            <div className="relative group inline-block">
+            {/* <div className="relative group inline-block">
               <button className="text-white hover:text-green-400 transition-colors duration-300 text-sm font-medium focus:outline-none flex items-center gap-1">
                 Pages
                 <svg
@@ -122,7 +122,7 @@ const Navbar = () => {
                 >
                   Register
                 </Link> */}
-                <Link
+                {/* <Link
                   to="/faq"
                   className="block px-4 py-2 hover:bg-gray-100 transition-colors"
                 >
@@ -133,12 +133,12 @@ const Navbar = () => {
                   className="block px-4 py-2 hover:bg-gray-100 transition-colors"
                 >
                   404 Page
-                </Link>
+                </Link> 
               </div>
-            </div>
+            </div> */}
 
             {/* Blog Dropdown - Hover */}
-            <div className="relative group inline-block">
+            {/* <div className="relative group inline-block">
               <button className="text-white hover:text-green-400 transition-colors duration-300 text-sm font-medium focus:outline-none flex items-center gap-1">
                 Blog
                 <svg
@@ -162,14 +162,20 @@ const Navbar = () => {
                 >
                   Blog Main
                 </Link>
-                <Link
+                {/* <Link
                   to="/blogpost"
                   className="block px-4 py-2 hover:bg-gray-100 transition-colors"
                 >
                   Blog Post
-                </Link>
+                </Link> 
               </div>
-            </div>
+            </div> */}
+            <Link
+              to="/blog"
+              className="text-white hover:text-green-400 transition-colors duration-300 text-sm font-medium"
+            >
+              Blogs
+            </Link>
 
             <Link
               to="/contact"

@@ -1,18 +1,18 @@
-/* @tailwind base;
-@tailwind components;
-@tailwind utilities; */
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
 
+body {
+  @apply bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100;
+}
 
-.logo{
-    height: 90px;
+.logo {
+  height: 90px;
 }
-@media (max-width:768px) {
-    .logo{
+@media (max-width: 768px) {
+  .logo {
     height: 50px;
-}
-.navbar{
+  }
+  .navbar {
     height: 55px;
-}
+  }
 }

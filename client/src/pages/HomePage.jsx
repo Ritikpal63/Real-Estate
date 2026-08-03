@@ -8,6 +8,7 @@ import Search from "./Search";
 import Property from "../components/Property";
 import Home from "../components/Home";
 import HomeServiceCard from "../components/HomeServiceCard";
+import YoutubeVideo from "../components/YoutubeVideo";
 // import TeamMember from "./TeamMember";
 // import About from "../components/About";
 // import WhyChooseUs from "../components/WhyChooseUs";
@@ -28,7 +29,8 @@ const HomePage = () => {
       {/* <ContactUs /> */}
       <HomeServiceCard />
       <Property />
-      <GalleryPage />
+      {/* <GalleryPage /> */}
+      <YoutubeVideo />
       <TeamPage />
       <Newsletter />
       {/* <TeamMember /> */}

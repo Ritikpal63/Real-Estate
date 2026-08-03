@@ -192,7 +192,14 @@ const LatestnewsPage = () => {
         {!loading && !error && news.length > 0 && (
           <div className="text-center mt-12">
             <Link to="/news/allnews" className="">
-              <span className="inline-block btn-contact-bg">View All News</span>
+              <span className="inline-block
+            bg-primary
+            text-white
+            px-6
+            py-3
+            rounded-lg
+            hover:bg-blue-700
+            transition">View All News</span>
             </Link>
           </div>
         )}

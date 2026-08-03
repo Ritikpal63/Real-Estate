@@ -29,10 +29,10 @@ const Property = () => {
         <div className="row">
           {properties.map((p) => (
             <div className="col-md-4 col-sm-12 col-xs-12 hover:cursor-pointer" key={p.id} onClick={() => window.location.href = `/property/${p.id}`}>
-              <div className="single_property">
+              <div className="single_property" style={{borderRadius:"30px "}}>
                 <img
                   src={p.image}
-                  className="img-fluid"
+                  className="img-fluid rounded-xl"
                   alt={p.title}
                 />
                 <div className="single_property_content">

@@ -13,25 +13,25 @@ export default function PropertyView() {
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState("Sale");
 
-  useEffect(() => {
-    const fetchProperties = async () => {
-      try {
-        setLoading(true);
-        const res = await axiosInstance.get("/property/all", {
-          params: {
-            limit: 50,
-            offset: 0,
-          },
-        });
-        setProperties(res.data.data);
-        setFilteredProperties(res.data.data);
-      } catch (err) {
-        setError(err.message || "Something went wrong");
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchProperties = async () => {
+    try {
+      setLoading(true);
+      const res = await axiosInstance.get("/property/all", {
+        params: {
+          limit: 50,
+          offset: 0,
+        },
+      });
+      setProperties(res.data.data);
+      setFilteredProperties(res.data.data);
+    } catch (err) {
+      setError(err.message || "Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchProperties();
   }, []);
   const handleSearch = (value) => {
@@ -51,7 +51,8 @@ export default function PropertyView() {
       return;
     try {
       const res = await axiosInstance.delete(`/property/${id}`);
-      setProperties((prev) => prev.filter((p) => p.id !== id));
+      // setProperties((prev) => prev.filter((p) => p.id !== id));
+      fetchProperties()
     } catch (err) {
       alert(err.message);
     }

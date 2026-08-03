@@ -54,12 +54,6 @@ export default function AddProperty() {
           "Content-Type": "multipart/form-data",
         },
       });
-      await axiosInstance.put(`/property/${id}`, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-
       navigate("/admin/viewproperty");
     } catch (err) {
       console.error(err);

@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { Sun, Moon } from "lucide-react";
+import { ThemeContext } from "../contextApi/ThemeContext";
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { theme, toggleTheme } = useContext(ThemeContext);
 
   const closeMenu = () => {
     setMobileMenuOpen(false);
@@ -19,8 +23,8 @@ const Navbar = () => {
                 src="/assets/img/NCRLOGOGolden01.png"
                 alt="NCR Space Connect"
                 className="w-auto logo"
-                // style={{height:"90px"}}
-                
+              // style={{height:"90px"}}
+
               />
             </Link>
           </div>
@@ -122,7 +126,7 @@ const Navbar = () => {
                 >
                   Register
                 </Link> */}
-                {/* <Link
+            {/* <Link
                   to="/faq"
                   className="block px-4 py-2 hover:bg-gray-100 transition-colors"
                 >
@@ -189,6 +193,9 @@ const Navbar = () => {
             >
               Admin
             </Link>
+            <button onClick={toggleTheme} aria-label="Toggle theme">
+              {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
+            </button>
           </div>
 
           {/* Mobile Menu Button */}

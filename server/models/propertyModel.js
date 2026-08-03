@@ -164,11 +164,56 @@ class PropertyModel {
   static find() {
     return new PropertyQuery();
   }
-    static async getAll(limit = 50, offset = 0) {
+  static async getAll(limit = 50, offset = 0) {
     const [rows] = await pool.query(
       "SELECT * FROM properties ORDER BY created_at DESC LIMIT ? OFFSET ?",
       [limit, offset],
     );
+    return rows;
+  }
+  static async increaseView(propertyId) {
+    await pool.query(
+      `UPDATE properties
+     SET views = views + 1
+     WHERE id = ?`,
+      [propertyId],
+    );
+  }
+
+  static async hasViewed(propertyId, visitorId) {
+    const [rows] = await pool.query(
+      `SELECT id
+     FROM property_views
+     WHERE property_id = ?
+     AND visitor_id = ?`,
+      [propertyId, visitorId],
+    );
+
+    return rows.length > 0;
+  }
+
+  static async saveView(propertyId, visitorId, ip) {
+    await pool.query(
+      `INSERT INTO property_views
+    (property_id, visitor_id, ip_address)
+    VALUES (?,?,?)`,
+      [propertyId, visitorId, ip],
+    );
+  }
+
+  static async getMostViewedProperties() {
+    const [rows] = await pool.query(`
+    SELECT
+      id,
+      title,
+      location,
+      price,
+      image,
+      views
+    FROM properties
+    ORDER BY views DESC, created_at DESC
+  `);
+
     return rows;
   }
 }

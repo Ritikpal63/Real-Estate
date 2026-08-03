@@ -3,6 +3,16 @@ import { useParams, Link } from "react-router-dom";
 import axiosInstance from "../utils/axiosConfig";
 
 const FALLBACK_IMG = "/assets/img/property/1.jpg";
+const getVisitorId = () => {
+  let visitorId = localStorage.getItem("visitor_id");
+
+  if (!visitorId) {
+    visitorId =
+      Date.now().toString(36) + Math.random().toString(36).substring(2);
+    localStorage.setItem("visitor_id", visitorId);
+  }
+  return visitorId;
+};
 
 const PropertyDetail = () => {
   const { id } = useParams();
@@ -15,6 +25,8 @@ const PropertyDetail = () => {
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
 
+
+
   useEffect(() => {
     const fetchProperty = async () => {
       try {
@@ -22,6 +34,11 @@ const PropertyDetail = () => {
         setError(null);
         const res = await axiosInstance.get(`/property/${id}`);
         setProperty(res.data);
+        console.log("Property Detail Page", res.data)
+        const visitorId = getVisitorId();
+        await axiosInstance.post(`/property/${id}/view`, {
+          visitorId,
+        });
       } catch (err) {
         console.error("PropertyDetail fetch error:", err);
         setError(
@@ -33,6 +50,7 @@ const PropertyDetail = () => {
         setLoading(false);
       }
     };
+
     fetchProperty();
   }, [id]);
 

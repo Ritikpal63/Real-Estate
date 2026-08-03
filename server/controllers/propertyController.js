@@ -27,8 +27,11 @@ class PropertyController {
   };
   static async getAll(req, res) {
     try {
-      const {limit , offset} = req.query;
-      const data = await PropertyModel.getAll(parseInt(limit), parseInt(offset));
+      const { limit, offset } = req.query;
+      const data = await PropertyModel.getAll(
+        parseInt(limit),
+        parseInt(offset),
+      );
       const total = await PropertyModel.getCount();
 
       res.json({
@@ -68,6 +71,52 @@ class PropertyController {
     } catch (err) {
       console.error("getPropertyById error:", err);
       res.status(500).json({ message: "Failed to fetch property" });
+    }
+  };
+
+  static addPropertyView = async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { visitorId } = req.body;
+
+      if (!visitorId) {
+        return res.status(400).json({
+          success: false,
+          message: "visitorId is required",
+        });
+      }
+
+      const property = await PropertyModel.getById(id);
+
+      if (!property) {
+        return res.status(404).json({
+          success: false,
+          message: "Property not found",
+        });
+      }
+
+      const alreadyViewed = await PropertyModel.hasViewed(id, visitorId);
+
+      if (!alreadyViewed) {
+        const ip =
+          req.headers["x-forwarded-for"] || req.socket.remoteAddress || req.ip;
+
+        await PropertyModel.saveView(id, visitorId, ip);
+
+        await PropertyModel.increaseView(id);
+      }
+
+      res.json({
+        success: true,
+        message: "View Count Updated",
+      });
+    } catch (error) {
+      console.log(error);
+
+      res.status(500).json({
+        success: false,
+        message: error.message,
+      });
     }
   };
 
@@ -178,6 +227,29 @@ class PropertyController {
     } catch (err) {
       console.error("updateProperty error:", err);
       res.status(500).json({ message: "Failed to update property" });
+    }
+  };
+
+  static getMostViewedProperties = async (req, res) => {
+    try {
+      const data = await PropertyModel.getMostViewedProperties();
+
+      const result = data.map((item) => ({
+        ...item,
+        image: toDisplayImageUrl(req, item.image),
+      }));
+
+      res.json({
+        success: true,
+        data: result,
+      });
+    } catch (error) {
+      console.log(error);
+
+      res.status(500).json({
+        success: false,
+        message: error.message,
+      });
     }
   };
 

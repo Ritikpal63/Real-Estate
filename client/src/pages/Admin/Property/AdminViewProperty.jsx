@@ -22,8 +22,10 @@ export default function PropertyView() {
           offset: 0,
         },
       });
-      setProperties(res.data.data);
-      setFilteredProperties(res.data.data);
+      const sorted = res.data.data.sort((a, b) => (b.views || 0) - (a.views || 0));
+
+      setProperties(sorted);
+      setFilteredProperties(sorted);
     } catch (err) {
       setError(err.message || "Something went wrong");
     } finally {
@@ -197,6 +199,11 @@ export default function PropertyView() {
                         </div> */}
 
                         <div className="min-w-0">
+                          <div className="mt-2">
+                            <span className="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-xs font-semibold">
+                              👁 {article.views || 0} Views
+                            </span>
+                          </div>
                           <h3 className="text-base font-bold text-gray-900 line-clamp-2 break-words">
                             {article.title}
                           </h3>
@@ -262,6 +269,9 @@ export default function PropertyView() {
                             Title
                           </th>
                           <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Views
+                          </th>
+                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Date
                           </th>
                           <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -288,6 +298,11 @@ export default function PropertyView() {
                             </td>
                             <td className="px-6 py-4 text-sm font-medium text-gray-900 truncate">
                               {property.title || 0}
+                            </td>
+                            <td className="px-6 py-4">
+                              <span className="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full font-semibold">
+                                👁 {property.views || 0}
+                              </span>
                             </td>
                             <td className="px-6 py-4 text-sm text-green-800">
                               {new Date(property.created_at).toLocaleDateString()}

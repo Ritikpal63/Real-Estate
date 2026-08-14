@@ -43,11 +43,11 @@ import AdminBlog from "./pages/Admin/Blog/AdminBlog";
 import BlogDetails from "./pages/Admin/Blog/BlogDetails";
 import AllProperty from "./components/AllProperty";
 import EditGallery from "./pages/Admin/Gallery/EditGallery";
-import { ThemeProvider } from "./contextApi/ThemeContext";
+// import { ThemeProvider } from "./contextApi/ThemeContext";
 
 const App = () => {
   return (
-    <ThemeProvider>
+    // <ThemeProvider>
       <AuthProvider>
         <PostProvider>
         <Navbar />
@@ -103,7 +103,7 @@ const App = () => {
         <Footer />
       </PostProvider>
     </AuthProvider>
-    </ThemeProvider>
+    // </ThemeProvider>
   );
 };
 

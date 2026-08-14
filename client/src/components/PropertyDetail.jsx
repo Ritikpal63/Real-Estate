@@ -34,7 +34,6 @@ const PropertyDetail = () => {
         setError(null);
         const res = await axiosInstance.get(`/property/${id}`);
         setProperty(res.data);
-        console.log("Property Detail Page", res.data)
         const visitorId = getVisitorId();
         await axiosInstance.post(`/property/${id}/view`, {
           visitorId,

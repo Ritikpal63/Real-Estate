@@ -87,16 +87,7 @@ const HomeServiceCard = () => {
         >
           <Link
             onClick={() => window.location.href = "/allservice"}
-            className="
-            inline-block
-            bg-primary
-            text-white
-            px-6
-            py-3
-            rounded-lg
-            hover:bg-blue-700
-            transition
-            "
+            className="btn btn-primary px-3 py-3"
           >
             View All Services
           </Link>

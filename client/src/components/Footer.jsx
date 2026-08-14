@@ -90,7 +90,11 @@ const Footer = () => {
 						</div>
 					</div>
 					<hr />
-					<p className="text-center text-light">NCRSpaceConnect</p>
+					<p className="text-center text-light">NCRSpaceConnect
+						<span className='ms-2'>Developed by
+							<Link to="https://instagram.com/ritikpal_63" className='text-light ms-2'>ritikpal_63</Link>
+						</span>
+					</p>
 				</div>
 
 			</footer>

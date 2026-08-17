@@ -112,27 +112,28 @@ const LatestnewsPage = () => {
                 return (
                   <div
                     key={item.id}
-                    className="w-full bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 group"
+                    className="w-full bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 group flex flex-col"
                   >
-                    {/* Blog Image */}
-                    <div className="relative overflow-hidden h-48">
+                    {/* ================= IMAGE ================= */}
+                    <div className="relative overflow-hidden h-52">
                       <Link to={`/news/${item.id}`}>
                         <img
                           src={item.image}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                           alt={item.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                           onError={(e) => {
-                            e.target.src = "assets/img/blog/blog-1.jpg";
+                            e.currentTarget.src = "/assets/img/blog/blog-1.jpg";
                           }}
                         />
                       </Link>
 
-                      {/* Post Date Badge */}
-                      <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg px-4 py-2 text-center min-w-[60px]">
-                        <span className="block text-2xl font-bold text-gray-800">
+                      {/* Date Badge */}
+                      <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg px-3 py-2 text-center min-w-[58px]">
+                        <span className="block text-xl font-bold text-gray-800">
                           {day}
                         </span>
-                        <span className="block text-sm text-gray-500 uppercase">
+
+                        <span className="block text-xs text-gray-500 uppercase">
                           {month}
                         </span>
                       </div>
@@ -140,45 +141,46 @@ const LatestnewsPage = () => {
                       {/* Category Badge */}
                       <div className="absolute top-4 right-4">
                         <span
-                          className={`px-3 py-1 rounded-full text-xs font-semibold ${getCategoryColor(item.category)}`}
+                          className={`px-3 py-1 rounded-full text-xs font-semibold shadow-sm ${getCategoryColor(
+                            item.category,
+                          )}`}
                         >
                           {item.category || "General"}
                         </span>
                       </div>
                     </div>
 
-                    {/* Blog Content */}
-                    <div className="p-6">
-                      <h3 className="text-xl font-bold text-gray-800 mb-2 hover:text-green-500 transition-colors line-clamp-2">
+                    {/* ================= CONTENT ================= */}
+                    <div className="p-5 flex flex-col flex-1">
+                      {/* Title */}
+                      <h3 className="text-lg font-bold text-gray-800 mb-3 line-clamp-2 group-hover:text-green-500 transition-colors duration-300">
                         <Link to={`/news/${item.id}`}>{item.title}</Link>
                       </h3>
-                      <p className="text-gray-600 text-sm leading-relaxed mb-4 line-clamp-3">
+
+                      {/* Description */}
+                      <p className="text-gray-600 text-sm leading-relaxed mb-5 line-clamp-3 flex-1">
                         {item.summary ||
-                          item.content?.substring(0, 120) + "..." ||
-                          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vitae risus nec dui venenatis dignissim."}
+                          (item.content
+                            ? item.content.substring(0, 120) + "..."
+                            : "Stay updated with the latest real estate news and property market updates.")}
                       </p>
-                      <div className="flex items-center justify-between">
+
+                      {/* Footer */}
+                      <div className="flex items-center justify-between border-t border-gray-100 pt-4">
+                        {/* Author */}
                         <span className="text-xs text-gray-500">
-                          By {item.author || "Admin"}
+                          By{" "}
+                          <span className="font-medium text-gray-700">
+                            {item.author || "Admin"}
+                          </span>
                         </span>
+
+                        {/* Read More */}
                         <Link
                           to={`/news/${item.id}`}
-                          className="text-green-500 font-semibold hover:text-green-600 transition-colors flex items-center gap-1"
+                          className="text-green-500 font-semibold text-sm hover:text-green-600 transition-colors duration-300"
                         >
-                          Read More
-                          <svg
-                            className="w-4 h-4"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth="2"
-                              d="M9 5l7 7-7 7"
-                            />
-                          </svg>
+                          Read More →
                         </Link>
                       </div>
                     </div>
@@ -192,14 +194,18 @@ const LatestnewsPage = () => {
         {!loading && !error && news.length > 0 && (
           <div className="text-center mt-12">
             <Link to="/news/allnews" className="">
-              <span className="inline-block
+              <span
+                className="inline-block
             bg-primary
             text-white
             px-6
             py-3
             rounded-lg
             hover:bg-blue-700
-            transition">View All News</span>
+            transition"
+              >
+                View All News
+              </span>
             </Link>
           </div>
         )}

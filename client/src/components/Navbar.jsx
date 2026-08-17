@@ -13,8 +13,8 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-[#374256] text-white shadow-lg border-b border-white/10 bg-primary">
-      {/* <nav className="bg-[#374256] text-white shadow-lg border-b border-white/10"> */}
+    <nav className="bg-[#374256] text-white shadow-lg border-b border-white/10 bg-primary ">
+      {/* // <nav className="bg-[#374256] text-white shadow-lg border-b border-white/10">  */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-24 navbar">
           {/* Logo */}

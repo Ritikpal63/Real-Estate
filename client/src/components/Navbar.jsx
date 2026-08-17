@@ -194,9 +194,9 @@ const Navbar = () => {
             >
               Admin
             </Link>
-            {/* <button onClick={toggleTheme} aria-label="Toggle theme">
+            <button onClick={toggleTheme} aria-label="Toggle theme">
               {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
-            </button> */}
+            </button>
           </div>
 
           {/* Mobile Menu Button */}

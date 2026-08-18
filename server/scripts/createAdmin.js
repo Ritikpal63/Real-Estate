@@ -1,52 +1,74 @@
-const bcrypt = require('bcrypt');
-const db = require('../config/database');
+const bcrypt = require("bcrypt");
+const db = require("../config/database");
 
 const createAdmin = async () => {
   try {
-    // Check if admin already exists
-    await db.query(
-      `CREATE TABLE IF NOT EXISTS users (
-        id VARCHAR(36) NOT NULL PRIMARY KEY UUID(),
+    // ==============================
+    // ADMIN CREDENTIALS FROM .ENV
+    // ==============================
+    const email = process.env.ADMIN_EMAIL;
+    const password = process.env.ADMIN_PASSWORD;
+
+    if (!email || !password) {
+      throw new Error("Please set ADMIN_EMAIL and ADMIN_PASSWORD in .env");
+    }
+
+    // ==============================
+    // CREATE USERS TABLE
+    // ==============================
+    await db.query(`
+      CREATE TABLE IF NOT EXISTS users (
+        id VARCHAR(36) NOT NULL PRIMARY KEY,
         username VARCHAR(255) NOT NULL UNIQUE,
         name VARCHAR(255) NOT NULL,
         email VARCHAR(255) NOT NULL UNIQUE,
         password VARCHAR(255) NOT NULL,
         role ENUM('admin', 'user') DEFAULT 'user',
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-      )`
-    );
+      )
+    `);
+
+    console.log("✅ Users table checked/created");
+
+    // ==============================
+    // CHECK ADMIN
+    // ==============================
     const [existing] = await db.query(
-      'SELECT * FROM users WHERE email = ?',
-      ['admin@realestate']
+      "SELECT id, email, role FROM users WHERE email = ?",
+      [email],
     );
-    
+
     if (existing.length > 0) {
-      console.log('✅ Admin user already exists');
+      console.log("✅ Admin user already exists");
       return;
     }
-    
-    const hashedPassword = await bcrypt.hash('admin123', 10);
-    
+
+    // ==============================
+    // HASH PASSWORD
+    // ==============================
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // ==============================
+    // CREATE ADMIN
+    // ==============================
     const [result] = await db.query(
-      `INSERT INTO users (username, name, email, password, role, created_at) 
-       VALUES (?, ?, ?, ?, ?, NOW())`,
-      ['admin', 'Admin User', 'admin@realestate', hashedPassword, 'admin']
+      `
+      INSERT INTO users
+      (id, username, name, email, password, role)
+      VALUES (UUID(), ?, ?, ?, ?, ?)
+      `,
+      ["admin", "Admin User", email, hashedPassword, "admin"],
     );
-    
-    console.log('✅ Admin user created successfully!');
-    console.log('📧 Email: admin@realestate');
-    console.log('🔑 Password: admin123');
-    
+
+    console.log("✅ Admin created successfully");
+    console.log("Admin ID:", result.insertId || "UUID generated");
+    console.log("Admin Email:", email);
   } catch (error) {
-    console.error('❌ Error creating admin:', error);
+    console.error("❌ Error creating admin:", error);
   }
 };
 
-// Run the function
+// Run
 createAdmin();
-module.exports = createAdmin;
 
-// Don't forget to close the connection
-process.on('exit', () => {
-  db.end();
-});
+module.exports = createAdmin;

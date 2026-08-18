@@ -3,6 +3,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const db = require("../config/database");
+const crypto = require("crypto");
 
 class authController{
 static async register(req, res){

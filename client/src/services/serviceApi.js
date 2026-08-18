@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://localhost:8000/api/services",
+  baseURL: "real-estate-sand-five.vercel.app/api/services",
 });
 
 export const getServices = () => API.get("/");

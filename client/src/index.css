@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@custom-variant dark (&:where(.dark, .dark *));
 
 
 .logo {
@@ -15,4 +14,7 @@
 }
 .grayColor{
   background-color: #374256;
+}
+.mobileNavbar Link:hover{
+  background-color: white;
 }

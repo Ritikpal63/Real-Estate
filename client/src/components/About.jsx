@@ -6,28 +6,6 @@ import { Link } from 'react-router-dom'
 const About = () => {
   return (
     <>
-	{/* <section className="about">
-  <div className="container">
-    <h2 className="section-title">About Us</h2>
-    <p className="section-sub">NCR Space Connect is dedicated to simplifying commercial real estate by bringing together office space listings, real estate professionals, business owners, developers, investors, and tenants on one trusted platform.</p>
-    <div className="about-grid">
-      <div className="about-card">
-        <h3><i className="fas fa-eye" style={{color:"#2563eb", marginRight:"10px"}}></i>Our Vision</h3>
-        <p>To become the most trusted commercial real estate platform in Delhi-NCR, empowering businesses with verified information, quality workspaces, and valuable business connections.</p>
-      </div>
-      <div className="about-card">
-        <h3><i className="fas fa-bullseye" style={{color:"#2563eb", marginRight:"10px"}}></i>Our Mission</h3>
-        <ul>
-          <li><i className="fas fa-check-circle"></i> Connect businesses with suitable office spaces.</li>
-          <li><i className="fas fa-check-circle"></i> Support commercial property owners.</li>
-          <li><i className="fas fa-check-circle"></i> Promote real estate employment.</li>
-          <li><i className="fas fa-check-circle"></i> Deliver reliable property news and insights.</li>
-          <li><i className="fas fa-check-circle"></i> Build a strong professional real estate community.</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section> */}
     {/* About Us Section */}
 <section id="about" className="about-us section-padding py-16 md:py-20 lg:py-24 bg-white">
   <div className="container mx-auto px-4 sm:px-6 lg:px-8">

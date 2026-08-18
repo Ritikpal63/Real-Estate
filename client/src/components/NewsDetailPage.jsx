@@ -91,7 +91,6 @@ const NewsDetailPage = () => {
       const savedIds = JSON.parse(localStorage.getItem("savedNews") || "[]");
       setSaved(savedIds.includes(String(data.id)));
 
-      // Related news: prefer same category, fall back to latest
       try {
         const relRes = await axiosInstance.get(
           `/news/category/${encodeURIComponent(data.category || "General")}`

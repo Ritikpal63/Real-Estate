@@ -9,7 +9,7 @@ export default defineConfig({
     strictPort: true, // agar 5173 busy hai toh error dega, silently dusra port nahi lega
     proxy: {
       '/api': {
-        target: 'http://localhost:8000', // apne actual backend port se match
+        target: 'https://real-estate-1-x62z.onrender.com', // apne actual backend port se match
         changeOrigin: true,
       },
     },

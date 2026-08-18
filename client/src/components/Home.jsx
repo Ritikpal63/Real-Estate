@@ -331,11 +331,7 @@ const Home = () => {
         {/* Background Carousel */}
         <BackgroundCarousel />
 
-        {/* ==================================================
-            HERO CONTENT
-        ================================================== */}
-
-        <div
+        {/* <div
           className="
             container
             mx-auto
@@ -350,7 +346,6 @@ const Home = () => {
         >
           <div className="max-w-5xl mx-auto text-center">
             <div className="hero-text">
-              {/* Heading */}
               <h2
                 className="
                   text-3xl
@@ -368,7 +363,6 @@ const Home = () => {
                 Connections
               </h2>
 
-              {/* Description */}
               <p
                 className="
                   text-base
@@ -390,7 +384,6 @@ const Home = () => {
                 startups and professionals across Delhi-NCR
               </p>
 
-              {/* Buttons */}
               <div
                 className="
                   flex
@@ -402,7 +395,6 @@ const Home = () => {
                   md:gap-6
                 "
               >
-                {/* About */}
                 <Link
                   to="/about"
                   className="
@@ -422,7 +414,6 @@ const Home = () => {
                   About Us
                 </Link>
 
-                {/* Listings */}
                 <Link
                   to="/property"
                   className="
@@ -454,7 +445,7 @@ const Home = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </section>
 
       {/* ==================================================

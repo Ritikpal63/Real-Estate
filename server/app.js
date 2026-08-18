@@ -1,22 +1,17 @@
-
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
 
 const app = express();
 
-
-
 app.use(
   cors({
-    origin: [
-     process.env.CLIENT_URL,
-      "http://localhost:5173",
-    ].filter(Boolean),
+    origin: "https://real-estate-sand-five.vercel.app",
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   }),
 );
-
 
 const path = require("path");
 
@@ -49,7 +44,6 @@ app.use("/api/services", serviceRoutes);
 
 const blogRoutes = require("./routes/blogRoutes");
 app.use("/api/blogs", blogRoutes);
-
 
 const adminRoutes = require("./routes/adminRoutes");
 app.use("/api/admin", adminRoutes);

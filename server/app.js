@@ -1,38 +1,23 @@
-// server/app.js
-// app.js ke top me
-// const { sequelize } = require("./models");
 
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
 
 const app = express();
-// sequelize
-//   .sync()
-//   .then(() => console.log("✅ All tables synced (auto-created if missing)"))
-//   .catch((err) => console.error("❌ Sequelize sync error:", err));
 
-// const allowedOrigins = [
-//   "http://localhost:5173",
-//   process.env.CLIENT_URL, // set this in Vercel env vars to your prod domain
-// ].filter(Boolean);
 
-// app.use(
-//   cors({
-//     origin: [
-//      process.env.CLIENT_URL,
-//       "http://localhost:5173",
-//     ].filter(Boolean),
-//     credentials: true,
-//   }),
-// );
-app.use(cors()); // Enable CORS for all origins (for testing purposes)
-// app.use(
-//   cors({
-//     origin: allowedOrigins,
-//     credentials: true,
-//   }),
-// );
+
+app.use(
+  cors({
+    origin: [
+     process.env.CLIENT_URL,
+      "http://localhost:5173",
+    ].filter(Boolean),
+    credentials: true,
+  }),
+);
+
+
 const path = require("path");
 
 app.use(express.json());

@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { Sun, Moon } from "lucide-react";
-import { ThemeContext } from "../contextApi/ThemeContext";
+// import { ThemeContext } from "../contextApi/ThemeContext";
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { theme, toggleTheme } = useContext(ThemeContext);
+  // const { theme, toggleTheme } = useContext(ThemeContext);
 
   const closeMenu = () => {
     setMobileMenuOpen(false);

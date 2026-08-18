@@ -53,7 +53,7 @@ const Team = () => {
       id: 4,
       name: "Neha Gupta",
       designation: "Marketing Director",
-      image: "/assets/img/team/4.jpg",
+      image: "/assets/img/team/2.jpg",
     },
   ];
     const displayedTeam = team && team.length > 0 ? team : teamMember;
@@ -70,7 +70,7 @@ const Team = () => {
               return (
                 <div key={item.id} className="col-lg-3 col-sm-3 col-xs-12 hover:scale-105 transition-transform duration-300">
                   <div className="single_team">
-                    <img src={ item.image} className="w-full h-auto" alt={item.name} />
+                    <img src={item.image} className="w-full h-auto" alt={item.name} />
                     <h3>{item.name}</h3>
                     <p>{item.designation}</p>
                     <ul className="list-inline">

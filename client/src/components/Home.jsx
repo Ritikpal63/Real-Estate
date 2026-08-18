@@ -321,7 +321,7 @@ const Home = () => {
         id="home"
         className="
           relative
-          min-h-[60vh]
+          min-h-[80vh]
           flex
           items-center
           justify-center

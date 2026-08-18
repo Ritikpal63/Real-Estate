@@ -321,7 +321,7 @@ const Home = () => {
         id="home"
         className="
           relative
-          min-h-[80vh]
+          banner
           flex
           items-center
           justify-center

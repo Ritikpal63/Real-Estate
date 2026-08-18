@@ -18,3 +18,18 @@
 .mobileNavbar Link:hover{
   background-color: white;
 }
+@media (max-width:375px) {
+  .banner{
+    min-height: 50vh;
+  }
+}
+@media (max-width:799px) and  (min-width:376px) {
+  .banner{
+    min-height: 65vh;
+  }
+}
+@media (max-width:2500px) and  (min-width:800px) {
+  .banner{
+    min-height: 80vh;
+  }
+}

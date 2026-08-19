@@ -4,9 +4,10 @@ require("dotenv").config();
 
 const app = express();
 
+const vercelURL = "https://real-estate-sand-five.vercel.app"
 app.use(
   cors({
-    origin: "https://real-estate-sand-five.vercel.app",
+    origin: vercelURL,
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
@@ -48,7 +49,6 @@ app.use("/api/blogs", blogRoutes);
 const adminRoutes = require("./routes/adminRoutes");
 app.use("/api/admin", adminRoutes);
 
-// Error handling middleware
 
 app.use((err, req, res, next) => {
   console.error(err.stack);

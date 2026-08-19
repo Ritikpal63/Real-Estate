@@ -35,10 +35,10 @@ const NewsletterPage = () => {
 
     try {
       // Replace with your actual API endpoint
-      const response = await axiosInstance.post("/newsletter/subscribe", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
+      const response = await axiosInstance.post("/newsletter/subscribe", email, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       });
 
       if (response.ok) {
@@ -71,14 +71,13 @@ const NewsletterPage = () => {
           <div className="flex gap-8 animate-scroll">
             {crousel.map((item) => (
               <div key={item.id} className="shrink-0">
-                  <img
-                    src={item.pic}
-                    alt="Partner"
-                    className="object-contain filter hover:filter-none transition-all duration-300 h-30"
-                  />
+                <img
+                  src={item.pic}
+                  alt="Partner"
+                  className="object-contain filter hover:filter-none transition-all duration-300 h-30"
+                />
               </div>
             ))}
-           
           </div>
         </div>
 
@@ -173,4 +172,3 @@ const NewsletterPage = () => {
 };
 
 export default NewsletterPage;
-

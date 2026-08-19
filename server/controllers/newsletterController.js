@@ -26,8 +26,7 @@ export const subscribeNewsletter = async (req, res) => {
       });
     }
 
-    const existingSubscriber =
-      await findSubscriberByEmail(normalizedEmail);
+    const existingSubscriber = await findSubscriberByEmail(normalizedEmail);
 
     if (existingSubscriber?.status === "active") {
       return res.status(409).json({
@@ -60,4 +59,10 @@ export const subscribeNewsletter = async (req, res) => {
       message: "Internal server error",
     });
   }
+};
+export const getAllSubscribers = async (req, res) => {
+  const [rows] = await pool.query(
+    "SELECT * FROM newsletter_subscribers",
+  );
+  res.json({ success: true, data: rows });
 };

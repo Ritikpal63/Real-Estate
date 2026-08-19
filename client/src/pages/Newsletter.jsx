@@ -34,14 +34,11 @@ const NewsletterPage = () => {
     setMessage({ type: "", text: "" });
 
     try {
-      // Replace with your actual API endpoint
-      const response = await axiosInstance.post("/newsletter/subscribe", email, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+      const response = await axiosInstance.post("/newsletter/subscribe", {
+        email: email.trim().toLowerCase(),
       });
 
-      if (response.ok) {
+      if (response.status >= 200 && response.status < 300) {
         setMessage({
           type: "success",
           text: "🎉 Successfully subscribed to our newsletter!",

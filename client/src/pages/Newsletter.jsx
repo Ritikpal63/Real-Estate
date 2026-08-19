@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import axiosInstance from "../utils/axiosConfig";
 
 const NewsletterPage = () => {
   const [email, setEmail] = useState("");
@@ -34,7 +35,7 @@ const NewsletterPage = () => {
 
     try {
       // Replace with your actual API endpoint
-      const response = await fetch("/api/newsletter/subscribe", {
+      const response = await axiosInstance.post("/newsletter/subscribe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),

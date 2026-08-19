@@ -49,6 +49,9 @@ app.use("/api/blogs", blogRoutes);
 const adminRoutes = require("./routes/adminRoutes");
 app.use("/api/admin", adminRoutes);
 
+const newsletterRoutes = require("./routes/newsletterRoutes.js");
+app.use("/api/newsletter", newsletterRoutes);
+
 
 app.use((err, req, res, next) => {
   console.error(err.stack);

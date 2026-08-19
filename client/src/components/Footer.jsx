@@ -89,12 +89,12 @@ const Footer = () => {
 							</div>
 						</div>
 					</div>
-					<hr />
+					{/* <hr />
 					<p className="text-center text-light">NCRSpaceConnect
 						<span className='ms-2'>Developed by
 							<Link to="https://instagram.com/ritikpal_63" className='text-light ms-2'>ritikpal_63</Link>
 						</span>
-					</p>
+					</p> */}
 				</div>
 
 			</footer>

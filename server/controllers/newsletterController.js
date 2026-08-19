@@ -26,11 +26,9 @@ export const subscribeNewsletter = async (req, res) => {
       });
     }
 
-    // MODEL → Find existing subscriber
     const existingSubscriber =
       await findSubscriberByEmail(normalizedEmail);
 
-    // Already subscribed
     if (existingSubscriber?.status === "active") {
       return res.status(409).json({
         success: false,
@@ -38,7 +36,6 @@ export const subscribeNewsletter = async (req, res) => {
       });
     }
 
-    // Previously unsubscribed → activate again
     if (existingSubscriber?.status === "unsubscribed") {
       await reactivateSubscriber(normalizedEmail);
 

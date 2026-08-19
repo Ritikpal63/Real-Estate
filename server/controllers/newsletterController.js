@@ -3,6 +3,7 @@ const {
   createSubscriber,
   reactivateSubscriber,
 } = require("../models/newsletterModel");
+const pool = require("../config/database");
 
 const subscribeNewsletter = async (req, res) => {
   try {
@@ -62,13 +63,11 @@ const subscribeNewsletter = async (req, res) => {
 };
 
 const getAllSubscriber = async (req, res) => {
-  const [rows] = await pool.query(
-    "SELECT * FROM newsletter_subscribers",
-  );
+  const [rows] = await pool.query("SELECT * FROM newsletter_subscribers");
   res.json({ success: true, data: rows });
 };
 
 module.exports = {
   subscribeNewsletter,
-  getAllSubscriber
+  getAllSubscriber,
 };

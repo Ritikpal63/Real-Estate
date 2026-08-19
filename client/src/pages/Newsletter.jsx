@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axiosInstance from "../utils/axiosConfig";
-import axios from "axios";
+// import axios from "axios";
 const NewsletterPage = () => {
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -20,13 +20,19 @@ const NewsletterPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!email) {
-      setMessage({ type: "error", text: "Please enter your email address" });
+    if (!email.trim()) {
+      setMessage({
+        type: "error",
+        text: "Please enter your email address",
+      });
       return;
     }
 
     if (!/\S+@\S+\.\S+/.test(email)) {
-      setMessage({ type: "error", text: "Please enter a valid email address" });
+      setMessage({
+        type: "error",
+        text: "Please enter a valid email address",
+      });
       return;
     }
 
@@ -34,24 +40,29 @@ const NewsletterPage = () => {
     setMessage({ type: "", text: "" });
 
     try {
-      const response = await axiosInstance.post("/newsletter/subscribe", {email})
+      const response = await axiosInstance.post("/newsletter/subscribe", {
+        email: email.trim().toLowerCase(),
+      });
 
-      if (response.status >= 200 && response.status < 300) {
-        setMessage({
-          type: "success",
-          text: "🎉 Successfully subscribed to our newsletter!",
-        });
-        setEmail("");
-      } else {
-        setMessage({
-          type: "error",
-          text: "Subscription failed. Please try again.",
-        });
-      }
+      setMessage({
+        type: "success",
+        text:
+          response.data?.message ||
+          "🎉 Successfully subscribed to our newsletter!",
+      });
+
+      setEmail("");
     } catch (error) {
+      console.error(
+        "Newsletter subscription error:",
+        error.response?.data || error.message,
+      );
+
       setMessage({
         type: "error",
-        text: "An error occurred. Please try again.",
+        text:
+          error.response?.data?.message ||
+          "An error occurred. Please try again.",
       });
     } finally {
       setIsSubmitting(false);

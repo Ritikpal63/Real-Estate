@@ -26,8 +26,7 @@ const subscribeNewsletter = async (req, res) => {
       });
     }
 
-    const existingSubscriber =
-      await findSubscriberByEmail(normalizedEmail);
+    const existingSubscriber = await findSubscriberByEmail(normalizedEmail);
 
     if (existingSubscriber?.status === "active") {
       return res.status(409).json({
@@ -57,10 +56,19 @@ const subscribeNewsletter = async (req, res) => {
     return res.status(500).json({
       success: false,
       message: "Internal server error",
+      error: process.env.NODE_ENV === "development" ? error.message : undefined,
     });
   }
 };
 
+const getAllSubscriber = async (req, res) => {
+  const [rows] = await pool.query(
+    "SELECT * FROM newsletter_subscribers",
+  );
+  res.json({ success: true, data: rows });
+};
+
 module.exports = {
   subscribeNewsletter,
+  getAllSubscriber
 };

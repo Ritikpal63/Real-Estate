@@ -7,7 +7,7 @@ const findSubscriberByEmail = async (email) => {
      FROM newsletter_subscribers
      WHERE email = ?
      LIMIT 1`,
-    [email]
+    [email],
   );
 
   return rows[0];
@@ -20,7 +20,7 @@ const createSubscriber = async (email) => {
     `INSERT INTO newsletter_subscribers
      (id, email, status)
      VALUES (?, ?, 'active')`,
-    [id, email]
+    [id, email],
   );
 
   return result;
@@ -31,12 +31,11 @@ const reactivateSubscriber = async (email) => {
     `UPDATE newsletter_subscribers
      SET status = 'active'
      WHERE email = ?`,
-    [email]
+    [email],
   );
 
   return result;
 };
-
 module.exports = {
   findSubscriberByEmail,
   createSubscriber,

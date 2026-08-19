@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-// import axiosInstance from "../utils/axiosConfig";
+import axiosInstance from "../utils/axiosConfig";
 import axios from "axios";
 const NewsletterPage = () => {
   const [email, setEmail] = useState("");
@@ -34,10 +34,7 @@ const NewsletterPage = () => {
     setMessage({ type: "", text: "" });
 
     try {
-      const response = await axios.post(
-        "https://real-estate-1-x62z.onrender.com/api/newsletter/subscribe",
-        { email },
-      );
+      const response = await axiosInstance.post("/newsletter/subscribe", {email})
 
       if (response.status >= 200 && response.status < 300) {
         setMessage({

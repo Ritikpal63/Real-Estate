@@ -4,7 +4,7 @@ require("dotenv").config();
 
 const app = express();
 
-const vercelURL = "https://real-estate-sand-five.vercel.app"
+const vercelURL = "https://real-estate-sand-five.vercel.app";
 app.use(
   cors({
     origin: vercelURL,
@@ -49,9 +49,8 @@ app.use("/api/blogs", blogRoutes);
 const adminRoutes = require("./routes/adminRoutes");
 app.use("/api/admin", adminRoutes);
 
-const newsletterRoutes = require("./routes/newsletterRoutes.js");
+const newsletterRoutes = require("./routes/newsletterRoutes");
 app.use("/api/newsletter", newsletterRoutes);
-
 
 app.use((err, req, res, next) => {
   console.error(err.stack);

@@ -1,10 +1,10 @@
-import express from "express";
-import { subscribeNewsletter, getAllSubscribers } from "../controllers/newsletterController.js";
-const pool = require("../config/database");
+const express = require("express");
+const {
+  subscribeNewsletter,
+} = require("../controllers/newsletterController");
 
 const router = express.Router();
 
 router.post("/subscribe", subscribeNewsletter);
-router.get("/subscribe", getAllSubscribers)
 
-export default router;
+module.exports = router;

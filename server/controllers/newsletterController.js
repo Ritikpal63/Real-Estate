@@ -1,10 +1,10 @@
-import {
+const {
   findSubscriberByEmail,
   createSubscriber,
   reactivateSubscriber,
-} from "../models/newsletterModel.js";
+} = require("../models/newsletterModel");
 
-export const subscribeNewsletter = async (req, res) => {
+const subscribeNewsletter = async (req, res) => {
   try {
     const { email } = req.body;
 
@@ -26,7 +26,8 @@ export const subscribeNewsletter = async (req, res) => {
       });
     }
 
-    const existingSubscriber = await findSubscriberByEmail(normalizedEmail);
+    const existingSubscriber =
+      await findSubscriberByEmail(normalizedEmail);
 
     if (existingSubscriber?.status === "active") {
       return res.status(409).json({
@@ -44,7 +45,6 @@ export const subscribeNewsletter = async (req, res) => {
       });
     }
 
-    // New subscriber
     await createSubscriber(normalizedEmail);
 
     return res.status(201).json({
@@ -60,9 +60,7 @@ export const subscribeNewsletter = async (req, res) => {
     });
   }
 };
-export const getAllSubscribers = async (req, res) => {
-  const [rows] = await pool.query(
-    "SELECT * FROM newsletter_subscribers",
-  );
-  res.json({ success: true, data: rows });
+
+module.exports = {
+  subscribeNewsletter,
 };

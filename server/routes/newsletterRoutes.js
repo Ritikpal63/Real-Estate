@@ -8,6 +8,6 @@ const {
 const router = express.Router();
 
 router.post("/subscribe", subscribeNewsletter);
-router.get("/subscriber", getAllSubscriber);
+router.get("/subscribe", getAllSubscriber);
 
 module.exports = router;

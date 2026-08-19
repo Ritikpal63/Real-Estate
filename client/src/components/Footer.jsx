@@ -22,12 +22,6 @@ const Footer = () => {
 									<li><Link data-toggle="tooltip" data-placement="top" title="Linkedin" href="#"><i
 										className="fa fa-linkedin"></i></Link>
 									</li>
-									<li><Link data-toggle="tooltip" data-placement="top" title="Youtube" href="#"><i
-										className="fa fa-youtube"></i></Link>
-									</li>
-									<li><Link data-toggle="tooltip" data-placement="top" title="Skype" href="#"><i
-										className="fa fa-skype"></i></Link>
-									</li>
 								</ul>
 							</div>
 						</div>

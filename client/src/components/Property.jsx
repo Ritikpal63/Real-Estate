@@ -28,23 +28,26 @@ const Property = () => {
       <div className="container">
         <div className="row">
           {properties.map((p) => (
-            <div className="col-md-4 col-sm-12 col-xs-12 hover:cursor-pointer" key={p.id} onClick={() => window.location.href = `/property/${p.id}`}>
-              <div className="single_property" style={{borderRadius:"30px "}}>
+            <div
+              className="col-md-4 col-sm-12 col-xs-12 hover:cursor-pointer"
+              key={p.id}
+              onClick={() => (window.location.href = `/property/${p.id}`)}
+            >
+              <div className="single_property rounded-[30px] overflow-hidden">
                 <img
                   src={p.image}
-                  className="img-fluid rounded-xl"
                   alt={p.title}
-                  style={{
-                    width:"250px",
-                    height:"250px"
-                  }}
+                  className="w-[250px] h-[250px] object-cover object-center rounded-xl"
                 />
+
                 <div className="single_property_content">
                   <h4>
                     <Link to={`/property/${p.id}`}>{p.title}</Link>
                   </h4>
+
                   <p>{p.location}</p>
                 </div>
+
                 <div className="single_property_price">
                   {p.location}{" "}
                   <span>${Number(p.price || 0).toLocaleString()}</span>
@@ -59,4 +62,3 @@ const Property = () => {
 };
 
 export default Property;
-

@@ -100,6 +100,7 @@ const Newsletter = () => {
             {crousel.map((item) => (
               <div key={item.id} className="flex-shrink-0 w-48">
                 <Link to={item.link} className="block">
+                <p>hgdvjbhkn</p>
                   <img
                     src={item.pic}
                     alt="Partner"

@@ -19,9 +19,6 @@ const Footer = () => {
 									<li><Link data-toggle="tooltip" data-placement="top" title="Google Plus" href="#"><i
 										className="fa fa-google-plus"></i></Link>
 									</li>
-									<li><Link data-toggle="tooltip" data-placement="top" title="Linkedin" href="#"><i
-										className="fa fa-linkedin"></i></Link>
-									</li>
 								</ul>
 							</div>
 						</div>

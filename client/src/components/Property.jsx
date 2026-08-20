@@ -36,7 +36,7 @@ const Property = () => {
                   alt={p.title}
                   style={{
                     width:"250px",
-                    height:"auto"
+                    height:"250px"
                   }}
                 />
                 <div className="single_property_content">

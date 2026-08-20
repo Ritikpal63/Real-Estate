@@ -34,6 +34,10 @@ const Property = () => {
                   src={p.image}
                   className="img-fluid rounded-xl"
                   alt={p.title}
+                  style={{
+                    width:"250px",
+                    height:"auto"
+                  }}
                 />
                 <div className="single_property_content">
                   <h4>

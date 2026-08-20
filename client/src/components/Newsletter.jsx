@@ -99,13 +99,13 @@ const Newsletter = () => {
           <div className="flex gap-8 animate-scroll">
             {crousel.map((item) => (
               <div key={item.id} className="flex-shrink-0 w-48">
-                <a href="#" className="block">
+                <Link to={item.link} className="block">
                   <img
                     src={item.pic}
                     alt="Partner"
                     className="h-16 object-contain filter brightness-0 invert hover:filter-none transition-all duration-300"
                   />
-                </a>
+                </Link>
               </div>
             ))}
             {/* Duplicate for seamless scrolling */}

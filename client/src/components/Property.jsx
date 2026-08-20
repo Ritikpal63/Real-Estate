@@ -34,11 +34,14 @@ const Property = () => {
               onClick={() => (window.location.href = `/property/${p.id}`)}
             >
               <div className="single_property rounded-[30px] overflow-hidden">
-                <img
-                  src={p.image}
-                  alt={p.title}
-                  className="w-[250px] h-[250px] object-cover object-center rounded-xl"
-                />
+                {/* Fixed Image Container */}
+                <div className="w-full h-[250px] overflow-hidden">
+                  <img
+                    src={p.image}
+                    alt={p.title}
+                    className="w-full h-full object-cover object-center"
+                  />
+                </div>
 
                 <div className="single_property_content">
                   <h4>
@@ -49,7 +52,7 @@ const Property = () => {
                 </div>
 
                 <div className="single_property_price">
-                  {p.location}{" "}
+                  {p.location}
                   <span>${Number(p.price || 0).toLocaleString()}</span>
                 </div>
               </div>

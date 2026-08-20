@@ -8,9 +8,9 @@ const NewsletterPage = () => {
   const [message, setMessage] = useState({ type: "", text: "" });
 
   const crousel = [
-    { id: 1, pic: "/assets/img/partner/M3M01.jpg" },
+    { id: 1, pic: "/assets/img/partner/M3M01.jpg", link: "https://m3mindia.com/" },
     { id: 2, pic: "/assets/img/partner/M3mElleSaab02.jpg" },
-    { id: 3, pic: "/assets/img/partner/M3M03.jpg" },
+    { id: 3, pic: "/assets/img/partner/M3M03.jpg", link: "https://m3mindia.com/"},
     { id: 4, pic: "/assets/img/partner/M3MTRUMP04.jpg" },
     { id: 5, pic: "/assets/img/partner/Godrege05.jpg" },
     { id: 6, pic: "/assets/img/partner/County06.jpg" },
@@ -77,11 +77,13 @@ const NewsletterPage = () => {
           <div className="flex gap-8 animate-scroll">
             {crousel.map((item) => (
               <div key={item.id} className="shrink-0">
+                <Link to={item.link}>
                 <img
                   src={item.pic}
                   alt="Partner"
                   className="object-contain filter hover:filter-none transition-all duration-300 h-30"
                 />
+                </Link>
               </div>
             ))}
           </div>

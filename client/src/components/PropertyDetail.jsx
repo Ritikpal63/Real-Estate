@@ -113,7 +113,7 @@ const PropertyDetail = () => {
             <div className="property_single_details_slide">
               <img
                 src={property.image}
-                className="img-fluid"
+                className="img-fluid h-[500px] w-full"
                 alt={property.title}
                 onError={(e) => { e.currentTarget.src = FALLBACK_IMG; }}
               />

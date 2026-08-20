@@ -1,11 +1,20 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axiosInstance from "../utils/axiosConfig";
-// import axios from "axios";
+
 const NewsletterPage = () => {
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState({ type: "", text: "" });
+
+  // Show message and automatically hide after 3 seconds
+  const showMessage = (type, text) => {
+    setMessage({ type, text });
+
+    setTimeout(() => {
+      setMessage({ type: "", text: "" });
+    }, 2000);
+  };
 
   const crousel = [
     {
@@ -49,26 +58,25 @@ const NewsletterPage = () => {
       link: "https://www.acehardware.com/",
     },
   ];
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Empty email validation
     if (!email.trim()) {
-      setMessage({
-        type: "error",
-        text: "Please enter your email address",
-      });
+      showMessage("error", "Please enter your email address");
       return;
     }
 
+    // Email validation
     if (!/\S+@\S+\.\S+/.test(email)) {
-      setMessage({
-        type: "error",
-        text: "Please enter a valid email address",
-      });
+      showMessage("error", "Please enter a valid email address");
       return;
     }
 
     setIsSubmitting(true);
+
+    // Clear previous message
     setMessage({ type: "", text: "" });
 
     try {
@@ -76,13 +84,14 @@ const NewsletterPage = () => {
         email: email.trim().toLowerCase(),
       });
 
-      setMessage({
-        type: "success",
-        text:
-          response.data?.message ||
+      // Success message - disappears after 3 seconds
+      showMessage(
+        "success",
+        response.data?.message ||
           "🎉 Successfully subscribed to our newsletter!",
-      });
+      );
 
+      // Clear email input
       setEmail("");
     } catch (error) {
       console.error(
@@ -90,12 +99,11 @@ const NewsletterPage = () => {
         error.response?.data || error.message,
       );
 
-      setMessage({
-        type: "error",
-        text:
-          error.response?.data?.message ||
-          "An error occurred. Please try again.",
-      });
+      // Error message - disappears after 3 seconds
+      showMessage(
+        "error",
+        error.response?.data?.message || "An error occurred. Please try again.",
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -127,6 +135,7 @@ const NewsletterPage = () => {
             <h3 className="text-2xl md:text-3xl font-bold text-white mb-3">
               Subscribe to <span className="text-yellow-300">Stay Updated</span>
             </h3>
+
             <p className="text-white/80 mb-6">
               Get the latest real estate news and updates delivered to your
               inbox
@@ -139,9 +148,10 @@ const NewsletterPage = () => {
                   placeholder="Enter your email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="flex-1 px-4 py-3 rounded-lg bg-white/90 backdrop-blur-sm text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring- focus:bg-white transition-all duration-300"
+                  className="flex-1 px-4 py-3 rounded-lg bg-white/90 backdrop-blur-sm text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:bg-white transition-all duration-300"
                   disabled={isSubmitting}
                 />
+
                 <button
                   type="submit"
                   disabled={isSubmitting}
@@ -159,6 +169,7 @@ const NewsletterPage = () => {
                           strokeWidth="4"
                           fill="none"
                         />
+
                         <path
                           className="opacity-75"
                           fill="currentColor"
@@ -194,15 +205,22 @@ const NewsletterPage = () => {
         </div>
       </div>
 
-      {/* Add animation styles */}
+      {/* Animation Styles */}
       <style>{`
         @keyframes scroll {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
+          0% {
+            transform: translateX(0);
+          }
+
+          100% {
+            transform: translateX(-50%);
+          }
         }
+
         .animate-scroll {
           animation: scroll 25s linear infinite;
         }
+
         .animate-scroll:hover {
           animation-play-state: paused;
         }

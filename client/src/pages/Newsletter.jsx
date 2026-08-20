@@ -8,14 +8,46 @@ const NewsletterPage = () => {
   const [message, setMessage] = useState({ type: "", text: "" });
 
   const crousel = [
-    { id: 1, pic: "/assets/img/partner/M3M01.jpg", link: "https://m3mindia.com/" },
-    { id: 2, pic: "/assets/img/partner/M3mElleSaab02.jpg", link:"https://m3mpremium.in/" },
-    { id: 3, pic: "/assets/img/partner/M3M03.jpg", link: "https://m3mindia.com/"},
-    { id: 4, pic: "/assets/img/partner/M3MTRUMP04.jpg", link:"https://www.trump.com/" },
-    { id: 5, pic: "/assets/img/partner/Godrege05.jpg", link:"https://www.godrejproperties.com/" },
-    { id: 6, pic: "/assets/img/partner/County06.jpg", link:"https://www.countygroup.in/" },
-    { id: 7, pic: "/assets/img/partner/Supertech07.jpg", link:"https://www.supertechlimited.com/" },
-    { id: 8, pic: "/assets/img/partner/ACE08.jpg", link:"https://www.acehardware.com/" },
+    {
+      id: 1,
+      pic: "/assets/img/partner/M3M01.jpg",
+      link: "https://m3mindia.com/",
+    },
+    {
+      id: 2,
+      pic: "/assets/img/partner/M3mElleSaab02.jpg",
+      link: "https://m3mpremium.in/",
+    },
+    {
+      id: 3,
+      pic: "/assets/img/partner/M3M03.jpg",
+      link: "https://jacobandco.com/",
+    },
+    {
+      id: 4,
+      pic: "/assets/img/partner/M3MTRUMP04.jpg",
+      link: "https://www.trump.com/",
+    },
+    {
+      id: 5,
+      pic: "/assets/img/partner/Godrege05.jpg",
+      link: "https://www.godrejproperties.com/",
+    },
+    {
+      id: 6,
+      pic: "/assets/img/partner/County06.jpg",
+      link: "https://www.countygroup.in/",
+    },
+    {
+      id: 7,
+      pic: "/assets/img/partner/Supertech07.jpg",
+      link: "https://www.supertechlimited.com/",
+    },
+    {
+      id: 8,
+      pic: "/assets/img/partner/ACE08.jpg",
+      link: "https://www.acehardware.com/",
+    },
   ];
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -78,11 +110,11 @@ const NewsletterPage = () => {
             {crousel.map((item) => (
               <div key={item.id} className="shrink-0">
                 <Link to={item.link}>
-                <img
-                  src={item.pic}
-                  alt="Partner"
-                  className="object-contain filter hover:filter-none transition-all duration-300 h-30"
-                />
+                  <img
+                    src={item.pic}
+                    alt="Partner"
+                    className="object-contain filter hover:filter-none transition-all duration-300 h-30"
+                  />
                 </Link>
               </div>
             ))}

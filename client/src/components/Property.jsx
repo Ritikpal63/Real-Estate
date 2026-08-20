@@ -39,7 +39,7 @@ const Property = () => {
                   <img
                     src={p.image}
                     alt={p.title}
-                    className="w-full h-full object-cover object-center"
+                    className="w-auto h-full object-cover object-center"
                   />
                 </div>
 

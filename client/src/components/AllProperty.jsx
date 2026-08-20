@@ -104,18 +104,24 @@ const AllProperty = () => {
                         (window.location.href = `/property/${p.id}`)
                       }
                     >
-                      <div className="single_property w-[350px]">
-                        <img
-                          src={p.image}
-                          className="img-fluid"
-                          alt={p.title}
-                        />
+                      <div className="single_property w-[350px] overflow-hidden rounded-[30px]">
+                        {/* Fixed Image Size */}
+                        <div className="w-full h-[250px] overflow-hidden">
+                          <img
+                            src={p.image}
+                            alt={p.title}
+                            className="w-full h-full object-cover object-center"
+                          />
+                        </div>
+
                         <div className="single_property_content">
                           <h4>
                             <Link to={`/property/${p.id}`}>{p.title}</Link>
                           </h4>
+
                           <p>{p.location}</p>
                         </div>
+
                         <div className="single_property_price">
                           {p.location}{" "}
                           <span>${Number(p.price || 0).toLocaleString()}</span>

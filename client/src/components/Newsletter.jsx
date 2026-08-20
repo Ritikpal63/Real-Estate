@@ -7,15 +7,43 @@ const Newsletter = () => {
   const [message, setMessage] = useState({ type: "", text: "" });
 
   const crousel = [
-    { id: 1, pic: "/assets/img/partner/1.png" },
-    { id: 2, pic: "/assets/img/partner/2.png" },
-    { id: 3, pic: "/assets/img/partner/3.png" },
-    { id: 4, pic: "/assets/img/partner/4.png" },
-    { id: 5, pic: "/assets/img/partner/5.png" },
-    { id: 6, pic: "/assets/img/partner/1.png" },
-    { id: 7, pic: "/assets/img/partner/2.png" },
-    { id: 8, pic: "/assets/img/partner/3.png" },
-    { id: 9, pic: "/assets/img/partner/4.png" },
+    { id: 1, pic: "/assets/img/partner/1.png", link: "https://m3mindia.com/" },
+    {
+      id: 2,
+      pic: "/assets/img/partner/2.png",
+      link: "https://www.acehardware.com/",
+    },
+    {
+      id: 3,
+      pic: "/assets/img/partner/3.png",
+      link: "https://en.wikipedia.org/wiki/Trump_Tower",
+    },
+    {
+      id: 4,
+      pic: "/assets/img/partner/4.png",
+      link: "https://jacobandco.com/",
+    },
+    {
+      id: 5,
+      pic: "/assets/img/partner/5.png",
+      link: "https://www.supertechlimited.com/",
+    },
+    { id: 6, pic: "/assets/img/partner/1.png", link: "https://m3mindia.com/" },
+    {
+      id: 7,
+      pic: "/assets/img/partner/2.png",
+      link: "https://www.acehardware.com/",
+    },
+    {
+      id: 8,
+      pic: "/assets/img/partner/3.png",
+      link: "https://en.wikipedia.org/wiki/Trump_Tower",
+    },
+    {
+      id: 9,
+      pic: "/assets/img/partner/4.png",
+      link: "https://jacobandco.com/",
+    },
   ];
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -83,7 +111,7 @@ const Newsletter = () => {
             {/* Duplicate for seamless scrolling */}
             {crousel.map((item) => (
               <div key={`dup-${item.id}`} className="flex-shrink-0">
-                <Link href="#" className="block">
+                <Link to={item.link} className="block">
                   <img
                     src={item.pic}
                     alt="Partner"

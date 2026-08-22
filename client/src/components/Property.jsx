@@ -27,7 +27,7 @@ const Property = () => {
     <section className="template_property">
       <div className="container">
         <div className="row">
-          {properties.map((p) => (
+          {properties?.map((p) => (
             <div
               className="col-md-4 col-sm-12 col-xs-12 hover:cursor-pointer"
               key={p.id}

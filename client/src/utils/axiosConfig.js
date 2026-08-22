@@ -2,9 +2,7 @@ import axios from "axios";
 
 const axiosInstance = axios.create({
   baseURL:
-    import.meta.env.VITE_API_URL ||
-    "https://real-estate-1-x62z.onrender.com/api" ||
-    "http://localhost:8000/api",
+    import.meta.env.VITE_API_URL,
   timeout: 10000,
   withCredentials: true,
 });

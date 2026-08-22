@@ -39,7 +39,7 @@ export const AuthProvider = ({ children }) => {
 
       if (!res.data.token) {
         console.error("Login response me token nahi mila:", res.data.user);
-        setAuthError("Server se token nahi mila. Backend response check karo.");
+        setAuthError("Token not found from server. Check backend response");
         return false;
       }
 

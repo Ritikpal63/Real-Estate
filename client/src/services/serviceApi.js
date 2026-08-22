@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://real-estate-sand-five.vercel.app/api/",
+  baseURL:import.meta.env.VITE_API_URL,
 });
 
 export const getServices = () => API.get("/");

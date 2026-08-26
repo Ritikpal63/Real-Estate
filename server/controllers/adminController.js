@@ -15,10 +15,10 @@ exports.getDashboardStats = async (req, res) => {
     const totalLeads = await ContactModel.getCount();
     const totalBlogs = await BlogModel.getCount();
 
-    const recentProperties = await PropertyModel.find()
-      .sort({ created_at: -1 })
-      .limit(5)
-      .execute();
+    const recentProperties = await PropertyModel.find().
+    sort({ created_at: -1 }).
+    limit(5).
+    execute();
 
     const monthlyProperty = await PropertyModel.aggregate("monthlyProperty");
 
@@ -30,17 +30,17 @@ exports.getDashboardStats = async (req, res) => {
         totalServices,
         totalGallery,
         totalLeads,
-        totalBlogs,
+        totalBlogs
       },
 
       recentProperties,
 
-      monthlyProperty,
+      monthlyProperty
     });
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: error.message,
+      message: error.message
     });
   }
 };

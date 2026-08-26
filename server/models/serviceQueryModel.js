@@ -9,7 +9,7 @@ class ServiceQueryModel {
     name,
     email,
     contact,
-    message,
+    message
   }) {
     const id = uuidv4();
 
@@ -30,7 +30,7 @@ class ServiceQueryModel {
       VALUES
       (?, ?, ?, ?, ?, ?, ?, 'pending', NOW())
       `,
-      [id, serviceId, serviceTitle, name, email, contact, message],
+      [id, serviceId, serviceTitle, name, email, contact, message]
     );
 
     return this.getById(id);
@@ -44,7 +44,7 @@ class ServiceQueryModel {
         WHERE id = ?
         LIMIT 1
         `,
-      [id],
+      [id]
     );
 
     return rows[0];
@@ -57,7 +57,7 @@ class ServiceQueryModel {
       SET email_status = ?
       WHERE id = ?
       `,
-      [status, id],
+      [status, id]
     );
   }
 

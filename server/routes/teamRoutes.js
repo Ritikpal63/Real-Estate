@@ -13,14 +13,14 @@ router.post(
   authenticate,
   isAdmin,
   upload.single("image"),
-  TeamController.addTeam,
+  TeamController.addTeam
 );
 router.put(
   "/:id",
   authenticate,
   isAdmin,
   upload.single("image"),
-  TeamController.updateTeamMember,
+  TeamController.updateTeamMember
 );
 router.delete("/:id", authenticate, isAdmin, TeamController.deleteTeamMember);
 

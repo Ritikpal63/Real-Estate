@@ -3,18 +3,18 @@ const ServiceQueryModel = require("../models/serviceQueryModel");
 const getTransporter = require("../config/mailer");
 
 const escapeHtml = (value) =>
-  String(value)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
+String(value).
+replaceAll("&", "&amp;").
+replaceAll("<", "&lt;").
+replaceAll(">", "&gt;").
+replaceAll('"', "&quot;").
+replaceAll("'", "&#039;");
 
 class ServiceController {
-  // ===================================
-  // Get Services (Pagination)
-  // Home Page / Listing
-  // ===================================
+
+
+
+
   static getAll = async (req, res) => {
     try {
       const limit = Number(req.query.limit) || 4;
@@ -28,21 +28,21 @@ class ServiceController {
         data: services,
         pagination: {
           limit,
-          offset,
-        },
+          offset
+        }
       });
     } catch (error) {
       res.status(500).json({
         success: false,
-        message: error.message,
+        message: error.message
       });
     }
   };
 
-  // ===================================
-  // Get All Services
-  // Services Page
-  // ===================================
+
+
+
+
   static getAllServices = async (req, res) => {
     try {
       const services = await ServiceModel.getAllServices();
@@ -50,19 +50,19 @@ class ServiceController {
       res.status(200).json({
         success: true,
         count: services.length,
-        data: services,
+        data: services
       });
     } catch (error) {
       res.status(500).json({
         success: false,
-        message: error.message,
+        message: error.message
       });
     }
   };
 
-  // ===================================
-  // Get Single Service
-  // ===================================
+
+
+
   static getById = async (req, res) => {
     try {
       const service = await ServiceModel.getById(req.params.id);
@@ -70,35 +70,35 @@ class ServiceController {
       if (!service) {
         return res.status(404).json({
           success: false,
-          message: "Service not found",
+          message: "Service not found"
         });
       }
 
       res.status(200).json({
         success: true,
-        data: service,
+        data: service
       });
     } catch (error) {
       res.status(500).json({
         success: false,
-        message: error.message,
+        message: error.message
       });
     }
   };
 
-  // ===================================
-  // Create Service
-  // Admin
-  // ===================================
+
+
+
+
   static createService = async (req, res) => {
     try {
       const { title, slug, description, icon, status, display_order } =
-        req.body;
+      req.body;
 
       if (!title || !slug) {
         return res.status(400).json({
           success: false,
-          message: "Title and slug are required",
+          message: "Title and slug are required"
         });
       }
 
@@ -108,7 +108,7 @@ class ServiceController {
         description,
         icon,
         status,
-        display_order,
+        display_order
       });
 
       res.status(201).json({
@@ -116,20 +116,20 @@ class ServiceController {
 
         message: "Service Created Successfully",
 
-        data: service,
+        data: service
       });
     } catch (error) {
       res.status(500).json({
         success: false,
-        message: error.message,
+        message: error.message
       });
     }
   };
 
-  // ===================================
-  // Update Service
-  // Admin
-  // ===================================
+
+
+
+
   static updateService = async (req, res) => {
     try {
       const service = await ServiceModel.getById(req.params.id);
@@ -137,33 +137,33 @@ class ServiceController {
       if (!service) {
         return res.status(404).json({
           success: false,
-          message: "Service not found",
+          message: "Service not found"
         });
       }
 
       await ServiceModel.update(
         req.params.id,
 
-        req.body,
+        req.body
       );
 
       res.status(200).json({
         success: true,
 
-        message: "Service Updated Successfully",
+        message: "Service Updated Successfully"
       });
     } catch (error) {
       res.status(500).json({
         success: false,
-        message: error.message,
+        message: error.message
       });
     }
   };
 
-  // ===================================
-  // Delete Service
-  // Admin
-  // ===================================
+
+
+
+
   static deleteService = async (req, res) => {
     try {
       const service = await ServiceModel.getById(req.params.id);
@@ -171,7 +171,7 @@ class ServiceController {
       if (!service) {
         return res.status(404).json({
           success: false,
-          message: "Service not found",
+          message: "Service not found"
         });
       }
 
@@ -180,13 +180,13 @@ class ServiceController {
       res.status(200).json({
         success: true,
 
-        message: "Service Deleted Successfully",
+        message: "Service Deleted Successfully"
       });
     } catch (error) {
       res.status(500).json({
         success: false,
 
-        message: error.message,
+        message: error.message
       });
     }
   };
@@ -195,15 +195,15 @@ class ServiceController {
       const { serviceId, name, email, contact, message } = req.body;
 
       if (
-        !serviceId ||
-        !name?.trim() ||
-        !email?.trim() ||
-        !contact?.trim() ||
-        !message?.trim()
-      ) {
+      !serviceId ||
+      !name?.trim() ||
+      !email?.trim() ||
+      !contact?.trim() ||
+      !message?.trim())
+      {
         return res.status(400).json({
           success: false,
-          message: "All fields are required",
+          message: "All fields are required"
         });
       }
 
@@ -220,7 +220,7 @@ class ServiceController {
       if (!emailRegex.test(cleanEmail)) {
         return res.status(400).json({
           success: false,
-          message: "Please enter a valid email address",
+          message: "Please enter a valid email address"
         });
       }
 
@@ -229,7 +229,7 @@ class ServiceController {
       if (!contactRegex.test(cleanContact)) {
         return res.status(400).json({
           success: false,
-          message: "Please enter a valid contact number",
+          message: "Please enter a valid contact number"
         });
       }
 
@@ -238,7 +238,7 @@ class ServiceController {
       if (!service) {
         return res.status(404).json({
           success: false,
-          message: "Service not found",
+          message: "Service not found"
         });
       }
 
@@ -248,7 +248,7 @@ class ServiceController {
         name: cleanName,
         email: cleanEmail,
         contact: cleanContact,
-        message: cleanMessage,
+        message: cleanMessage
       });
 
       const adminEmail = process.env.ADMIN_EMAIL;
@@ -258,7 +258,7 @@ class ServiceController {
 
         return res.status(500).json({
           success: false,
-          message: "Admin email is not configured",
+          message: "Admin email is not configured"
         });
       }
 
@@ -269,7 +269,7 @@ class ServiceController {
           name: escapeHtml(cleanName),
           email: escapeHtml(cleanEmail),
           contact: escapeHtml(cleanContact),
-          message: escapeHtml(cleanMessage).replaceAll("\n", "<br>"),
+          message: escapeHtml(cleanMessage).replaceAll("\n", "<br>")
         };
 
         await mailer.sendMail({
@@ -278,14 +278,14 @@ class ServiceController {
           replyTo: cleanEmail,
           subject: `New service enquiry: ${service.title}`,
           text: [
-            `Service: ${service.title}`,
-            `Name: ${cleanName}`,
-            `Email: ${cleanEmail}`,
-            `Contact: ${cleanContact}`,
-            "",
-            "Customer request:",
-            cleanMessage,
-          ].join("\n"),
+          `Service: ${service.title}`,
+          `Name: ${cleanName}`,
+          `Email: ${cleanEmail}`,
+          `Contact: ${cleanContact}`,
+          "",
+          "Customer request:",
+          cleanMessage].
+          join("\n"),
           html: `
             <h2>New service enquiry</h2>
             <p><strong>Service:</strong> ${safe.service}</p>
@@ -294,7 +294,7 @@ class ServiceController {
             <p><strong>Contact:</strong> ${safe.contact}</p>
             <p><strong>Customer request:</strong></p>
             <p>${safe.message}</p>
-          `,
+          `
         });
 
         await ServiceQueryModel.updateEmailStatus(query.id, "sent");
@@ -307,8 +307,8 @@ class ServiceController {
           success: false,
           emailSent: false,
           message:
-            "We could not email your enquiry right now. Please try again shortly.",
-          queryId: query.id,
+          "We could not email your enquiry right now. Please try again shortly.",
+          queryId: query.id
         });
       }
 
@@ -316,14 +316,14 @@ class ServiceController {
         success: true,
         emailSent: true,
         message: "Your enquiry has been sent successfully",
-        queryId: query.id,
+        queryId: query.id
       });
     } catch (error) {
       console.error("Service Query Error:", error);
 
       return res.status(500).json({
         success: false,
-        message: "Unable to submit service enquiry",
+        message: "Unable to submit service enquiry"
       });
     }
   };

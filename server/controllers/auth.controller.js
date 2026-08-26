@@ -12,7 +12,7 @@ class authController {
       if (!email?.trim()) {
         return res.status(400).json({
           success: false,
-          message: "Email is required",
+          message: "Email is required"
         });
       }
 
@@ -23,7 +23,7 @@ class authController {
       if (!emailRegex.test(cleanEmail)) {
         return res.status(400).json({
           success: false,
-          message: "Please enter a valid email address",
+          message: "Please enter a valid email address"
         });
       }
 
@@ -34,13 +34,13 @@ class authController {
         WHERE email = ?
         LIMIT 1
         `,
-        [cleanEmail],
+        [cleanEmail]
       );
 
       if (existingUser.length > 0) {
         return res.status(409).json({
           success: false,
-          message: "This email is already registered",
+          message: "This email is already registered"
         });
       }
 
@@ -56,18 +56,18 @@ class authController {
         WHERE email = ?
         LIMIT 1
         `,
-        [cleanEmail],
+        [cleanEmail]
       );
 
       if (
-        existingOtp.length > 0 &&
-        existingOtp[0].seconds_since_last_sent < 60
-      ) {
+      existingOtp.length > 0 &&
+      existingOtp[0].seconds_since_last_sent < 60)
+      {
         const remaining = 60 - Number(existingOtp[0].seconds_since_last_sent);
 
         return res.status(429).json({
           success: false,
-          message: `Please wait ${remaining} seconds before requesting another OTP`,
+          message: `Please wait ${remaining} seconds before requesting another OTP`
         });
       }
 
@@ -108,7 +108,7 @@ class authController {
           expires_at = DATE_ADD(NOW(), INTERVAL 5 MINUTE),
           last_sent_at = NOW()
         `,
-        [otpId, cleanEmail, otpHash],
+        [otpId, cleanEmail, otpHash]
       );
 
       try {
@@ -116,18 +116,18 @@ class authController {
 
         await novu.trigger({
           workflowId:
-            process.env.NOVU_REGISTER_OTP_WORKFLOW_ID ||
-            "registration-email-otp",
+          process.env.NOVU_REGISTER_OTP_WORKFLOW_ID ||
+          "registration-email-otp",
 
           to: {
             subscriberId: `registration-${cleanEmail}`,
-            email: cleanEmail,
+            email: cleanEmail
           },
 
           payload: {
             otp,
-            expiresInMinutes: 5,
-          },
+            expiresInMinutes: 5
+          }
         });
       } catch (novuError) {
         console.error("Novu OTP Email Error:", novuError);
@@ -137,25 +137,25 @@ class authController {
           DELETE FROM email_otps
           WHERE email = ?
           `,
-          [cleanEmail],
+          [cleanEmail]
         );
 
         return res.status(500).json({
           success: false,
-          message: "Unable to send OTP email",
+          message: "Unable to send OTP email"
         });
       }
 
       return res.status(200).json({
         success: true,
-        message: "OTP sent successfully to your email",
+        message: "OTP sent successfully to your email"
       });
     } catch (error) {
       console.error("Send OTP Error:", error);
 
       return res.status(500).json({
         success: false,
-        message: "Internal server error",
+        message: "Internal server error"
       });
     }
   }
@@ -163,20 +163,20 @@ class authController {
   static async register(req, res) {
     try {
       const { username, name, email, password, contact, category, otp } =
-        req.body;
+      req.body;
 
       if (
-        !username?.trim() ||
-        !name?.trim() ||
-        !email?.trim() ||
-        !password ||
-        !contact?.trim() ||
-        !category ||
-        !otp?.trim()
-      ) {
+      !username?.trim() ||
+      !name?.trim() ||
+      !email?.trim() ||
+      !password ||
+      !contact?.trim() ||
+      !category ||
+      !otp?.trim())
+      {
         return res.status(400).json({
           success: false,
-          message: "All fields including OTP are required",
+          message: "All fields including OTP are required"
         });
       }
 
@@ -191,7 +191,7 @@ class authController {
       if (!emailRegex.test(cleanEmail)) {
         return res.status(400).json({
           success: false,
-          message: "Please enter a valid email address",
+          message: "Please enter a valid email address"
         });
       }
 
@@ -200,28 +200,28 @@ class authController {
       if (!contactRegex.test(cleanContact)) {
         return res.status(400).json({
           success: false,
-          message: "Please enter a valid 10 digit contact number",
+          message: "Please enter a valid 10 digit contact number"
         });
       }
 
       if (!["Dealer", "Consumer"].includes(category)) {
         return res.status(400).json({
           success: false,
-          message: "Category must be Dealer or Consumer",
+          message: "Category must be Dealer or Consumer"
         });
       }
 
       if (password.length < 6) {
         return res.status(400).json({
           success: false,
-          message: "Password must be at least 6 characters long",
+          message: "Password must be at least 6 characters long"
         });
       }
 
       if (!/^\d{6}$/.test(cleanOtp)) {
         return res.status(400).json({
           success: false,
-          message: "OTP must be 6 digits",
+          message: "OTP must be 6 digits"
         });
       }
 
@@ -234,13 +234,13 @@ class authController {
         OR contact = ?
         LIMIT 1
         `,
-        [cleanEmail, cleanUsername, cleanContact],
+        [cleanEmail, cleanUsername, cleanContact]
       );
 
       if (existingUser.length > 0) {
         return res.status(409).json({
           success: false,
-          message: "User already exists with this email, username or contact",
+          message: "User already exists with this email, username or contact"
         });
       }
 
@@ -260,13 +260,13 @@ class authController {
         WHERE email = ?
         LIMIT 1
         `,
-        [cleanEmail],
+        [cleanEmail]
       );
 
       if (otpRecords.length === 0) {
         return res.status(400).json({
           success: false,
-          message: "Please request an OTP first",
+          message: "Please request an OTP first"
         });
       }
 
@@ -278,12 +278,12 @@ class authController {
           DELETE FROM email_otps
           WHERE email = ?
           `,
-          [cleanEmail],
+          [cleanEmail]
         );
 
         return res.status(400).json({
           success: false,
-          message: "OTP has expired. Please request a new OTP",
+          message: "OTP has expired. Please request a new OTP"
         });
       }
 
@@ -293,12 +293,12 @@ class authController {
           DELETE FROM email_otps
           WHERE email = ?
           `,
-          [cleanEmail],
+          [cleanEmail]
         );
 
         return res.status(429).json({
           success: false,
-          message: "Too many incorrect OTP attempts. Please request a new OTP",
+          message: "Too many incorrect OTP attempts. Please request a new OTP"
         });
       }
 
@@ -313,13 +313,13 @@ class authController {
             DELETE FROM email_otps
             WHERE email = ?
             `,
-            [cleanEmail],
+            [cleanEmail]
           );
 
           return res.status(429).json({
             success: false,
             message:
-              "Too many incorrect OTP attempts. Please request a new OTP",
+            "Too many incorrect OTP attempts. Please request a new OTP"
           });
         }
 
@@ -329,12 +329,12 @@ class authController {
           SET attempts = attempts + 1
           WHERE email = ?
           `,
-          [cleanEmail],
+          [cleanEmail]
         );
 
         return res.status(400).json({
           success: false,
-          message: `Invalid OTP. ${5 - newAttempts} attempts remaining`,
+          message: `Invalid OTP. ${5 - newAttempts} attempts remaining`
         });
       }
 
@@ -361,15 +361,15 @@ class authController {
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW())
         `,
         [
-          userId,
-          cleanUsername,
-          cleanName,
-          cleanEmail,
-          hashedPassword,
-          cleanContact,
-          category,
-          role,
-        ],
+        userId,
+        cleanUsername,
+        cleanName,
+        cleanEmail,
+        hashedPassword,
+        cleanContact,
+        category,
+        role]
+
       );
 
       await db.query(
@@ -377,7 +377,7 @@ class authController {
         DELETE FROM email_otps
         WHERE email = ?
         `,
-        [cleanEmail],
+        [cleanEmail]
       );
 
       return res.status(201).json({
@@ -391,8 +391,8 @@ class authController {
           email: cleanEmail,
           contact: cleanContact,
           category,
-          role,
-        },
+          role
+        }
       });
     } catch (error) {
       console.error("Registration Error:", error);
@@ -400,13 +400,13 @@ class authController {
       if (error.code === "ER_DUP_ENTRY") {
         return res.status(409).json({
           success: false,
-          message: "Email, username or contact already exists",
+          message: "Email, username or contact already exists"
         });
       }
 
       return res.status(500).json({
         success: false,
-        message: "Internal server error",
+        message: "Internal server error"
       });
     }
   }
@@ -418,7 +418,7 @@ class authController {
       if (!email?.trim() || !password) {
         return res.status(400).json({
           success: false,
-          message: "Email and password are required",
+          message: "Email and password are required"
         });
       }
 
@@ -431,13 +431,13 @@ class authController {
         WHERE email = ?
         LIMIT 1
         `,
-        [cleanEmail],
+        [cleanEmail]
       );
 
       if (users.length === 0) {
         return res.status(401).json({
           success: false,
-          message: "Invalid email or password",
+          message: "Invalid email or password"
         });
       }
 
@@ -448,7 +448,7 @@ class authController {
       if (!isValidPassword) {
         return res.status(401).json({
           success: false,
-          message: "Invalid email or password",
+          message: "Invalid email or password"
         });
       }
 
@@ -456,12 +456,12 @@ class authController {
         {
           id: user.id,
           email: user.email,
-          role: user.role,
+          role: user.role
         },
         process.env.JWT_SECRET,
         {
-          expiresIn: "7d",
-        },
+          expiresIn: "7d"
+        }
       );
 
       const { password: _, ...userWithoutPassword } = user;
@@ -470,14 +470,14 @@ class authController {
         success: true,
         message: "Login successful",
         token,
-        user: userWithoutPassword,
+        user: userWithoutPassword
       });
     } catch (error) {
       console.error("Login Error:", error);
 
       return res.status(500).json({
         success: false,
-        message: "Internal server error",
+        message: "Internal server error"
       });
     }
   }
@@ -501,26 +501,26 @@ class authController {
         WHERE id = ?
         LIMIT 1
         `,
-        [userId],
+        [userId]
       );
 
       if (users.length === 0) {
         return res.status(404).json({
           success: false,
-          message: "User not found",
+          message: "User not found"
         });
       }
 
       return res.status(200).json({
         success: true,
-        user: users[0],
+        user: users[0]
       });
     } catch (error) {
       console.error("Get Current User Error:", error);
 
       return res.status(500).json({
         success: false,
-        message: "Internal server error",
+        message: "Internal server error"
       });
     }
   }

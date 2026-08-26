@@ -1,5 +1,5 @@
 const ContactModel = require("../models/contactModel");
-const pool = require("../config/database"); 
+const pool = require("../config/database");
 
 class ContactController {
   static async postContact(req, res) {
@@ -22,8 +22,8 @@ class ContactController {
       res.json({
         success: true,
         pagination: {
-          total,
-        },
+          total
+        }
       });
     } catch (err) {
       console.error(err);
@@ -32,7 +32,7 @@ class ContactController {
   }
   static async getAllContacts(req, res) {
     const [rows] = await pool.query(
-      "SELECT * FROM contacts ORDER BY created_at DESC",
+      "SELECT * FROM contacts ORDER BY created_at DESC"
     );
     res.json({ success: true, data: rows });
   }

@@ -11,7 +11,7 @@ class ServiceModel {
       ORDER BY display_order ASC, created_at DESC
       LIMIT ? OFFSET ?
       `,
-      [Number(limit), Number(offset)],
+      [Number(limit), Number(offset)]
     );
 
     return rows;
@@ -37,7 +37,7 @@ class ServiceModel {
       WHERE id = ?
       LIMIT 1
       `,
-      [id],
+      [id]
     );
 
     return rows[0];
@@ -52,7 +52,7 @@ class ServiceModel {
       description,
       icon,
       status = "active",
-      display_order = 0,
+      display_order = 0
     } = service;
 
     await pool.query(
@@ -71,7 +71,7 @@ class ServiceModel {
       VALUES
       (?, ?, ?, ?, ?, ?, ?, NOW())
       `,
-      [id, title, slug, description, icon, status, display_order],
+      [id, title, slug, description, icon, status, display_order]
     );
 
     return await this.getById(id);
@@ -92,7 +92,7 @@ class ServiceModel {
         display_order = ?
       WHERE id = ?
       `,
-      [title, slug, description, icon, status, display_order, id],
+      [title, slug, description, icon, status, display_order, id]
     );
 
     return result;
@@ -105,7 +105,7 @@ class ServiceModel {
       DELETE FROM services
       WHERE id = ?
       `,
-      [id],
+      [id]
     );
 
     return result;

@@ -1,4 +1,4 @@
-// config/database.js
+
 const mysql = require("mysql2/promise");
 const fs = require("fs");
 const path = require("path");
@@ -16,20 +16,20 @@ const pool = mysql.createPool({
   queueLimit: 0,
 
   ssl: {
-    minVersion: "TLSv1.2",
-    // ca: fs.readFileSync(path.join(__dirname, "../ca.pem")),
-  },
+    minVersion: "TLSv1.2"
+
+  }
 });
 
-pool
-  .getConnection()
-  .then((connection) => {
-    console.log("✅ TiDB Cloud connected successfully");
-    connection.release();
-  })
-  .catch((error) => {
-    console.error("❌ TiDB Cloud connection failed:");
-    console.error(error.message);
-  });
+pool.
+getConnection().
+then((connection) => {
+  console.log("✅ TiDB Cloud connected successfully");
+  connection.release();
+}).
+catch((error) => {
+  console.error("❌ TiDB Cloud connection failed:");
+  console.error(error.message);
+});
 
 module.exports = pool;

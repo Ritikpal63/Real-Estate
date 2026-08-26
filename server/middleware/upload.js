@@ -12,9 +12,9 @@ if (!fs.existsSync(uploadDir)) {
 
 const storage = new CloudinaryStorage({
   cloudinary,
-  params: { folder: "real-estate", allowed_formats: ["jpg", "png", "webp"] },
+  params: { folder: "real-estate", allowed_formats: ["jpg", "png", "webp"] }
 });
-// const upload = multer({ storage, limits: { fileSize: 5 * 1024 * 1024 } });
+
 
 const fileFilter = (req, file, cb) => {
   const allowedTypes = /jpeg|jpg|png|webp/;
@@ -31,7 +31,7 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({
   storage,
   fileFilter,
-  limits: { fileSize: 5 * 1024 * 1024 }, 
+  limits: { fileSize: 5 * 1024 * 1024 }
 });
 
 module.exports = upload;

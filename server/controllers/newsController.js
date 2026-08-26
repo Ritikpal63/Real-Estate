@@ -1,8 +1,8 @@
-// controllers/newsController.js
+
 const NewsModel = require("../models/newsModel");
 
 class NewsController {
-  // Get all news
+
   static async getAll(req, res) {
     try {
       const { limit = 4, offset = 0 } = req.query;
@@ -15,29 +15,29 @@ class NewsController {
         pagination: {
           total,
           limit: parseInt(limit),
-          offset: parseInt(offset),
-        },
+          offset: parseInt(offset)
+        }
       });
     } catch (error) {
       console.error("Error fetching news:", error);
       res.status(500).json({
         success: false,
         message: "Failed to fetch news",
-        error: error.message,
+        error: error.message
       });
     }
   }
 
-  // Get single news
+
   static async getById(req, res) {
     try {
       const { id } = req.params;
       const news = await NewsModel.getById(id);
 
       if (!news) {
-        return res
-          .status(404)
-          .json({ success: false, message: "News not found" });
+        return res.
+        status(404).
+        json({ success: false, message: "News not found" });
       }
 
       res.json({ success: true, data: news });
@@ -46,7 +46,7 @@ class NewsController {
       res.status(500).json({
         success: false,
         message: "Failed to fetch news",
-        error: error.message,
+        error: error.message
       });
     }
   }
@@ -60,30 +60,30 @@ class NewsController {
         success: true,
         data: news,
         pagination: {
-          total,
-        },
+          total
+        }
       });
     } catch (error) {
       console.error("Error fetching news:", error);
       res.status(500).json({
         success: false,
         message: "Failed to fetch news",
-        error: error.message,
+        error: error.message
       });
     }
   }
 
-  // Create news
+
   static async create(req, res) {
     try {
       const { title, content, summary, category, author } = req.body;
-      const image = req.file ? req.file.path : null; // full Cloudinary URL
+      const image = req.file ? req.file.path : null;
 
-      // Validation
+
       if (!title || !content) {
         return res.status(400).json({
           success: false,
-          message: "Title and content are required",
+          message: "Title and content are required"
         });
       }
 
@@ -93,24 +93,24 @@ class NewsController {
         summary,
         category,
         image,
-        author: author || "Admin",
+        author: author || "Admin"
       });
       res.status(201).json({
         success: true,
         message: "News created successfully",
-        data: newNews,
+        data: newNews
       });
     } catch (error) {
       console.error("Error creating news:", error);
       res.status(500).json({
         success: false,
         message: "Failed to create news",
-        error: error.message,
+        error: error.message
       });
     }
   }
 
-  // Update news
+
   static async update(req, res) {
     try {
       const { id } = req.params;
@@ -121,7 +121,7 @@ class NewsController {
       if (!existing) {
         return res.status(404).json({
           success: false,
-          message: "News not found",
+          message: "News not found"
         });
       }
       const image = req.file ? req.file.path : existing.image;
@@ -132,54 +132,54 @@ class NewsController {
         summary,
         category,
         image,
-        author: author || existing.author,
+        author: author || existing.author
       });
 
       return res.json({
         success: true,
         message: "News updated successfully",
-        data: updated,
+        data: updated
       });
     } catch (error) {
       console.error(error);
       return res.status(500).json({
         success: false,
-        message: "Failed to update news",
+        message: "Failed to update news"
       });
     }
   }
 
-  // Delete news
+
   static async delete(req, res) {
     try {
       const { id } = req.params;
 
-      // Check if news exists
+
       const existing = await NewsModel.getById(id);
       console.log("Existing News", existing);
       if (!existing) {
-        return res
-          .status(404)
-          .json({ success: false, message: "News not found" });
+        return res.
+        status(404).
+        json({ success: false, message: "News not found" });
       }
 
       await NewsModel.delete(id);
 
       res.json({
         success: true,
-        message: "News deleted successfully",
+        message: "News deleted successfully"
       });
     } catch (error) {
       console.error("Error deleting news:", error);
       res.status(500).json({
         success: false,
         message: "Failed to delete news",
-        error: error.message,
+        error: error.message
       });
     }
   }
 
-  // Get news by category
+
   static async getByCategory(req, res) {
     try {
       const { category } = req.params;
@@ -190,19 +190,19 @@ class NewsController {
       res.json({
         success: true,
         data: news,
-        count: news.length,
+        count: news.length
       });
     } catch (error) {
       console.error("Error fetching news by category:", error);
       res.status(500).json({
         success: false,
         message: "Failed to fetch news",
-        error: error.message,
+        error: error.message
       });
     }
   }
 
-  // Search news
+
   static async search(req, res) {
     try {
       const { q } = req.query;
@@ -210,7 +210,7 @@ class NewsController {
       if (!q) {
         return res.status(400).json({
           success: false,
-          message: "Search keyword is required",
+          message: "Search keyword is required"
         });
       }
 
@@ -219,19 +219,19 @@ class NewsController {
       res.json({
         success: true,
         data: news,
-        count: news.length,
+        count: news.length
       });
     } catch (error) {
       console.error("Error searching news:", error);
       res.status(500).json({
         success: false,
         message: "Failed to search news",
-        error: error.message,
+        error: error.message
       });
     }
   }
 
-  // Get latest news
+
   static async getLatest(req, res) {
     try {
       const { limit = 5 } = req.query;
@@ -239,14 +239,14 @@ class NewsController {
 
       res.json({
         success: true,
-        data: news,
+        data: news
       });
     } catch (error) {
       console.error("Error fetching latest news:", error);
       res.status(500).json({
         success: false,
         message: "Failed to fetch latest news",
-        error: error.message,
+        error: error.message
       });
     }
   }

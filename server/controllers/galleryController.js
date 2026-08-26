@@ -3,7 +3,7 @@ const { toDisplayImageUrl } = require("../utils/imageUrl");
 
 const withFullImageUrl = (req, item) => ({
   ...item,
-  image: toDisplayImageUrl(req, item.image),
+  image: toDisplayImageUrl(req, item.image)
 });
 
 class GalleryController {
@@ -44,7 +44,7 @@ class GalleryController {
       if (!title) return res.status(400).json({ success: false, message: "Title is required" });
       if (!req.file) return res.status(400).json({ success: false, message: "Image is required" });
 
-      const image = req.file.path; // full Cloudinary URL
+      const image = req.file.path;
       const item = await GalleryModel.create({ title, category: category || "bedroom", image, description });
 
       res.status(201).json({ success: true, message: "Gallery item created", data: withFullImageUrl(req, item) });
@@ -69,7 +69,7 @@ class GalleryController {
         title: title || existing.title,
         category: category || existing.category,
         image,
-        description: description ?? existing.description,
+        description: description ?? existing.description
       });
 
       res.status(200).json({ success: true, message: "Gallery item updated", data: withFullImageUrl(req, updated) });

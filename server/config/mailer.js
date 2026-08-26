@@ -9,7 +9,7 @@ const getTransporter = () => {
 
   if (!SMTP_HOST || !SMTP_PORT || !SMTP_USER || !SMTP_PASS) {
     throw new Error(
-      "Email is not configured. Set SMTP_HOST, SMTP_PORT, SMTP_USER and SMTP_PASS.",
+      "Email is not configured. Set SMTP_HOST, SMTP_PORT, SMTP_USER and SMTP_PASS."
     );
   }
 
@@ -19,8 +19,8 @@ const getTransporter = () => {
     secure: Number(SMTP_PORT) === 465,
     auth: {
       user: SMTP_USER,
-      pass: SMTP_PASS,
-    },
+      pass: SMTP_PASS
+    }
   });
 
   return transporter;

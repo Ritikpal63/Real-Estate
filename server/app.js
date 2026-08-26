@@ -5,10 +5,10 @@ require("dotenv").config();
 const app = express();
 
 const allowedOrigins = [
-  process.env.CLIENT_URL,
-  "http://localhost:5173",
-  "https://real-estate-sand-five.vercel.app",
-].filter(Boolean);
+process.env.CLIENT_URL,
+"http://localhost:5173",
+"https://real-estate-sand-five.vercel.app"].
+filter(Boolean);
 app.use(
   cors({
     origin(origin, callback) {
@@ -17,8 +17,8 @@ app.use(
     },
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  }),
+    allowedHeaders: ["Content-Type", "Authorization"]
+  })
 );
 
 const path = require("path");
@@ -28,7 +28,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-// Routes
+
 
 const contactRoutes = require("./routes/contactRoutes");
 app.use("/api/contact", contactRoutes);
@@ -65,7 +65,7 @@ app.use((err, req, res, next) => {
   res.status(500).json({
     success: false,
     message: "Something went wrong!",
-    error: process.env.NODE_ENV === "development" ? err.message : undefined,
+    error: process.env.NODE_ENV === "development" ? err.message : undefined
   });
 });
 

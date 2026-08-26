@@ -11,12 +11,12 @@ class PropertyController {
 
       const [rows] = await pool.query(
         "SELECT * FROM properties ORDER BY id DESC LIMIT ? OFFSET ?",
-        [limit, offset],
+        [limit, offset]
       );
 
       const data = rows.map((row) => ({
         ...row,
-        image: toDisplayImageUrl(req, row.image),
+        image: toDisplayImageUrl(req, row.image)
       }));
 
       res.status(200).json({ success: true, data });
@@ -30,7 +30,7 @@ class PropertyController {
       const { limit, offset } = req.query;
       const data = await PropertyModel.getAll(
         parseInt(limit),
-        parseInt(offset),
+        parseInt(offset)
       );
       const total = await PropertyModel.getCount();
 
@@ -38,15 +38,15 @@ class PropertyController {
         success: true,
         data: data,
         pagination: {
-          total,
-        },
+          total
+        }
       });
     } catch (error) {
       console.error("Error fetching properties:", error);
       res.status(500).json({
         success: false,
         message: "Failed to fetch properties",
-        error: error.message,
+        error: error.message
       });
     }
   }
@@ -55,8 +55,8 @@ class PropertyController {
     try {
       const { id } = req.params;
       const [rows] = await pool.query("SELECT * FROM properties WHERE id = ?", [
-        id,
-      ]);
+      id]
+      );
 
       if (rows.length === 0) {
         return res.status(404).json({ message: "Property not found" });
@@ -64,7 +64,7 @@ class PropertyController {
 
       const property = {
         ...rows[0],
-        image: toDisplayImageUrl(req, rows[0].image),
+        image: toDisplayImageUrl(req, rows[0].image)
       };
 
       res.status(200).json(property);
@@ -82,7 +82,7 @@ class PropertyController {
       if (!visitorId) {
         return res.status(400).json({
           success: false,
-          message: "visitorId is required",
+          message: "visitorId is required"
         });
       }
 
@@ -91,7 +91,7 @@ class PropertyController {
       if (!property) {
         return res.status(404).json({
           success: false,
-          message: "Property not found",
+          message: "Property not found"
         });
       }
 
@@ -99,7 +99,7 @@ class PropertyController {
 
       if (!alreadyViewed) {
         const ip =
-          req.headers["x-forwarded-for"] || req.socket.remoteAddress || req.ip;
+        req.headers["x-forwarded-for"] || req.socket.remoteAddress || req.ip;
 
         await PropertyModel.saveView(id, visitorId, ip);
 
@@ -108,14 +108,14 @@ class PropertyController {
 
       res.json({
         success: true,
-        message: "View Count Updated",
+        message: "View Count Updated"
       });
     } catch (error) {
       console.log(error);
 
       res.status(500).json({
         success: false,
-        message: error.message,
+        message: error.message
       });
     }
   };
@@ -132,16 +132,16 @@ class PropertyController {
         bedroom,
         bathroom,
         description,
-        price,
+        price
       } = req.body;
 
       if (!title || !location || !type) {
-        return res
-          .status(400)
-          .json({ message: "Title, location and type are required" });
+        return res.
+        status(400).
+        json({ message: "Title, location and type are required" });
       }
 
-      // With CloudinaryStorage: req.file.path = full secure URL, req.file.filename = public_id
+
       const image = req.file ? req.file.path : null;
 
       const property = await PropertyModel.createProperty(
@@ -155,7 +155,7 @@ class PropertyController {
         bathroom || 0,
         description || null,
         image,
-        price || 0,
+        price || 0
       );
 
       res.status(201).json({
@@ -163,8 +163,8 @@ class PropertyController {
         id: property.id,
         property: {
           ...property,
-          image: toDisplayImageUrl(req, property.image),
-        },
+          image: toDisplayImageUrl(req, property.image)
+        }
       });
     } catch (err) {
       console.error("createProperty error:", err);
@@ -185,18 +185,18 @@ class PropertyController {
         bedroom,
         bathroom,
         description,
-        price,
+        price
       } = req.body;
 
       const [existingRows] = await pool.query(
         "SELECT * FROM properties WHERE id = ?",
-        [id],
+        [id]
       );
       if (existingRows.length === 0) {
         return res.status(404).json({ message: "Property not found" });
       }
 
-      // Cloudinary-hosted images don't need local fs cleanup — just swap the stored URL
+
       let image = existingRows[0].image;
       if (req.file) {
         image = req.file.path;
@@ -208,19 +208,19 @@ class PropertyController {
         year = ?, bedroom = ?, bathroom = ?, description = ?, image = ?, price = ?
        WHERE id = ?`,
         [
-          title,
-          location,
-          type,
-          amenities || null,
-          size || null,
-          year || null,
-          bedroom || 0,
-          bathroom || 0,
-          description || null,
-          image,
-          price || 0,
-          id,
-        ],
+        title,
+        location,
+        type,
+        amenities || null,
+        size || null,
+        year || null,
+        bedroom || 0,
+        bathroom || 0,
+        description || null,
+        image,
+        price || 0,
+        id]
+
       );
 
       res.status(200).json({ message: "Property updated successfully" });
@@ -236,19 +236,19 @@ class PropertyController {
 
       const result = data.map((item) => ({
         ...item,
-        image: toDisplayImageUrl(req, item.image),
+        image: toDisplayImageUrl(req, item.image)
       }));
 
       res.json({
         success: true,
-        data: result,
+        data: result
       });
     } catch (error) {
       console.log(error);
 
       res.status(500).json({
         success: false,
-        message: error.message,
+        message: error.message
       });
     }
   };
@@ -258,7 +258,7 @@ class PropertyController {
       const { id } = req.params;
       const [existingRows] = await pool.query(
         "SELECT * FROM properties WHERE id = ?",
-        [id],
+        [id]
       );
 
       if (existingRows.length === 0) {

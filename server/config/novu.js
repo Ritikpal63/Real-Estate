@@ -5,7 +5,7 @@ const getNovu = async () => {
     const { Novu } = await import("@novu/api");
 
     novuInstance = new Novu({
-      secretKey: process.env.NOVU_SECRET_KEY,
+      secretKey: process.env.NOVU_SECRET_KEY
     });
   }
 

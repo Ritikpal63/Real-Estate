@@ -3,9 +3,9 @@ const db = require("../config/database");
 
 const createAdmin = async () => {
   try {
-    // ==============================
-    // ADMIN CREDENTIALS FROM .ENV
-    // ==============================
+
+
+
     const email = process.env.ADMIN_EMAIL;
     const password = process.env.ADMIN_PASSWORD;
 
@@ -13,9 +13,9 @@ const createAdmin = async () => {
       throw new Error("Please set ADMIN_EMAIL and ADMIN_PASSWORD in .env");
     }
 
-    // ==============================
-    // CREATE USERS TABLE
-    // ==============================
+
+
+
     await db.query(`
       CREATE TABLE IF NOT EXISTS users (
         id VARCHAR(36) NOT NULL PRIMARY KEY,
@@ -30,12 +30,12 @@ const createAdmin = async () => {
 
     console.log("✅ Users table checked/created");
 
-    // ==============================
-    // CHECK ADMIN
-    // ==============================
+
+
+
     const [existing] = await db.query(
       "SELECT id, email, role FROM users WHERE email = ?",
-      [email],
+      [email]
     );
 
     if (existing.length > 0) {
@@ -43,22 +43,22 @@ const createAdmin = async () => {
       return;
     }
 
-    // ==============================
-    // HASH PASSWORD
-    // ==============================
-    const hashedPassword = await bcrypt.hash(password, 10);
-    
 
-    // ==============================
-    // CREATE ADMIN
-    // ==============================
+
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+
+
+
+
     const [result] = await db.query(
       `
       INSERT INTO users
       (id, username, name, email, password, role)
       VALUES (UUID(), ?, ?, ?, ?, ?)
       `,
-      ["admin", "Admin User", email, hashedPassword, "admin"],
+      ["admin", "Admin User", email, hashedPassword, "admin"]
     );
 
     console.log("✅ Admin created successfully");
@@ -69,7 +69,7 @@ const createAdmin = async () => {
   }
 };
 
-// Run
+
 createAdmin();
 
 module.exports = createAdmin;

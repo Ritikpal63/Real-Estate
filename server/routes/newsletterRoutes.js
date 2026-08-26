@@ -2,7 +2,7 @@ const express = require("express");
 
 const {
   subscribeNewsletter,
-  getAllSubscriber,
+  getAllSubscriber
 } = require("../controllers/newsletterController");
 
 const router = express.Router();

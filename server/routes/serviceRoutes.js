@@ -23,4 +23,3 @@ router.put("/:id", authenticate, isAdmin, ServiceController.updateService);
 router.delete("/:id", authenticate, isAdmin, ServiceController.deleteService);
 
 module.exports = router;
-    

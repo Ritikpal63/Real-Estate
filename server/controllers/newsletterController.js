@@ -1,7 +1,7 @@
 const {
   findSubscriberByEmail,
   createSubscriber,
-  reactivateSubscriber,
+  reactivateSubscriber
 } = require("../models/newsletterModel");
 const pool = require("../config/database");
 
@@ -12,7 +12,7 @@ const subscribeNewsletter = async (req, res) => {
     if (!email) {
       return res.status(400).json({
         success: false,
-        message: "Email is required",
+        message: "Email is required"
       });
     }
 
@@ -23,7 +23,7 @@ const subscribeNewsletter = async (req, res) => {
     if (!emailRegex.test(normalizedEmail)) {
       return res.status(400).json({
         success: false,
-        message: "Please enter a valid email address",
+        message: "Please enter a valid email address"
       });
     }
 
@@ -32,7 +32,7 @@ const subscribeNewsletter = async (req, res) => {
     if (existingSubscriber?.status === "active") {
       return res.status(409).json({
         success: false,
-        message: "This email is already subscribed",
+        message: "This email is already subscribed"
       });
     }
 
@@ -41,7 +41,7 @@ const subscribeNewsletter = async (req, res) => {
 
       return res.status(200).json({
         success: true,
-        message: "Newsletter subscription reactivated successfully",
+        message: "Newsletter subscription reactivated successfully"
       });
     }
 
@@ -49,7 +49,7 @@ const subscribeNewsletter = async (req, res) => {
 
     return res.status(201).json({
       success: true,
-      message: "Successfully subscribed to our newsletter",
+      message: "Successfully subscribed to our newsletter"
     });
   } catch (error) {
     console.error("Subscribe newsletter error:", error);
@@ -57,7 +57,7 @@ const subscribeNewsletter = async (req, res) => {
     return res.status(500).json({
       success: false,
       message: "Internal server error",
-      error: process.env.NODE_ENV === "development" ? error.message : undefined,
+      error: process.env.NODE_ENV === "development" ? error.message : undefined
     });
   }
 };
@@ -69,5 +69,5 @@ const getAllSubscriber = async (req, res) => {
 
 module.exports = {
   subscribeNewsletter,
-  getAllSubscriber,
+  getAllSubscriber
 };

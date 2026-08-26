@@ -44,24 +44,24 @@ class PropertyQuery {
 class PropertyModel {
   static async getById(id) {
     const [rows] = await pool.query("SELECT * FROM properties WHERE id = ?", [
-      id,
-    ]);
+    id]
+    );
     return rows[0];
   }
 
   static async createProperty(
-    title,
-    location,
-    type,
-    amenities,
-    size,
-    year,
-    bedroom,
-    bathroom,
-    description,
-    image,
-    price,
-  ) {
+  title,
+  location,
+  type,
+  amenities,
+  size,
+  year,
+  bedroom,
+  bathroom,
+  description,
+  image,
+  price)
+  {
     const id = uuidv4();
 
     await pool.query(
@@ -69,19 +69,19 @@ class PropertyModel {
       (id, title, location, type, amenities, size, year, bedroom, bathroom, description, image, price, created_at)
      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())`,
       [
-        id,
-        title,
-        location,
-        type,
-        amenities,
-        size,
-        year,
-        bedroom,
-        bathroom,
-        description,
-        image,
-        price,
-      ],
+      id,
+      title,
+      location,
+      type,
+      amenities,
+      size,
+      year,
+      bedroom,
+      bathroom,
+      description,
+      image,
+      price]
+
     );
 
     return this.getById(id);
@@ -103,8 +103,8 @@ class PropertyModel {
       switch (type) {
         case "monthlyProperty":
           query = `
-                    
-                    SELECT 
+
+                    SELECT
                         MONTH(created_at) AS month,
                         COUNT(*) AS count
 
@@ -113,15 +113,15 @@ class PropertyModel {
                     GROUP BY MONTH(created_at)
 
                     ORDER BY month ASC
-                    
+
                     `;
 
           break;
 
         case "yearlyProperty":
           query = `
-                    
-                    SELECT 
+
+                    SELECT
                         YEAR(created_at) AS year,
                         COUNT(*) AS count
 
@@ -130,22 +130,22 @@ class PropertyModel {
                     GROUP BY YEAR(created_at)
 
                     ORDER BY year ASC
-                    
+
                     `;
 
           break;
 
         case "categoryWise":
           query = `
-                    
-                    SELECT 
+
+                    SELECT
                         category,
                         COUNT(*) AS count
 
                     FROM properties
 
                     GROUP BY category
-                    
+
                     `;
 
           break;
@@ -167,7 +167,7 @@ class PropertyModel {
   static async getAll(limit = 50, offset = 0) {
     const [rows] = await pool.query(
       "SELECT * FROM properties ORDER BY created_at DESC LIMIT ? OFFSET ?",
-      [limit, offset],
+      [limit, offset]
     );
     return rows;
   }
@@ -176,7 +176,7 @@ class PropertyModel {
       `UPDATE properties
      SET views = views + 1
      WHERE id = ?`,
-      [propertyId],
+      [propertyId]
     );
   }
 
@@ -185,7 +185,7 @@ class PropertyModel {
       `SELECT id
      FROM property_views
      WHERE property_id = ?`,
-      [propertyId, visitorId],
+      [propertyId, visitorId]
     );
 
     return rows.length > 0;
@@ -196,7 +196,7 @@ class PropertyModel {
       `INSERT INTO property_views
     (property_id,  ip_address)
     VALUES (?,?)`,
-      [propertyId, ip],
+      [propertyId, ip]
     );
   }
 

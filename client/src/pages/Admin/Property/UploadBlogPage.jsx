@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import axiosInstance from "../../../utils/axiosConfig";
 import ImageUploader from './ImageUploader';
 import { useNavigate } from "react-router-dom";
@@ -8,8 +8,8 @@ const UploadBlogPage = () => {
   const navigate = useNavigate();
   const [form, setForm] = useState({
     title: "",
-    content: "",
-  })
+    content: ""
+  });
   const [preview, setPreview] = useState(null);
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
@@ -50,8 +50,8 @@ const UploadBlogPage = () => {
       console.log("Form Data:", formData);
       await axiosInstance.post("/blogs", formData, {
         headers: {
-          "Content-Type": "multipart/form-data",
-        },
+          "Content-Type": "multipart/form-data"
+        }
       });
 
       navigate("/admin");
@@ -75,11 +75,11 @@ const UploadBlogPage = () => {
                   <div>
                     <p className="text-uppercase text-secondary mb-1">Admin panel</p>
                     <h3 className="mb-0">Create a new post</h3>
-                    {/* <p className="text-muted mb-0">
-                      Logged in as <strong>{user?.name || user?.email}</strong>
-                    </p> */}
+                    {
+
+                    }
                   </div>
-                  {/* <span className="badge fs-4">{posts.length} posts</span> */}
+                  {}
                 </div>
 
                 {error && <div className="alert alert-danger">{error}</div>}
@@ -95,8 +95,8 @@ const UploadBlogPage = () => {
                       onChange={handleChange}
                       disabled={loading}
                       className="form-control form-control-lg border-2"
-                      placeholder="Enter title"
-                    />
+                      placeholder="Enter title" />
+
                   </div>
 
                   <div className="mb-3">
@@ -108,8 +108,8 @@ const UploadBlogPage = () => {
                       disabled={loading}
                       rows="6"
                       className="form-control border-2"
-                      placeholder="Write the blog content here"
-                    />
+                      placeholder="Write the blog content here" />
+
                   </div>
 
                   <div className="mb-3">
@@ -121,8 +121,8 @@ const UploadBlogPage = () => {
                   <button
                     type="submit"
                     className="btn btn-dark px-5 py-2"
-                    disabled={loading}
-                  >
+                    disabled={loading}>
+
                     {loading ? "Saving post..." : "Upload post"}
                   </button>
                 </form>
@@ -134,20 +134,20 @@ const UploadBlogPage = () => {
             <div className="card shadow-sm border-0 mb-4">
               <div className="card-body p-4">
                 <h5 className="mb-3">Post preview</h5>
-                {imageFile ? (
-                  <div className="mb-3 rounded overflow-hidden border">
+                {imageFile ?
+                <div className="mb-3 rounded overflow-hidden border">
                     <img
-                      src={imageFile}
-                      alt="imageFile"
-                      className="img-fluid"
-                      style={{ width: "100%", height: "240px", objectFit: "cover" }}
-                    />
-                  </div>
-                ) : (
-                  <div className="mb-3 rounded border p-4 text-center text-muted">
+                    src={imageFile}
+                    alt="imageFile"
+                    className="img-fluid"
+                    style={{ width: "100%", height: "240px", objectFit: "cover" }} />
+
+                  </div> :
+
+                <div className="mb-3 rounded border p-4 text-center text-muted">
                     Choose an image to preview
                   </div>
-                )}
+                }
                 <div className="p-3 bg-light rounded">
                   <h6 className="mb-2 text-muted">Tip</h6>
                   <p className="small text-muted mb-0">
@@ -166,22 +166,22 @@ const UploadBlogPage = () => {
                   </div>
                 </div>
 
-                {posts.length === 0 ? (
-                  <p className="text-muted">No posts yet. Your latest posts will appear here.</p>
-                ) : (
-                  posts.map((item) => (
-                    <div key={item.id} className="d-flex gap-3 mb-3 pb-3 border-bottom">
+                {posts.length === 0 ?
+                <p className="text-muted">No posts yet. Your latest posts will appear here.</p> :
+
+                posts.map((item) =>
+                <div key={item.id} className="d-flex gap-3 mb-3 pb-3 border-bottom">
                       <div style={{ width: 90, minHeight: 72, overflow: "hidden", borderRadius: 12 }}>
-                        {item.image ? (
-                          <img
-                            src={item.image}
-                            alt={item.title}
-                            className="img-fluid"
-                            style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                          />
-                        ) : (
-                          <div className="bg-secondary bg-opacity-10 h-100" />
-                        )}
+                        {item.image ?
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      className="img-fluid"
+                      style={{ width: "100%", height: "100%", objectFit: "cover" }} /> :
+
+
+                    <div className="bg-secondary bg-opacity-10 h-100" />
+                    }
                       </div>
                       <div className="">
                         <h6 className="mb-1">{item.title}</h6>
@@ -189,15 +189,15 @@ const UploadBlogPage = () => {
                         <small className="text-secondary">{item.createdAt}</small>
                       </div>
                     </div>
-                  ))
-                )}
+                )
+                }
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  )
-}
+    </div>);
 
-export default UploadBlogPage
+};
+
+export default UploadBlogPage;

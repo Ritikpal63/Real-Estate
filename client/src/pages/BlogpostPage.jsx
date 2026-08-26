@@ -1,7 +1,7 @@
-import React from 'react'
-import Section from '../components/Section'
-import Blogpost from '../components/Blogpost'
-// import AdminAsideSection from './Admin/AdminAsideSection'
+import React from 'react';
+import Section from '../components/Section';
+import Blogpost from '../components/Blogpost';
+
 
 
 const BlogpostPage = () => {
@@ -9,8 +9,8 @@ const BlogpostPage = () => {
     <>
 	<Section title={"Blog Post"} />
   <Blogpost />
-    </>
-  )
-}
+    </>);
 
-export default BlogpostPage
+};
+
+export default BlogpostPage;

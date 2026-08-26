@@ -7,44 +7,44 @@ const Newsletter = () => {
   const [message, setMessage] = useState({ type: "", text: "" });
 
   const crousel = [
-    { id: 1, pic: "/assets/img/partner/1.png", link: "https://m3mindia.com/" },
-    {
-      id: 2,
-      pic: "/assets/img/partner/2.png",
-      link: "https://www.acehardware.com/",
-    },
-    {
-      id: 3,
-      pic: "/assets/img/partner/3.png",
-      link: "https://en.wikipedia.org/wiki/Trump_Tower",
-    },
-    {
-      id: 4,
-      pic: "/assets/img/partner/4.png",
-      link: "https://jacobandco.com/",
-    },
-    {
-      id: 5,
-      pic: "/assets/img/partner/5.png",
-      link: "https://www.supertechlimited.com/",
-    },
-    { id: 6, pic: "/assets/img/partner/1.png", link: "https://m3mindia.com/" },
-    {
-      id: 7,
-      pic: "/assets/img/partner/2.png",
-      link: "https://www.acehardware.com/",
-    },
-    {
-      id: 8,
-      pic: "/assets/img/partner/3.png",
-      link: "https://en.wikipedia.org/wiki/Trump_Tower",
-    },
-    {
-      id: 9,
-      pic: "/assets/img/partner/4.png",
-      link: "https://jacobandco.com/",
-    },
-  ];
+  { id: 1, pic: "/assets/img/partner/1.png", link: "https://m3mindia.com/" },
+  {
+    id: 2,
+    pic: "/assets/img/partner/2.png",
+    link: "https://www.acehardware.com/"
+  },
+  {
+    id: 3,
+    pic: "/assets/img/partner/3.png",
+    link: "https://en.wikipedia.org/wiki/Trump_Tower"
+  },
+  {
+    id: 4,
+    pic: "/assets/img/partner/4.png",
+    link: "https://jacobandco.com/"
+  },
+  {
+    id: 5,
+    pic: "/assets/img/partner/5.png",
+    link: "https://www.supertechlimited.com/"
+  },
+  { id: 6, pic: "/assets/img/partner/1.png", link: "https://m3mindia.com/" },
+  {
+    id: 7,
+    pic: "/assets/img/partner/2.png",
+    link: "https://www.acehardware.com/"
+  },
+  {
+    id: 8,
+    pic: "/assets/img/partner/3.png",
+    link: "https://en.wikipedia.org/wiki/Trump_Tower"
+  },
+  {
+    id: 9,
+    pic: "/assets/img/partner/4.png",
+    link: "https://jacobandco.com/"
+  }];
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -62,29 +62,29 @@ const Newsletter = () => {
     setMessage({ type: "", text: "" });
 
     try {
-      // Replace with your actual API endpoint
+
       const response = await fetch("/api/newsletter/subscribe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email })
       });
 
       if (response.ok) {
         setMessage({
           type: "success",
-          text: "🎉 Successfully subscribed to our newsletter!",
+          text: "🎉 Successfully subscribed to our newsletter!"
         });
         setEmail("");
       } else {
         setMessage({
           type: "error",
-          text: "Subscription failed. Please try again.",
+          text: "Subscription failed. Please try again."
         });
       }
     } catch (error) {
       setMessage({
         type: "error",
-        text: "An error occurred. Please try again.",
+        text: "An error occurred. Please try again."
       });
     } finally {
       setIsSubmitting(false);
@@ -94,36 +94,36 @@ const Newsletter = () => {
   return (
     <section className="py-16 bg-gradient-to-r from-emerald-500 to-emerald-700">
       <div className="container mx-auto px-4">
-        {/* Partner Logos Carousel */}
+        {}
         <div className="mb-12 overflow-hidden">
           <div className="flex gap-8 animate-scroll">
-            {crousel.map((item) => (
-              <div key={item.id} className="flex-shrink-0 w-48">
+            {crousel.map((item) =>
+            <div key={item.id} className="flex-shrink-0 w-48">
                 <Link to={item.link} className="block">
                   <img
-                    src={item.pic}
-                    alt="Partner"
-                    className="h-16 object-contain filter brightness-0 invert hover:filter-none transition-all duration-300"
-                  />
+                  src={item.pic}
+                  alt="Partner"
+                  className="h-16 object-contain filter brightness-0 invert hover:filter-none transition-all duration-300" />
+
                 </Link>
               </div>
-            ))}
-            {/* Duplicate for seamless scrolling */}
-            {crousel.map((item) => (
-              <div key={`dup-${item.id}`} className="flex-shrink-0">
+            )}
+            {}
+            {crousel.map((item) =>
+            <div key={`dup-${item.id}`} className="flex-shrink-0">
                 <Link to={item.link} className="block">
                   <img
-                    src={item.pic}
-                    alt="Partner"
-                    className="w-full h-16 object-contain filter brightness-0 invert hover:filter-none transition-all duration-300"
-                  />
+                  src={item.pic}
+                  alt="Partner"
+                  className="w-full h-16 object-contain filter brightness-0 invert hover:filter-none transition-all duration-300" />
+
                 </Link>
               </div>
-            ))}
+            )}
           </div>
         </div>
 
-        {/* Newsletter Signup */}
+        {}
         <div className="max-w-2xl mx-auto text-center">
           <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 md:p-12 shadow-xl">
             <h3 className="text-2xl md:text-3xl font-bold text-white mb-3">
@@ -142,51 +142,51 @@ const Newsletter = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="flex-1 px-4 py-3 rounded-lg bg-white/90 backdrop-blur-sm text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:bg-white transition-all duration-300"
-                  disabled={isSubmitting}
-                />
+                  disabled={isSubmitting} />
+
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="px-6 py-3 bg-yellow-400 text-gray-800 font-semibold rounded-lg hover:bg-yellow-300 transition-colors duration-300 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
-                >
-                  {isSubmitting ? (
-                    <span className="flex items-center gap-2">
+                  className="px-6 py-3 bg-yellow-400 text-gray-800 font-semibold rounded-lg hover:bg-yellow-300 transition-colors duration-300 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap">
+
+                  {isSubmitting ?
+                  <span className="flex items-center gap-2">
                       <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
                         <circle
-                          className="opacity-25"
-                          cx="12"
-                          cy="12"
-                          r="10"
-                          stroke="currentColor"
-                          strokeWidth="4"
-                          fill="none"
-                        />
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                        fill="none" />
+
                         <path
-                          className="opacity-75"
-                          fill="currentColor"
-                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                        />
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+
                       </svg>
                       Subscribing...
-                    </span>
-                  ) : (
-                    "Subscribe"
-                  )}
+                    </span> :
+
+                  "Subscribe"
+                  }
                 </button>
               </div>
 
-              {/* Message Display */}
-              {message.text && (
-                <div
-                  className={`p-3 rounded-lg ${
-                    message.type === "success"
-                      ? "bg-green-600/20 text-green-100 border border-green-500/50"
-                      : "bg-red-600/20 text-red-100 border border-red-500/50"
-                  }`}
-                >
+              {}
+              {message.text &&
+              <div
+                className={`p-3 rounded-lg ${
+                message.type === "success" ?
+                "bg-green-600/20 text-green-100 border border-green-500/50" :
+                "bg-red-600/20 text-red-100 border border-red-500/50"}`
+                }>
+
                   {message.text}
                 </div>
-              )}
+              }
             </form>
 
             <p className="text-white/60 text-xs mt-4">
@@ -196,7 +196,7 @@ const Newsletter = () => {
         </div>
       </div>
 
-      {/* Add animation styles */}
+      {}
       <style>{`
         @keyframes scroll {
           0% { transform: translateX(0); }
@@ -209,8 +209,8 @@ const Newsletter = () => {
           animation-play-state: paused;
         }
       `}</style>
-    </section>
-  );
+    </section>);
+
 };
 
 export default Newsletter;

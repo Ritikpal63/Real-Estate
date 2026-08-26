@@ -7,20 +7,20 @@ import ImageUploader from "../Property/ImageUploader";
 import axiosInstance from "../../../utils/axiosConfig";
 
 const CATEGORIES = [
-  "bedroom",
-  "bathroom",
-  "kitchen",
-  "garage",
-  "basement",
-  "exterior",
-];
+"bedroom",
+"bathroom",
+"kitchen",
+"garage",
+"basement",
+"exterior"];
+
 
 const AddGallery = () => {
   const navigate = useNavigate();
   const [form, setForm] = useState({
     title: "",
     category: "bedroom",
-    description: "",
+    description: ""
   });
   const [imageFile, setImageFile] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -43,21 +43,21 @@ const AddGallery = () => {
 
       const formData = new FormData();
       Object.entries(form).forEach(([key, value]) =>
-        formData.append(key, value),
+      formData.append(key, value)
       );
       formData.append("image", imageFile);
 
       await axiosInstance.post("/gallery", formData, {
         headers: {
-          "Content-Type": "multipart/form-data",
-        },
+          "Content-Type": "multipart/form-data"
+        }
       });
       toast.success("Gallery item added!");
       navigate("/admin/viewgallery");
     } catch (err) {
       console.error(err);
       setError(
-        err.response?.data?.message || "Failed to add gallery item. Try again.",
+        err.response?.data?.message || "Failed to add gallery item. Try again."
       );
     } finally {
       setLoading(false);
@@ -79,11 +79,11 @@ const AddGallery = () => {
               </p>
             </div>
 
-            {error && (
-              <div className="bg-red-50 text-red-600 text-sm rounded-xl px-4 py-3 mb-4">
+            {error &&
+            <div className="bg-red-50 text-red-600 text-sm rounded-xl px-4 py-3 mb-4">
                 {error}
               </div>
-            )}
+            }
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <input
@@ -91,20 +91,20 @@ const AddGallery = () => {
                 value={form.title}
                 onChange={handleChange}
                 placeholder="Title"
-                className="w-full bg-gray-100 rounded-xl px-4 py-3 mb-3 outline-none"
-              />
+                className="w-full bg-gray-100 rounded-xl px-4 py-3 mb-3 outline-none" />
+
 
               <select
                 name="category"
                 value={form.category}
                 onChange={handleChange}
-                className="w-full bg-gray-100 rounded-xl px-4 py-3 mb-3 outline-none"
-              >
-                {CATEGORIES.map((cat) => (
-                  <option key={cat} value={cat}>
+                className="w-full bg-gray-100 rounded-xl px-4 py-3 mb-3 outline-none">
+
+                {CATEGORIES.map((cat) =>
+                <option key={cat} value={cat}>
                     {cat.charAt(0).toUpperCase() + cat.slice(1)}
                   </option>
-                ))}
+                )}
               </select>
 
               <textarea
@@ -113,24 +113,24 @@ const AddGallery = () => {
                 onChange={handleChange}
                 rows={3}
                 placeholder="Short description (optional)"
-                className="w-full bg-gray-100 rounded-xl px-4 py-3 mb-3 outline-none"
-              />
+                className="w-full bg-gray-100 rounded-xl px-4 py-3 mb-3 outline-none" />
+
 
               <ImageUploader onImageSelect={setImageFile} />
 
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-[#374256] text-white rounded-lg py-3 disabled:opacity-60"
-              >
+                className="w-full bg-[#374256] text-white rounded-lg py-3 disabled:opacity-60">
+
                 {loading ? "Uploading..." : "Add to Gallery"}
               </button>
             </form>
           </div>
         </div>
       </div>
-    </>
-  );
+    </>);
+
 };
 
 export default AddGallery;

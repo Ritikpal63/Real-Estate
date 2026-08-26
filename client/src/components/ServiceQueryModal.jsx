@@ -7,7 +7,7 @@ const ServiceQueryModal = ({ service, onClose }) => {
     name: "",
     email: "",
     contact: "",
-    message: "",
+    message: ""
   });
 
   const [loading, setLoading] = useState(false);
@@ -39,7 +39,7 @@ const ServiceQueryModal = ({ service, onClose }) => {
 
     setFormData((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: value
     }));
 
     setError("");
@@ -50,11 +50,11 @@ const ServiceQueryModal = ({ service, onClose }) => {
     e.preventDefault();
 
     if (
-      !formData.name.trim() ||
-      !formData.email.trim() ||
-      !formData.contact.trim() ||
-      !formData.message.trim()
-    ) {
+    !formData.name.trim() ||
+    !formData.email.trim() ||
+    !formData.contact.trim() ||
+    !formData.message.trim())
+    {
       setError("Please fill all fields");
 
       return;
@@ -74,7 +74,7 @@ const ServiceQueryModal = ({ service, onClose }) => {
 
         contact: formData.contact.trim(),
 
-        message: formData.message.trim(),
+        message: formData.message.trim()
       });
 
       if (response.data.success) {
@@ -84,7 +84,7 @@ const ServiceQueryModal = ({ service, onClose }) => {
           name: "",
           email: "",
           contact: "",
-          message: "",
+          message: ""
         });
       }
     } catch (error) {
@@ -110,11 +110,20 @@ const ServiceQueryModal = ({ service, onClose }) => {
         justify-center
         p-4
       "
+
+
+
+
+
+
+
+
+
       onClick={onClose}
       role="dialog"
       aria-modal="true"
-      aria-labelledby="service-query-title"
-    >
+      aria-labelledby="service-query-title">
+
       <div
         className="
           bg-white
@@ -127,8 +136,18 @@ const ServiceQueryModal = ({ service, onClose }) => {
           max-h-[90vh]
           overflow-y-auto
         "
-        onClick={(e) => e.stopPropagation()}
-      >
+
+
+
+
+
+
+
+
+
+
+        onClick={(e) => e.stopPropagation()}>
+
         <button
           type="button"
           onClick={onClose}
@@ -140,8 +159,15 @@ const ServiceQueryModal = ({ service, onClose }) => {
             text-gray-500
             hover:text-black
           "
-          aria-label="Close enquiry form"
-        >
+
+
+
+
+
+
+
+          aria-label="Close enquiry form">
+
           ×
         </button>
 
@@ -152,8 +178,13 @@ const ServiceQueryModal = ({ service, onClose }) => {
             font-bold
             text-gray-800
             mb-2
-          "
-        >
+          ">
+
+
+
+
+
+
           Service Enquiry
         </h2>
 
@@ -162,38 +193,54 @@ const ServiceQueryModal = ({ service, onClose }) => {
             text-blue-600
             font-semibold
             mb-6
-          "
-        >
+          ">
+
+
+
+
+
           {service.title}
         </p>
 
-        {error && (
-          <div
-            className="
+        {error &&
+        <div
+          className="
               mb-4
               p-3
               rounded-lg
               bg-red-100
               text-red-700
-            "
-          >
+            ">
+
+
+
+
+
+
+
             {error}
           </div>
-        )}
+        }
 
-        {success && (
-          <div
-            className="
+        {success &&
+        <div
+          className="
               mb-4
               p-3
               rounded-lg
               bg-green-100
               text-green-700
-            "
-          >
+            ">
+
+
+
+
+
+
+
             {success}
           </div>
-        )}
+        }
 
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
@@ -203,8 +250,13 @@ const ServiceQueryModal = ({ service, onClose }) => {
                 mb-2
                 font-medium
                 text-gray-700
-              "
-            >
+              ">
+
+
+
+
+
+
               Full Name
             </label>
 
@@ -222,9 +274,17 @@ const ServiceQueryModal = ({ service, onClose }) => {
                 outline-none
                 focus:border-blue-500
               "
+
+
+
+
+
+
+
+
               placeholder="Enter your name"
-              required
-            />
+              required />
+
           </div>
 
           <div className="mb-4">
@@ -234,8 +294,13 @@ const ServiceQueryModal = ({ service, onClose }) => {
                 mb-2
                 font-medium
                 text-gray-700
-              "
-            >
+              ">
+
+
+
+
+
+
               Email
             </label>
 
@@ -253,9 +318,17 @@ const ServiceQueryModal = ({ service, onClose }) => {
                 outline-none
                 focus:border-blue-500
               "
+
+
+
+
+
+
+
+
               placeholder="Enter your email"
-              required
-            />
+              required />
+
           </div>
 
           <div className="mb-4">
@@ -265,8 +338,13 @@ const ServiceQueryModal = ({ service, onClose }) => {
                 mb-2
                 font-medium
                 text-gray-700
-              "
-            >
+              ">
+
+
+
+
+
+
               Contact
             </label>
 
@@ -275,13 +353,13 @@ const ServiceQueryModal = ({ service, onClose }) => {
               name="contact"
               value={formData.contact}
               onChange={(e) => {
-                const value = e.target.value
-                  .replace(/[^0-9+()\-\s]/g, "")
-                  .slice(0, 20);
+                const value = e.target.value.
+                replace(/[^0-9+()\-\s]/g, "").
+                slice(0, 20);
 
                 setFormData((prev) => ({
                   ...prev,
-                  contact: value,
+                  contact: value
                 }));
 
                 setError("");
@@ -295,11 +373,19 @@ const ServiceQueryModal = ({ service, onClose }) => {
                 outline-none
                 focus:border-blue-500
               "
+
+
+
+
+
+
+
+
               placeholder="Enter contact number"
               maxLength={20}
               inputMode="tel"
-              required
-            />
+              required />
+
           </div>
 
           <div className="mb-6">
@@ -309,8 +395,13 @@ const ServiceQueryModal = ({ service, onClose }) => {
                 mb-2
                 font-medium
                 text-gray-700
-              "
-            >
+              ">
+
+
+
+
+
+
               Your Message
             </label>
 
@@ -329,9 +420,18 @@ const ServiceQueryModal = ({ service, onClose }) => {
                 focus:border-blue-500
                 resize-none
               "
+
+
+
+
+
+
+
+
+
               placeholder={`Tell us what you need regarding ${service.title}`}
-              required
-            />
+              required />
+
           </div>
 
           <div
@@ -339,8 +439,12 @@ const ServiceQueryModal = ({ service, onClose }) => {
               flex
               gap-3
               justify-end
-            "
-          >
+            ">
+
+
+
+
+
             <button
               type="button"
               onClick={onClose}
@@ -351,8 +455,14 @@ const ServiceQueryModal = ({ service, onClose }) => {
                 border
                 rounded-lg
                 text-gray-700
-              "
-            >
+              ">
+
+
+
+
+
+
+
               Cancel
             </button>
 
@@ -367,15 +477,23 @@ const ServiceQueryModal = ({ service, onClose }) => {
                 text-white
                 rounded-lg
                 disabled:opacity-60
-              "
-            >
+              ">
+
+
+
+
+
+
+
+
+
               {loading ? "Sending..." : "Send Enquiry"}
             </button>
           </div>
         </form>
       </div>
-    </div>
-  );
+    </div>);
+
 };
 
 export default ServiceQueryModal;

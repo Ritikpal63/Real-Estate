@@ -1,6 +1,6 @@
-import React from 'react'
-import Section from '../components/Section'
-import Agentprofile from '../components/Agentprofile'
+import React from 'react';
+import Section from '../components/Section';
+import Agentprofile from '../components/Agentprofile';
 
 
 const AgentprofilePage = () => {
@@ -8,8 +8,8 @@ const AgentprofilePage = () => {
     <>
 	<Section title={"Agent Profile"} />
 	<Agentprofile />
-    </>
-  )
-}
+    </>);
 
-export default AgentprofilePage
+};
+
+export default AgentprofilePage;

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-// import "./ContactPopup.css";
+
 import axiosInstance from "../utils/axiosConfig";
-import { toast } from "react-toastify"; 
+import { toast } from "react-toastify";
 
 const Contact = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -9,7 +9,7 @@ const Contact = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    message: "",
+    message: ""
   });
 
 
@@ -47,8 +47,8 @@ const Contact = () => {
                 <div className="contact">
                   <form
                     id="contact-form"
-                    onSubmit={handleSubmit}
-                  >
+                    onSubmit={handleSubmit}>
+
                     <div className="row">
                       <div className="form-group col-md-6">
                         <input
@@ -58,8 +58,8 @@ const Contact = () => {
                           onChange={handleChange}
                           className="form-control"
                           placeholder="Name"
-                          required="required"
-                        />
+                          required="required" />
+
                       </div>
                       <div className="form-group col-md-6">
                         <input
@@ -69,8 +69,8 @@ const Contact = () => {
                           onChange={handleChange}
                           className="form-control"
                           placeholder="Email"
-                          required="required"
-                        />
+                          required="required" />
+
                       </div>
                       <div className="form-group col-md-12">
                         <input
@@ -78,8 +78,8 @@ const Contact = () => {
                           name="subject"
                           className="form-control"
                           placeholder="Subject"
-                          required="required"
-                        />
+                          required="required" />
+
                       </div>
                       <div className="form-group col-md-12">
                         <textarea
@@ -89,8 +89,8 @@ const Contact = () => {
                           onChange={handleChange}
                           className="form-control"
                           placeholder="Your Message"
-                          required="required"
-                        ></textarea>
+                          required="required">
+                        </textarea>
                       </div>
                       <div className="col-md-12 text-center">
                         <button
@@ -99,8 +99,8 @@ const Contact = () => {
                           name="submit"
                           id="submitButton"
                           className="btn btn-contact-bg"
-                          title="Submit Your Message!"
-                        >
+                          title="Submit Your Message!">
+
                           Send Message
                         </button>
                       </div>
@@ -140,11 +140,11 @@ const Contact = () => {
           style={{ border: "0" }}
           allowFullScreen=""
           loading="lazy"
-          referrerPolicy="strict-origin-when-cross-origin"
-        ></iframe>
+          referrerPolicy="strict-origin-when-cross-origin">
+        </iframe>
       </div>
-    </>
-  );
+    </>);
+
 };
 
 export default Contact;

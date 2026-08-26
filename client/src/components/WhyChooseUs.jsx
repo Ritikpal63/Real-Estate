@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 const WhyChooseUs = () => {
   return (
@@ -37,8 +37,8 @@ const WhyChooseUs = () => {
     </div>
   </div>
 </section>
-    </div>
-  )
-}
+    </div>);
 
-export default WhyChooseUs
+};
+
+export default WhyChooseUs;

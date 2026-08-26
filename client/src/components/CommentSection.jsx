@@ -6,26 +6,26 @@ import axiosInstance from "../utils/axiosConfig";
 import { useAuth } from "../contextApi/useAuth";
 
 const initials = (name = "") =>
-  name
-    .split(" ")
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((n) => n[0]?.toUpperCase())
-    .join("") || "U";
+name.
+split(" ").
+filter(Boolean).
+slice(0, 2).
+map((n) => n[0]?.toUpperCase()).
+join("") || "U";
 
 const formatDate = (dateString) =>
-  new Date(dateString).toLocaleDateString("en-US", {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
+new Date(dateString).toLocaleDateString("en-US", {
+  day: "numeric",
+  month: "short",
+  year: "numeric",
+  hour: "2-digit",
+  minute: "2-digit"
+});
 
-// blogId: id of the blog these comments belong to
-// comments / setComments: lifted state from BlogDetailPage (so the comment
-// count shown elsewhere on the page stays in sync without a refetch)
-// loading: true while the initial comment list is being fetched
+
+
+
+
 const CommentSection = ({ blogId, comments, setComments, loading }) => {
   const { user, isAdmin, isAuthenticated } = useAuth();
   const [text, setText] = useState("");
@@ -38,7 +38,7 @@ const CommentSection = ({ blogId, comments, setComments, loading }) => {
     try {
       setPosting(true);
       const res = await axiosInstance.post(`/blogs/${blogId}/comments`, {
-        comment: text.trim(),
+        comment: text.trim()
       });
       if (res.data.success) {
         setComments((prev) => [res.data.data, ...prev]);
@@ -72,52 +72,52 @@ const CommentSection = ({ blogId, comments, setComments, loading }) => {
         Comments {comments.length > 0 && `(${comments.length})`}
       </h3>
 
-      {/* Comment form — only for logged-in users */}
-      {isAuthenticated() ? (
-        <form onSubmit={handlePost} className="flex gap-3 mb-8">
+      {}
+      {isAuthenticated() ?
+      <form onSubmit={handlePost} className="flex gap-3 mb-8">
           <div className="h-10 w-10 shrink-0 rounded-full bg-green-500 text-white flex items-center justify-center font-bold text-sm">
             {initials(user?.name || user?.username)}
           </div>
           <div className="flex-1">
             <textarea
-              value={text}
-              onChange={(e) => setText(e.target.value)}
-              rows={3}
-              placeholder="Share your thoughts..."
-              className="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none resize-none"
-            />
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            rows={3}
+            placeholder="Share your thoughts..."
+            className="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none resize-none" />
+
             <div className="flex justify-end mt-2">
               <button
-                type="submit"
-                disabled={posting || !text.trim()}
-                className="inline-flex items-center gap-1.5 bg-green-500 hover:bg-green-600 disabled:opacity-50 text-white text-sm font-semibold px-4 py-2 rounded-full transition-colors"
-              >
+              type="submit"
+              disabled={posting || !text.trim()}
+              className="inline-flex items-center gap-1.5 bg-green-500 hover:bg-green-600 disabled:opacity-50 text-white text-sm font-semibold px-4 py-2 rounded-full transition-colors">
+
                 <Send size={14} />
                 {posting ? "Posting..." : "Post Comment"}
               </button>
             </div>
           </div>
-        </form>
-      ) : (
-        <div className="mb-8 bg-gray-50 border border-gray-100 rounded-xl px-4 py-3 text-sm text-gray-500">
+        </form> :
+
+      <div className="mb-8 bg-gray-50 border border-gray-100 rounded-xl px-4 py-3 text-sm text-gray-500">
           <Link to="/login" className="text-green-600 font-semibold hover:underline">
             Login
           </Link>{" "}
           to join the conversation.
         </div>
-      )}
+      }
 
-      {/* Comment list */}
-      {loading ? (
-        <div className="flex justify-center py-6">
+      {}
+      {loading ?
+      <div className="flex justify-center py-6">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-500" />
-        </div>
-      ) : comments.length === 0 ? (
-        <p className="text-sm text-gray-400">No comments yet. Be the first to comment!</p>
-      ) : (
-        <div className="space-y-5">
-          {comments.map((c) => (
-            <div key={c.id} className="flex gap-3">
+        </div> :
+      comments.length === 0 ?
+      <p className="text-sm text-gray-400">No comments yet. Be the first to comment!</p> :
+
+      <div className="space-y-5">
+          {comments.map((c) =>
+        <div key={c.id} className="flex gap-3">
               <div className="h-10 w-10 shrink-0 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center font-bold text-sm">
                 {initials(c.user_name || c.user_username)}
               </div>
@@ -128,15 +128,15 @@ const CommentSection = ({ blogId, comments, setComments, loading }) => {
                   </p>
                   <div className="flex items-center gap-2">
                     <span className="text-xs text-gray-400">{formatDate(c.created_at)}</span>
-                    {(isAdmin || user?.id === c.user_id) && (
-                      <button
-                        onClick={() => handleDelete(c.id)}
-                        className="text-gray-300 hover:text-red-500 transition-colors"
-                        title="Delete comment"
-                      >
+                    {(isAdmin || user?.id === c.user_id) &&
+                <button
+                  onClick={() => handleDelete(c.id)}
+                  className="text-gray-300 hover:text-red-500 transition-colors"
+                  title="Delete comment">
+
                         <Trash2 size={14} />
                       </button>
-                    )}
+                }
                   </div>
                 </div>
                 <p className="text-sm text-gray-600 mt-1 whitespace-pre-line break-words">
@@ -144,11 +144,11 @@ const CommentSection = ({ blogId, comments, setComments, loading }) => {
                 </p>
               </div>
             </div>
-          ))}
+        )}
         </div>
-      )}
-    </div>
-  );
+      }
+    </div>);
+
 };
 
 export default CommentSection;

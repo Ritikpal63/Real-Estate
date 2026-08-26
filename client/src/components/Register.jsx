@@ -32,7 +32,7 @@ const Register = () => {
     contact: "",
     category: "Consumer",
     password: "",
-    confirmPassword: "",
+    confirmPassword: ""
   });
 
   useEffect(() => {
@@ -58,10 +58,10 @@ const Register = () => {
     const { name, value } = e.target;
 
     if (
-      name === "email" &&
-      otpSent &&
-      value.trim().toLowerCase() !== otpEmail
-    ) {
+    name === "email" &&
+    otpSent &&
+    value.trim().toLowerCase() !== otpEmail)
+    {
       setOtpSent(false);
       setOtp("");
       setResendSeconds(0);
@@ -70,7 +70,7 @@ const Register = () => {
 
     setFormData((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: value
     }));
 
     if (error) {
@@ -113,7 +113,7 @@ const Register = () => {
       setSuccess("");
 
       const response = await axiosInstance.post("/auth/send-register-otp", {
-        email: cleanEmail,
+        email: cleanEmail
       });
 
       if (response.data.success) {
@@ -133,14 +133,14 @@ const Register = () => {
 
   const validateForm = () => {
     if (
-      !formData.username.trim() ||
-      !formData.name.trim() ||
-      !formData.email.trim() ||
-      !formData.contact.trim() ||
-      !formData.category ||
-      !formData.password ||
-      !formData.confirmPassword
-    ) {
+    !formData.username.trim() ||
+    !formData.name.trim() ||
+    !formData.email.trim() ||
+    !formData.contact.trim() ||
+    !formData.category ||
+    !formData.password ||
+    !formData.confirmPassword)
+    {
       setError("All fields are required");
       return false;
     }
@@ -224,14 +224,14 @@ const Register = () => {
 
         password: formData.password,
 
-        otp,
+        otp
       };
 
       const result = await register(userData);
 
       if (result) {
         setSuccess(
-          "Email verified and registration successful! Redirecting to login...",
+          "Email verified and registration successful! Redirecting to login..."
         );
 
         setFormData({
@@ -241,7 +241,7 @@ const Register = () => {
           contact: "",
           category: "Consumer",
           password: "",
-          confirmPassword: "",
+          confirmPassword: ""
         });
 
         setOtp("");
@@ -257,7 +257,7 @@ const Register = () => {
       }
     } catch (error) {
       setError(
-        error.response?.data?.message || error.message || "Registration failed",
+        error.response?.data?.message || error.message || "Registration failed"
       );
     } finally {
       setLoading(false);
@@ -272,17 +272,17 @@ const Register = () => {
             <div className="register">
               <h4 className="login_register_title">Create a new account:</h4>
 
-              {error && (
-                <div className="alert alert-danger" role="alert">
+              {error &&
+              <div className="alert alert-danger" role="alert">
                   {error}
                 </div>
-              )}
+              }
 
-              {success && (
-                <div className="alert alert-success" role="alert">
+              {success &&
+              <div className="alert alert-success" role="alert">
                   {success}
                 </div>
-              )}
+              }
 
               <form onSubmit={handleSubmit}>
                 <div className="form-group">
@@ -294,8 +294,8 @@ const Register = () => {
                     value={formData.username}
                     onChange={handleChange}
                     disabled={loading}
-                    required
-                  />
+                    required />
+
                 </div>
 
                 <div className="form-group">
@@ -307,8 +307,8 @@ const Register = () => {
                     value={formData.name}
                     onChange={handleChange}
                     disabled={loading}
-                    required
-                  />
+                    required />
+
                 </div>
 
                 <div className="form-group">
@@ -321,8 +321,8 @@ const Register = () => {
                       value={formData.email}
                       onChange={handleChange}
                       disabled={loading}
-                      required
-                    />
+                      required />
+
 
                     <button
                       type="button"
@@ -330,36 +330,36 @@ const Register = () => {
                       onClick={handleSendOtp}
                       disabled={loading || otpLoading || resendSeconds > 0}
                       style={{
-                        whiteSpace: "nowrap",
-                      }}
-                    >
-                      {otpLoading
-                        ? "Sending..."
-                        : resendSeconds > 0
-                          ? `${resendSeconds}s`
-                          : otpSent
-                            ? "Resend OTP"
-                            : "Send OTP"}
+                        whiteSpace: "nowrap"
+                      }}>
+
+                      {otpLoading ?
+                      "Sending..." :
+                      resendSeconds > 0 ?
+                      `${resendSeconds}s` :
+                      otpSent ?
+                      "Resend OTP" :
+                      "Send OTP"}
                     </button>
                   </div>
                 </div>
 
-                {otpSent && (
-                  <div className="form-group">
+                {otpSent &&
+                <div className="form-group">
                     <input
-                      type="text"
-                      className="form-control requiredField input-label"
-                      placeholder="Enter 6 Digit Email OTP"
-                      value={otp}
-                      onChange={handleOtpChange}
-                      disabled={loading}
-                      maxLength={6}
-                      inputMode="numeric"
-                      autoComplete="one-time-code"
-                      required
-                    />
+                    type="text"
+                    className="form-control requiredField input-label"
+                    placeholder="Enter 6 Digit Email OTP"
+                    value={otp}
+                    onChange={handleOtpChange}
+                    disabled={loading}
+                    maxLength={6}
+                    inputMode="numeric"
+                    autoComplete="one-time-code"
+                    required />
+
                   </div>
-                )}
+                }
 
                 <div className="form-group">
                   <input
@@ -372,8 +372,8 @@ const Register = () => {
                     disabled={loading}
                     maxLength={10}
                     inputMode="numeric"
-                    required
-                  />
+                    required />
+
                 </div>
 
                 <div className="form-group">
@@ -383,8 +383,8 @@ const Register = () => {
                     value={formData.category}
                     onChange={handleChange}
                     disabled={loading}
-                    required
-                  >
+                    required>
+
                     <option value="Consumer">Consumer</option>
 
                     <option value="Dealer">Dealer</option>
@@ -400,8 +400,8 @@ const Register = () => {
                     value={formData.password}
                     onChange={handleChange}
                     disabled={loading}
-                    required
-                  />
+                    required />
+
                 </div>
 
                 <div className="form-group">
@@ -413,8 +413,8 @@ const Register = () => {
                     value={formData.confirmPassword}
                     onChange={handleChange}
                     disabled={loading}
-                    required
-                  />
+                    required />
+
                 </div>
 
                 <div className="form-group col-md-12 mbnone">
@@ -423,21 +423,21 @@ const Register = () => {
                     type="submit"
                     disabled={loading || otpLoading}
                     style={{
-                      width: "100%",
-                    }}
-                  >
-                    {loading ? (
-                      <>
+                      width: "100%"
+                    }}>
+
+                    {loading ?
+                    <>
                         <span
-                          className="spinner-border spinner-border-sm me-2"
-                          role="status"
-                          aria-hidden="true"
-                        ></span>
+                        className="spinner-border spinner-border-sm me-2"
+                        role="status"
+                        aria-hidden="true">
+                      </span>
                         Creating Account...
-                      </>
-                    ) : (
-                      "Verify OTP & Sign Up"
-                    )}
+                      </> :
+
+                    "Verify OTP & Sign Up"
+                    }
                   </button>
                 </div>
 
@@ -454,8 +454,8 @@ const Register = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>);
+
 };
 
 export default Register;

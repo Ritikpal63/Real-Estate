@@ -11,42 +11,42 @@ import {
   Share2,
   MessageCircle,
   Clock,
-  ChevronRight,
-} from "lucide-react";
+  ChevronRight } from
+"lucide-react";
 import axiosInstance from "../utils/axiosConfig";
 
 
 const FALLBACK_IMG = "assets/img/blog/blog-1.jpg";
 
 const CATEGORIES = [
-  "General",
-  "Market Trends",
-  "Investment Tips",
-  "Property News",
-  "Legal Updates",
-];
+"General",
+"Market Trends",
+"Investment Tips",
+"Property News",
+"Legal Updates"];
+
 
 const CATEGORY_STYLES = {
   General: "bg-blue-100 text-blue-600",
   "Market Trends": "bg-purple-100 text-purple-600",
   "Investment Tips": "bg-green-100 text-green-600",
   "Property News": "bg-orange-100 text-orange-600",
-  "Legal Updates": "bg-red-100 text-red-600",
+  "Legal Updates": "bg-red-100 text-red-600"
 };
 
 const NAV_LINKS = [
-  { label: "Home", icon: Home, to: "/" },
-  { label: "Properties", icon: Building2, to: "/property" },
-  { label: "Market", icon: TrendingUp, to: "/blog" },
-  { label: "Guides", icon: BookOpen, to: "/faq" },
-];
+{ label: "Home", icon: Home, to: "/" },
+{ label: "Properties", icon: Building2, to: "/property" },
+{ label: "Market", icon: TrendingUp, to: "/blog" },
+{ label: "Guides", icon: BookOpen, to: "/faq" }];
+
 
 const formatDate = (dateString) => {
   if (!dateString) return "";
   return new Date(dateString).toLocaleDateString("en-US", {
     day: "numeric",
     month: "short",
-    year: "numeric",
+    year: "numeric"
   });
 };
 
@@ -56,12 +56,12 @@ const estimateReadTime = (text = "") => {
 };
 
 const initials = (name = "") =>
-  name
-    .split(" ")
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((n) => n[0]?.toUpperCase())
-    .join("") || "A";
+name.
+split(" ").
+filter(Boolean).
+slice(0, 2).
+map((n) => n[0]?.toUpperCase()).
+join("") || "A";
 
 const NewsDetailPage = () => {
   const { id } = useParams();
@@ -137,9 +137,9 @@ const NewsDetailPage = () => {
     if (!article) return;
     const savedIds = JSON.parse(localStorage.getItem("savedNews") || "[]");
     const key = String(article.id);
-    const next = saved
-      ? savedIds.filter((sId) => sId !== key)
-      : [...savedIds, key];
+    const next = saved ?
+    savedIds.filter((sId) => sId !== key) :
+    [...savedIds, key];
     localStorage.setItem("savedNews", JSON.stringify(next));
     setSaved(!saved);
   };
@@ -151,7 +151,7 @@ const NewsDetailPage = () => {
         await navigator.share({ title: article?.title, url });
         return;
       } catch {
-        /* user cancelled — fall through to copy */
+
       }
     }
     try {
@@ -159,7 +159,7 @@ const NewsDetailPage = () => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      /* clipboard unavailable, ignore */
+
     }
   };
 
@@ -167,7 +167,7 @@ const NewsDetailPage = () => {
     <section className="bg-gray-100 py-10">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden">
-          {/* ---- Top toolbar ---- */}
+          {}
           <div className="flex items-center justify-between gap-4 px-6 py-4 border-b border-gray-100">
             <Link to="/" className="flex items-center gap-2 shrink-0">
               <span className="text-xl font-extrabold tracking-tight text-gray-900">
@@ -179,16 +179,16 @@ const NewsDetailPage = () => {
             </Link>
 
             <nav className="hidden md:flex flex items-center gap-6">
-              {NAV_LINKS.map(({ label, icon: Icon, to }) => (
-                <Link
-                  key={label}
-                  to={to}
-                  className="flex items-center gap-1.5 text-sm font-medium text-gray-500 hover:text-green-600 transition-colors"
-                >
+              {NAV_LINKS.map(({ label, icon: Icon, to }) =>
+              <Link
+                key={label}
+                to={to}
+                className="flex items-center gap-1.5 text-sm font-medium text-gray-500 hover:text-green-600 transition-colors">
+
                   <Icon size={16} />
                   {label}
                 </Link>
-              ))}
+              )}
             </nav>
 
             <div className="flex items-center gap-3">
@@ -197,46 +197,46 @@ const NewsDetailPage = () => {
                 <input
                   type="text"
                   placeholder="Enter search term"
-                  className="bg-transparent outline-none text-sm ml-2 w-full text-gray-600 placeholder:text-gray-400"
-                />
+                  className="bg-transparent outline-none text-sm ml-2 w-full text-gray-600 placeholder:text-gray-400" />
+
               </div>
               <button
                 type="button"
                 aria-label="Notifications"
-                className="relative p-2 rounded-full hover:bg-gray-100 text-gray-500"
-              >
+                className="relative p-2 rounded-full hover:bg-gray-100 text-gray-500">
+
                 <Bell size={18} />
                 <span className="absolute top-1.5 right-1.5 h-1.5 w-1.5 rounded-full bg-red-500" />
               </button>
             </div>
           </div>
 
-          {/* ---- Loading / error states ---- */}
-          {loading && (
-            <div className="flex justify-center items-center py-24">
+          {}
+          {loading &&
+          <div className="flex justify-center items-center py-24">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-500" />
             </div>
-          )}
+          }
 
-          {!loading && error && (
-            <div className="px-6 py-16 text-center">
+          {!loading && error &&
+          <div className="px-6 py-16 text-center">
               <p className="text-lg font-semibold text-gray-800 mb-2">
                 We couldn't load this article
               </p>
               <p className="text-gray-500 mb-6">{error}</p>
               <button
-                onClick={loadArticle}
-                className="bg-green-500 text-white px-5 py-2.5 rounded-full font-semibold hover:bg-green-600 transition-colors"
-              >
+              onClick={loadArticle}
+              className="bg-green-500 text-white px-5 py-2.5 rounded-full font-semibold hover:bg-green-600 transition-colors">
+
                 Try again
               </button>
             </div>
-          )}
+          }
 
-          {/* ---- Article ---- */}
-          {!loading && !error && article && (
-            <div className="px-6 py-6">
-              {/* Section heading row */}
+          {}
+          {!loading && !error && article &&
+          <div className="px-6 py-6">
+              {}
               <div className="flex items-center justify-between mb-5">
                 <h1 className="text-lg font-bold text-gray-900">
                   {article.category || "General"}
@@ -247,7 +247,7 @@ const NewsDetailPage = () => {
               </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                {/* ---- Left sidebar: profile + categories ---- */}
+                {}
                 <aside className="lg:col-span-2 order-2 lg:order-1">
                   <div className="flex items-center gap-3 mb-8">
                     <div className="h-11 w-11 rounded-full bg-green-500 text-white flex items-center justify-center font-bold text-sm">
@@ -265,42 +265,42 @@ const NewsDetailPage = () => {
                     Category
                   </h4>
                   <ul className="space-y-2.5">
-                    {CATEGORIES.map((cat) => (
-                      <li key={cat}>
+                    {CATEGORIES.map((cat) =>
+                  <li key={cat}>
                         <span
-                          className={`text-sm cursor-default ${
-                            cat === (article.category || "General")
-                              ? "text-green-600 font-semibold"
-                              : "text-gray-500"
-                          }`}
-                        >
+                      className={`text-sm cursor-default ${
+                      cat === (article.category || "General") ?
+                      "text-green-600 font-semibold" :
+                      "text-gray-500"}`
+                      }>
+
                           {cat}
                         </span>
                       </li>
-                    ))}
+                  )}
                   </ul>
                 </aside>
 
-                {/* ---- Main article ---- */}
+                {}
                 <article className="lg:col-span-7 order-1 lg:order-2">
                   <div className="rounded-xl overflow-hidden mb-4">
                     <img
-                      src={article.image || FALLBACK_IMG}
-                      alt={article.title}
-                      className="w-full h-80 object-cover"
-                      onError={(e) => {
-                        e.target.src = FALLBACK_IMG;
-                      }}
-                    />
+                    src={article.image || FALLBACK_IMG}
+                    alt={article.title}
+                    className="w-full h-80 object-cover"
+                    onError={(e) => {
+                      e.target.src = FALLBACK_IMG;
+                    }} />
+
                   </div>
 
                   <div className="flex items-center justify-between flex-wrap gap-3 mb-4">
                     <span
-                      className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide ${
-                        CATEGORY_STYLES[article.category] ||
-                        "bg-gray-100 text-gray-600"
-                      }`}
-                    >
+                    className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide ${
+                    CATEGORY_STYLES[article.category] ||
+                    "bg-gray-100 text-gray-600"}`
+                    }>
+
                       {article.category || "General"}
                     </span>
                     <div className="flex items-center gap-4 text-xs text-gray-400">
@@ -325,25 +325,25 @@ const NewsDetailPage = () => {
 
                   <div className="flex items-center gap-3 mb-6">
                     <button
-                      type="button"
-                      onClick={toggleSave}
-                      className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold border transition-colors ${
-                        saved
-                          ? "bg-green-500 border-green-500 text-white"
-                          : "border-gray-200 text-gray-600 hover:border-green-500 hover:text-green-600"
-                      }`}
-                    >
+                    type="button"
+                    onClick={toggleSave}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold border transition-colors ${
+                    saved ?
+                    "bg-green-500 border-green-500 text-white" :
+                    "border-gray-200 text-gray-600 hover:border-green-500 hover:text-green-600"}`
+                    }>
+
                       <Bookmark
-                        size={16}
-                        fill={saved ? "currentColor" : "none"}
-                      />
+                      size={16}
+                      fill={saved ? "currentColor" : "none"} />
+
                       {saved ? "Saved" : "Save to pocket"}
                     </button>
                     <button
-                      type="button"
-                      onClick={shareArticle}
-                      className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold border border-gray-200 text-gray-600 hover:border-green-500 hover:text-green-600 transition-colors"
-                    >
+                    type="button"
+                    onClick={shareArticle}
+                    className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold border border-gray-200 text-gray-600 hover:border-green-500 hover:text-green-600 transition-colors">
+
                       <Share2 size={16} />
                       {copied ? "Link copied!" : "Share on media"}
                     </button>
@@ -351,60 +351,60 @@ const NewsDetailPage = () => {
 
                   <div className="prose max-w-none text-gray-600 leading-relaxed space-y-4">
                     {(
-                      article.summary
-                        ? `${article.summary}\n\n${article.content}`
-                        : article.content || ""
-                    )
-                      .split(/\n+/)
-                      .filter((p) => p.trim())
-                      .map((para, idx) => (
-                        <p key={idx}>{para}</p>
-                      ))}
+                  article.summary ?
+                  `${article.summary}\n\n${article.content}` :
+                  article.content || "").
+
+                  split(/\n+/).
+                  filter((p) => p.trim()).
+                  map((para, idx) =>
+                  <p key={idx}>{para}</p>
+                  )}
                   </div>
                 </article>
 
-                {/* ---- Right sidebar: related news ---- */}
+                {}
                 <aside className="lg:col-span-3 order-3">
                   <div className="flex items-center justify-between mb-4">
                     <h4 className="text-sm font-bold text-gray-800">
                       Related News
                     </h4>
                     <Link
-                      to="/news/allnews"
-                      className="text-xs font-semibold text-green-600 hover:text-green-700 flex items-center gap-0.5"
-                    >
+                    to="/news/allnews"
+                    className="text-xs font-semibold text-green-600 hover:text-green-700 flex items-center gap-0.5">
+
                       See all
                       <ChevronRight size={14} />
                     </Link>
                   </div>
 
-                  {related.length === 0 ? (
-                    <p className="text-sm text-gray-400">
+                  {related.length === 0 ?
+                <p className="text-sm text-gray-400">
                       No related articles yet.
-                    </p>
-                  ) : (
-                    <div className="space-y-4">
-                      {related.map((item) => (
-                        <Link
-                          key={item.id}
-                          to={`/news/${item.id}`}
-                          className="block rounded-lg overflow-hidden border border-gray-100 hover:shadow-md transition-shadow"
-                        >
+                    </p> :
+
+                <div className="space-y-4">
+                      {related.map((item) =>
+                  <Link
+                    key={item.id}
+                    to={`/news/${item.id}`}
+                    className="block rounded-lg overflow-hidden border border-gray-100 hover:shadow-md transition-shadow">
+
                           <div className="relative h-28">
                             <img
-                              src={item.image || FALLBACK_IMG}
-                              alt={item.title}
-                              className="w-full h-full object-cover"
-                              onError={(e) => {
-                                e.target.src = FALLBACK_IMG;
-                              }}
-                            />
+                        src={item.image || FALLBACK_IMG}
+                        alt={item.title}
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          e.target.src = FALLBACK_IMG;
+                        }} />
+
                             <span
-                              className={`absolute top-2 left-2 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase ${
-                                CATEGORY_STYLES[item.category] ||
-                                "bg-gray-100 text-gray-600"
-                              }`}
-                            >
+                        className={`absolute top-2 left-2 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase ${
+                        CATEGORY_STYLES[item.category] ||
+                        "bg-gray-100 text-gray-600"}`
+                        }>
+
                               {item.category || "General"}
                             </span>
                           </div>
@@ -417,17 +417,17 @@ const NewsDetailPage = () => {
                             </p>
                           </div>
                         </Link>
-                      ))}
-                    </div>
                   )}
+                    </div>
+                }
                 </aside>
               </div>
             </div>
-          )}
+          }
         </div>
       </div>
-    </section>
-  );
+    </section>);
+
 };
 
 export default NewsDetailPage;

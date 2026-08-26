@@ -8,20 +8,27 @@ const ServiceCard = ({ services = [] }) => {
   return (
     <>
       <div
-      className="
+        className="
       grid
       grid-cols-1
       sm:grid-cols-2
       md:grid-cols-3
       lg:grid-cols-4
       gap-6
-      "
-    >
-      {services.length === 0 ? (
+      ">
+
+
+
+
+
+
+
+
+      {services.length === 0 ?
         <div className="col-span-full text-center py-10 text-gray-500">
           No Services Available
-        </div>
-      ) : (
+        </div> :
+
         services.map((service) => {
           const Icon = iconMap[service.icon];
 
@@ -51,9 +58,22 @@ const ServiceCard = ({ services = [] }) => {
                 hover:-translate-y-2
                 hover:shadow-xl
                 cursor-pointer
-                "
-            >
-              {/* Icon */}
+                ">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              {}
 
               <div
                 className="
@@ -66,62 +86,84 @@ const ServiceCard = ({ services = [] }) => {
                   items-center
                   justify-center
                   mb-4
-                  "
-              >
-                {Icon && (
-                  <Icon
-                    className="
+                  ">
+
+
+
+
+
+
+
+
+
+
+
+                {Icon &&
+                <Icon
+                  className="
                         text-3xl
                         text-blue-600
-                        "
-                  />
-                )}
+                        " />
+
+
+
+
+                }
               </div>
 
-              {/* Title */}
+              {}
 
               <h3
                 className="
                   text-lg
                   font-semibold
                   text-gray-800
-                  "
-              >
+                  ">
+
+
+
+
+
                 {service.title}
               </h3>
 
-              {/* Description */}
+              {}
 
-              {service.description && (
-                <p
-                  className="
+              {service.description &&
+              <p
+                className="
                       mt-3
                       text-sm
                       text-gray-500
                       line-clamp-3
-                      "
-                >
+                      ">
+
+
+
+
+
+
                   {service.description}
                 </p>
-              )}
+              }
 
               <span className="inline-block mt-5 text-sm font-semibold text-blue-600">
                 Enquire now
               </span>
-            </div>
-          );
+            </div>);
+
         })
-      )}
+        }
       </div>
 
-      {selectedService && (
-        <ServiceQueryModal
-          service={selectedService}
-          onClose={() => setSelectedService(null)}
-        />
-      )}
-    </>
-  );
+      {selectedService &&
+      <ServiceQueryModal
+        service={selectedService}
+        onClose={() => setSelectedService(null)} />
+
+      }
+    </>);
+
 };
 
 export default ServiceCard;

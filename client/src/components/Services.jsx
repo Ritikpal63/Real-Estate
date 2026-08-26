@@ -4,8 +4,8 @@ const Services = () => {
   return (
     <section className="w-full">
       <ServiceCard />
-    </section>
-  );
+    </section>);
+
 };
 
 export default Services;

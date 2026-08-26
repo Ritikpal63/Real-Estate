@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
-const NotAuthorizedPage = () => (
-  <div className="container py-5">
+const NotAuthorizedPage = () =>
+<div className="container py-5">
     <div className="card mx-auto" style={{ maxWidth: 600 }}>
       <div className="card-body text-center">
         <h2>Access denied</h2>
@@ -11,7 +11,7 @@ const NotAuthorizedPage = () => (
         </Link>
       </div>
     </div>
-  </div>
-);
+  </div>;
+
 
 export default NotAuthorizedPage;

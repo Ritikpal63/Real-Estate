@@ -1,10 +1,10 @@
-import React from 'react'
+import React from 'react';
 
 const Testimonial = () => {
   return (
     <>
     <section data-stellar-background-ratio="0.3" className="our_testimonial section-padding"
-		style="background-image: url(assets/img/bg/testimonial-bg.jpg);  background-size:cover;background-position:center;">
+      style="background-image: url(assets/img/bg/testimonial-bg.jpg);  background-size:cover;background-position:center;">
 		<div className="container">
 			<div className="row">
 				<div className="col-lg-8 offset-lg-2 col-sm-12 col-xs-12 text-center">
@@ -38,8 +38,8 @@ const Testimonial = () => {
 			</div>
 		</div>
 	</section>
-    </>
-  )
-}
+    </>);
 
-export default Testimonial
+};
+
+export default Testimonial;

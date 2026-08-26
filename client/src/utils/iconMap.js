@@ -15,8 +15,8 @@ import {
   FaVideo,
   FaCamera,
   FaListAlt,
-  FaRegNewspaper,
-} from "react-icons/fa";
+  FaRegNewspaper } from
+"react-icons/fa";
 
 export const iconMap = {
   FaBuilding,
@@ -35,11 +35,11 @@ export const iconMap = {
   FaVideo,
   FaCamera,
   FaListAlt,
-  FaRegNewspaper,
+  FaRegNewspaper
 };
 
-// Dropdown options
+
 export const iconOptions = Object.entries(iconMap).map(([name, icon]) => ({
   name,
-  icon,
+  icon
 }));

@@ -8,7 +8,7 @@ const getVisitorId = () => {
 
   if (!visitorId) {
     visitorId =
-      Date.now().toString(36) + Math.random().toString(36).substring(2);
+    Date.now().toString(36) + Math.random().toString(36).substring(2);
     localStorage.setItem("visitor_id", visitorId);
   }
   return visitorId;
@@ -25,7 +25,7 @@ const PropertyDetail = () => {
     name: "",
     email: "",
     phone: "",
-    message: "",
+    message: ""
   });
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
@@ -45,9 +45,9 @@ const PropertyDetail = () => {
         console.error("PropertyDetail fetch error:", err);
 
         setError(
-          err.response?.status === 404
-            ? "This property could not be found."
-            : "Something went wrong while loading this property.",
+          err.response?.status === 404 ?
+          "This property could not be found." :
+          "Something went wrong while loading this property."
         );
       } finally {
         setLoading(false);
@@ -59,7 +59,7 @@ const PropertyDetail = () => {
         const visitorId = getVisitorId();
 
         await axiosInstance.post(`/property/${id}/view`, {
-          visitorId,
+          visitorId
         });
       } catch (err) {
         console.error("Property view tracking error:", err);
@@ -85,7 +85,7 @@ const PropertyDetail = () => {
       await axiosInstance.post("/contact", {
         name: form.name,
         email: form.email,
-        message: `[Enquiry for: ${property?.title}]\nPhone: ${form.phone}\n\n${form.message}`,
+        message: `[Enquiry for: ${property?.title}]\nPhone: ${form.phone}\n\n${form.message}`
       });
       setSent(true);
       setForm({ name: "", email: "", phone: "", message: "" });
@@ -103,8 +103,8 @@ const PropertyDetail = () => {
         <div className="container text-center py-5">
           <p>Loading property details...</p>
         </div>
-      </section>
-    );
+      </section>);
+
   }
 
   if (error || !property) {
@@ -116,16 +116,16 @@ const PropertyDetail = () => {
             Back to Properties
           </Link>
         </div>
-      </section>
-    );
+      </section>);
+
   }
 
-  const amenitiesList = property.amenities
-    ? property.amenities
-        .split(",")
-        .map((a) => a.trim())
-        .filter(Boolean)
-    : [];
+  const amenitiesList = property.amenities ?
+  property.amenities.
+  split(",").
+  map((a) => a.trim()).
+  filter(Boolean) :
+  [];
 
   return (
     <section className="property_single_details section-padding">
@@ -139,8 +139,8 @@ const PropertyDetail = () => {
                 alt={property.title}
                 onError={(e) => {
                   e.currentTarget.src = FALLBACK_IMG;
-                }}
-              />
+                }} />
+
             </div>
 
             <div className="property_single_details_price">
@@ -167,28 +167,28 @@ const PropertyDetail = () => {
               <h4>Property description</h4>
               <p>
                 {property.description ||
-                  "No description provided for this property."}
+                "No description provided for this property."}
               </p>
             </div>
 
-            {amenitiesList.length > 0 && (
-              <div className="property_info">
+            {amenitiesList.length > 0 &&
+            <div className="property_info">
                 <div className="row">
                   <div className="col-md-12 col-sm-12 col-xs-12">
                     <div className="single_property_list">
                       <h4>Amenities</h4>
                       <ul className="single_property_list_mr">
-                        {amenitiesList.map((a, i) => (
-                          <li key={i}>
+                        {amenitiesList.map((a, i) =>
+                      <li key={i}>
                             <i className="fa fa-check"></i> {a}
                           </li>
-                        ))}
+                      )}
                       </ul>
                     </div>
                   </div>
                 </div>
               </div>
-            )}
+            }
 
             <div className="property_map">
               <h4>on map</h4>
@@ -196,15 +196,15 @@ const PropertyDetail = () => {
                 <iframe
                   title="property-location"
                   src={`https://www.google.com/maps?q=${encodeURIComponent(
-                    property.location || "",
+                    property.location || ""
                   )}&output=embed`}
                   width="600"
                   height="450"
                   style={{ border: "0" }}
                   allowFullScreen=""
                   loading="lazy"
-                  referrerPolicy="strict-origin-when-cross-origin"
-                ></iframe>
+                  referrerPolicy="strict-origin-when-cross-origin">
+                </iframe>
               </div>
             </div>
           </div>
@@ -212,76 +212,76 @@ const PropertyDetail = () => {
           <div className="col-md-3 col-sm-3 col-xs-12">
             <div className="single_property_form">
               <h4>Enquire here</h4>
-              {sent ? (
-                <p>
+              {sent ?
+              <p>
                   Thanks! We've received your enquiry and will get back to you
                   soon.
-                </p>
-              ) : (
-                <form className="form" onSubmit={handleEnquirySubmit}>
+                </p> :
+
+              <form className="form" onSubmit={handleEnquirySubmit}>
                   <div className="row">
                     <div className="form-group col-md-12">
                       <input
-                        type="text"
-                        name="name"
-                        className="form-control"
-                        placeholder="Name"
-                        value={form.name}
-                        onChange={handleChange}
-                      />
+                      type="text"
+                      name="name"
+                      className="form-control"
+                      placeholder="Name"
+                      value={form.name}
+                      onChange={handleChange} />
+
                     </div>
                     <div className="form-group col-md-12">
                       <input
-                        type="email"
-                        name="email"
-                        className="form-control"
-                        placeholder="Email"
-                        required
-                        value={form.email}
-                        onChange={handleChange}
-                      />
+                      type="email"
+                      name="email"
+                      className="form-control"
+                      placeholder="Email"
+                      required
+                      value={form.email}
+                      onChange={handleChange} />
+
                     </div>
                     <div className="form-group col-md-12">
                       <input
-                        type="text"
-                        name="phone"
-                        className="form-control"
-                        placeholder="Phone"
-                        value={form.phone}
-                        onChange={handleChange}
-                      />
+                      type="text"
+                      name="phone"
+                      className="form-control"
+                      placeholder="Phone"
+                      value={form.phone}
+                      onChange={handleChange} />
+
                     </div>
                     <div className="form-group col-md-12 mbnone">
                       <textarea
-                        rows="6"
-                        name="message"
-                        className="form-control"
-                        placeholder="Your Message"
-                        required
-                        value={form.message}
-                        onChange={handleChange}
-                      ></textarea>
+                      rows="6"
+                      name="message"
+                      className="form-control"
+                      placeholder="Your Message"
+                      required
+                      value={form.message}
+                      onChange={handleChange}>
+                    </textarea>
                     </div>
                     <div className="col-md-12">
                       <div className="actions">
                         <button
-                          type="submit"
-                          disabled={sending}
-                          className="btn btn-lg btn-contact-bg"
-                        >
+                        type="submit"
+                        disabled={sending}
+                        className="btn btn-lg btn-contact-bg">
+
                           {sending ? "Sending..." : "Send message"}
                         </button>
                       </div>
                     </div>
                   </div>
                 </form>
-              )}
+              }
             </div>
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>);
+
 };
 
 export default PropertyDetail;

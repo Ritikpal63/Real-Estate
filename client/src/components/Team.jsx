@@ -1,7 +1,7 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import axiosInstance from "../utils/axiosConfig";
 import { Link } from "react-router-dom";
-const IMAGE = "/assets/img/team/1.jpg"
+const IMAGE = "/assets/img/team/1.jpg";
 const Team = () => {
   const [team, setTeam] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -10,7 +10,7 @@ const Team = () => {
     try {
       setLoading(true);
       setError(null);
-      const res = await axiosInstance.get("/team", {params:{limit:4, offset:0}});
+      const res = await axiosInstance.get("/team", { params: { limit: 4, offset: 0 } });
       if (res.data.success) {
         setTeam(res.data.data);
       } else {
@@ -19,7 +19,7 @@ const Team = () => {
     } catch (err) {
       setError(
         err.response?.data?.message ||
-          "Cannot connect to server. Please check if backend is running.",
+        "Cannot connect to server. Please check if backend is running."
       );
     } finally {
       setLoading(false);
@@ -31,32 +31,32 @@ const Team = () => {
   }, []);
 
   const teamMember = [
-    {
-      id: 1,
-      name: "Rahul Sharma",
-      designation: "Founder & CEO",
-      image: "/assets/img/team/1.jpg",
-    },
-    {
-      id: 2,
-      name: "Priya Patel",
-      designation: "Head of Operations",
-      image: "/assets/img/team/2.jpg",
-    },
-    {
-      id: 3,
-      name: "Amit Singh",
-      designation: "Real Estate Consultant",
-      image: "/assets/img/team/3.jpg",
-    },
-    {
-      id: 4,
-      name: "Neha Gupta",
-      designation: "Marketing Director",
-      image: "/assets/img/team/2.jpg",
-    },
-  ];
-    const displayedTeam = team && team.length > 0 ? team : teamMember;
+  {
+    id: 1,
+    name: "Rahul Sharma",
+    designation: "Founder & CEO",
+    image: "/assets/img/team/1.jpg"
+  },
+  {
+    id: 2,
+    name: "Priya Patel",
+    designation: "Head of Operations",
+    image: "/assets/img/team/2.jpg"
+  },
+  {
+    id: 3,
+    name: "Amit Singh",
+    designation: "Real Estate Consultant",
+    image: "/assets/img/team/3.jpg"
+  },
+  {
+    id: 4,
+    name: "Neha Gupta",
+    designation: "Marketing Director",
+    image: "/assets/img/team/2.jpg"
+  }];
+
+  const displayedTeam = team && team.length > 0 ? team : teamMember;
   if (loading) return <p>Loadaing...</p>;
   return (
     <>
@@ -91,14 +91,14 @@ const Team = () => {
                       </li>
                     </ul>
                   </div>
-                </div>
-              );
+                </div>);
+
             })}
           </div>
         </div>
       </section>
-    </>
-  );
+    </>);
+
 };
 
 export default Team;

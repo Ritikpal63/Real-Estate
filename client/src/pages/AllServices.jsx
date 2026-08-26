@@ -36,11 +36,16 @@ const Services = () => {
         py-20
         text-xl
         font-semibold
-        "
-      >
+        ">
+
+
+
+
+
+
         Loading Services...
-      </div>
-    );
+      </div>);
+
   }
 
   if (error) {
@@ -50,11 +55,15 @@ const Services = () => {
         text-center
         py-20
         text-red-500
-        "
-      >
+        ">
+
+
+
+
+
         {error}
-      </div>
-    );
+      </div>);
+
   }
 
   return (
@@ -62,8 +71,11 @@ const Services = () => {
       className="
       w-full
       py-12
-      "
-    >
+      ">
+
+
+
+
       <div
         className="
         max-w-7xl
@@ -71,23 +83,36 @@ const Services = () => {
         px-4
         sm:px-6
         lg:px-8
-        "
-      >
-        {/* Page Heading */}
+        ">
+
+
+
+
+
+
+
+        {}
 
         <div
           className="
           text-center
           mb-10
-          "
-        >
+          ">
+
+
+
+
           <h1
             className="
             text-4xl
             font-bold
             text-gray-800
-            "
-          >
+            ">
+
+
+
+
+
             All Services
           </h1>
 
@@ -95,18 +120,21 @@ const Services = () => {
             className="
             text-gray-500
             mt-3
-            "
-          >
+            ">
+
+
+
+
             Explore all our available services
           </p>
         </div>
 
-        {/* Services */}
+        {}
 
         <ServiceCard services={services} />
       </div>
-    </section>
-  );
+    </section>);
+
 };
 
 export default Services;

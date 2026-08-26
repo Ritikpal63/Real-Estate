@@ -16,7 +16,7 @@ export default function AddProperty() {
     size: "",
     year: "",
     price: "",
-    description: "",
+    description: ""
   });
 
   const [imageFile, setImageFile] = useState(null);
@@ -49,10 +49,10 @@ export default function AddProperty() {
         formData.append("image", imageFile);
       }
 
-     await axiosInstance.post("/property", formData, {
+      await axiosInstance.post("/property", formData, {
         headers: {
-          "Content-Type": "multipart/form-data",
-        },
+          "Content-Type": "multipart/form-data"
+        }
       });
       navigate("/admin/viewproperty");
     } catch (err) {
@@ -72,11 +72,11 @@ export default function AddProperty() {
         <p className="text-gray-500 mt-1">Describe your real estate asset.</p>
       </div>
 
-      {error && (
-        <div className="bg-red-50 text-red-600 text-sm rounded-xl px-4 py-3 mb-4">
+      {error &&
+      <div className="bg-red-50 text-red-600 text-sm rounded-xl px-4 py-3 mb-4">
           {error}
         </div>
-      )}
+      }
 
       <form onSubmit={handleSubmit} className="space-y-5">
         <input
@@ -84,23 +84,23 @@ export default function AddProperty() {
           value={form.title}
           onChange={handleChange}
           placeholder="Property Name"
-          className="w-full bg-gray-100 rounded-xl px-4 py-3 outline-none mb-3"
-        />
+          className="w-full bg-gray-100 rounded-xl px-4 py-3 outline-none mb-3" />
+
 
         <input
           name="location"
           value={form.location}
           onChange={handleChange}
           placeholder="Location"
-          className="w-full bg-gray-100 rounded-xl px-4 py-3 outline-none mb-3"
-        />
+          className="w-full bg-gray-100 rounded-xl px-4 py-3 outline-none mb-3" />
+
 
         <select
           name="type"
           value={form.type}
           onChange={handleChange}
-          className="w-full bg-gray-100 rounded-xl px-4 py-3 outline-none mb-3"
-        >
+          className="w-full bg-gray-100 rounded-xl px-4 py-3 outline-none mb-3">
+
           <option value="">Select Property Type</option>
           <option value="Villa">Villa</option>
           <option value="Apartment">Apartment</option>
@@ -113,8 +113,8 @@ export default function AddProperty() {
           value={form.amenities}
           onChange={handleChange}
           placeholder="Amenities (comma separated)"
-          className="w-full bg-gray-100 rounded-xl px-4 py-3 outline-none mb-3"
-        />
+          className="w-full bg-gray-100 rounded-xl px-4 py-3 outline-none mb-3" />
+
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <input
@@ -124,8 +124,8 @@ export default function AddProperty() {
             onChange={handleChange}
             placeholder="Bedrooms"
             min="0"
-            className="bg-gray-100 rounded-xl px-4 py-3 w-full outline-none"
-          />
+            className="bg-gray-100 rounded-xl px-4 py-3 w-full outline-none" />
+
           <input
             type="number"
             name="bathroom"
@@ -133,8 +133,8 @@ export default function AddProperty() {
             onChange={handleChange}
             placeholder="Bathrooms"
             min="0"
-            className="bg-gray-100 rounded-xl px-4 py-3 w-full outline-none"
-          />
+            className="bg-gray-100 rounded-xl px-4 py-3 w-full outline-none" />
+
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -144,16 +144,16 @@ export default function AddProperty() {
             value={form.size}
             onChange={handleChange}
             placeholder="Size (SQM)"
-            className="bg-gray-100 rounded-xl px-4 py-3 w-full outline-none"
-          />
+            className="bg-gray-100 rounded-xl px-4 py-3 w-full outline-none" />
+
           <input
             type="number"
             name="year"
             value={form.year}
             onChange={handleChange}
             placeholder="Year Built"
-            className="bg-gray-100 rounded-xl px-4 py-3 w-full outline-none"
-          />
+            className="bg-gray-100 rounded-xl px-4 py-3 w-full outline-none" />
+
         </div>
 
         <input
@@ -163,8 +163,8 @@ export default function AddProperty() {
           onChange={handleChange}
           placeholder="Price"
           min="0"
-          className="w-full bg-gray-100 rounded-xl px-4 py-3 outline-none mb-3"
-        />
+          className="w-full bg-gray-100 rounded-xl px-4 py-3 outline-none mb-3" />
+
 
         <textarea
           name="description"
@@ -172,19 +172,19 @@ export default function AddProperty() {
           onChange={handleChange}
           rows={5}
           placeholder="About Property"
-          className="w-full bg-gray-100 rounded-xl px-4 py-3 outline-none mb-3"
-        />
+          className="w-full bg-gray-100 rounded-xl px-4 py-3 outline-none mb-3" />
+
 
         <ImageUploader onImageSelect={setImageFile} />
 
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-[#374256] text-white rounded-lg py-3 disabled:opacity-60"
-        >
+          className="w-full bg-[#374256] text-white rounded-lg py-3 disabled:opacity-60">
+
           {loading ? "Saving..." : "Continue"}
         </button>
       </form>
-    </div>
-  );
+    </div>);
+
 }

@@ -32,14 +32,14 @@ const ServiceList = () => {
 
   useEffect(() => {
     fetchServices();
-     window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
   const handleSearch = (value) => {
     setSearch(value);
 
     const result = services.filter((service) =>
-      service.title.toLowerCase().includes(value.toLowerCase()),
+    service.title.toLowerCase().includes(value.toLowerCase())
     );
 
     setFilteredServices(result);
@@ -47,7 +47,7 @@ const ServiceList = () => {
 
   const handleDelete = async (id) => {
     const confirmDelete = window.confirm(
-      "Are you sure you want to delete this service?",
+      "Are you sure you want to delete this service?"
     );
 
     if (!confirmDelete) return;
@@ -69,8 +69,8 @@ const ServiceList = () => {
     return (
       <div className="text-center py-20 text-xl font-semibold">
         Loading Services...
-      </div>
-    );
+      </div>);
+
   }
 
   return (
@@ -82,8 +82,12 @@ const ServiceList = () => {
         flex
         flex-col
         lg:flex-row
-        "
-      >
+        ">
+
+
+
+
+
         <AdminAsideSection />
 
         <div
@@ -91,15 +95,22 @@ const ServiceList = () => {
           flex-1
           px-4
           py-6
-          "
-        >
+          ">
+
+
+
+
+
           <div
             className="
             max-w-7xl
             mx-auto
-            "
-          >
-            {/* Header */}
+            ">
+
+
+
+
+            {}
 
             <div
               className="
@@ -109,14 +120,24 @@ const ServiceList = () => {
               justify-between
               items-center
               mb-6
-              "
-            >
+              ">
+
+
+
+
+
+
+
+
               <h1
                 className="
                 text-3xl
                 font-bold
-                "
-              >
+                ">
+
+
+
+
                 Services
               </h1>
 
@@ -131,13 +152,22 @@ const ServiceList = () => {
                 py-2
                 rounded-lg
                 hover:bg-blue-700
-                "
-              >
+                ">
+
+
+
+
+
+
+
+
+
+
                 + Add Service
               </Link>
             </div>
 
-            {/* Search */}
+            {}
 
             <input
               type="text"
@@ -150,10 +180,16 @@ const ServiceList = () => {
               rounded-lg
               p-3
               mb-6
-              "
-            />
+              " />
 
-            {/* Table */}
+
+
+
+
+
+
+
+            {}
 
             <div
               className="
@@ -161,18 +197,27 @@ const ServiceList = () => {
               bg-white
               rounded-xl
               shadow
-              "
-            >
+              ">
+
+
+
+
+
+
               <table
                 className="
                 w-full
-                "
-              >
+                ">
+
+
+
                 <thead
                   className="
                   bg-gray-100
-                  "
-                >
+                  ">
+
+
+
                   <tr>
                     <th className="p-4 text-left">Icon</th>
 
@@ -189,34 +234,41 @@ const ServiceList = () => {
                 </thead>
 
                 <tbody>
-                  {filteredServices.length === 0 ? (
-                    <tr>
+                  {filteredServices.length === 0 ?
+                  <tr>
                       <td
-                        colSpan="6"
-                        className="
+                      colSpan="6"
+                      className="
                         text-center
                         py-10
                         text-gray-500
-                        "
-                      >
+                        ">
+
+
+
+
+
                         No Services Found
                       </td>
-                    </tr>
-                  ) : (
-                    filteredServices.map((service) => {
-                      const Icon = iconMap[service.icon];
+                    </tr> :
 
-                      return (
-                        <tr
-                          key={service.id}
-                          className="
+                  filteredServices.map((service) => {
+                    const Icon = iconMap[service.icon];
+
+                    return (
+                      <tr
+                        key={service.id}
+                        className="
                         border-t
                         hover:bg-gray-50
-                        "
-                        >
+                        ">
+
+
+
+
                           <td className="p-4">
                             <div
-                              className="
+                            className="
                             w-12
                             h-12
                             rounded-full
@@ -224,25 +276,39 @@ const ServiceList = () => {
                             flex
                             items-center
                             justify-center
-                            "
-                            >
-                              {Icon && (
-                                <Icon
-                                  className="
+                            ">
+
+
+
+
+
+
+
+
+
+                              {Icon &&
+                            <Icon
+                              className="
                               text-blue-600
                               text-xl
-                              "
-                                />
-                              )}
+                              " />
+
+
+
+
+                            }
                             </div>
                           </td>
 
                           <td
-                            className="
+                          className="
                           p-4
                           font-medium
-                          "
-                          >
+                          ">
+
+
+
+
                             {service.title}
                           </td>
 
@@ -250,7 +316,7 @@ const ServiceList = () => {
 
                           <td className="p-4">
                             <span
-                              className={`
+                            className={`
                             px-3
                             py-1
                             rounded-full
@@ -258,13 +324,13 @@ const ServiceList = () => {
                             text-sm
 
                             ${
-                              service.status === "active"
-                                ? "bg-green-500"
-                                : "bg-red-500"
-                            }
+                            service.status === "active" ?
+                            "bg-green-500" :
+                            "bg-red-500"}
 
-                            `}
-                            >
+                            `
+                            }>
+
                               {service.status}
                             </span>
                           </td>
@@ -273,51 +339,67 @@ const ServiceList = () => {
 
                           <td className="p-4">
                             <div
-                              className="
+                            className="
                             flex
                             justify-center
                             gap-3
-                            "
-                            >
+                            ">
+
+
+
+
+
                               <Link
-                                to={`/admin/editservices/${service.id}`}
-                                className="
+                              to={`/admin/editservices/${service.id}`}
+                              className="
                               bg-primary
                               text-light
                               px-4
                               py-2
                               rounded
-                              "
-                              >
+                              ">
+
+
+
+
+
+
+
                                 Edit
                               </Link>
 
                               <button
-                                onClick={() => handleDelete(service.id)}
-                                className="
+                              onClick={() => handleDelete(service.id)}
+                              className="
                               bg-red-600
                               text-light
                               px-4
                               py-2
                               rounded
-                              "
-                              >
+                              ">
+
+
+
+
+
+
+
                                 Delete
                               </button>
                             </div>
                           </td>
-                        </tr>
-                      );
-                    })
-                  )}
+                        </tr>);
+
+                  })
+                  }
                 </tbody>
               </table>
             </div>
           </div>
         </div>
       </div>
-    </>
-  );
+    </>);
+
 };
 
 export default ServiceList;

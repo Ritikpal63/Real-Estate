@@ -16,22 +16,22 @@ export function PostProvider({ children }) {
   };
 
   return (
-    <PostContext.Provider value={{ 
-      posts, 
-      setPosts, 
-      loading, 
-      setLoading, 
-      error, 
+    <PostContext.Provider value={{
+      posts,
+      setPosts,
+      loading,
+      setLoading,
+      error,
       setError,
       addPost,
       clearError
     }}>
       {children}
-    </PostContext.Provider>
-  );
+    </PostContext.Provider>);
+
 }
 
-// Custom hook to use PostContext
+
 export function usePost() {
   const context = useContext(PostContext);
   if (!context) {

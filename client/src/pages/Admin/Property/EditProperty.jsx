@@ -17,7 +17,7 @@ export default function EditProperty() {
     size: "",
     year: "",
     price: "",
-    description: "",
+    description: ""
   });
 
   const [imageFile, setImageFile] = useState(null);
@@ -42,7 +42,7 @@ export default function EditProperty() {
           size: p.size || "",
           year: p.year || "",
           price: p.price || "",
-          description: p.description || "",
+          description: p.description || ""
         });
         setExistingImage(p.image);
       } catch (err) {
@@ -82,7 +82,7 @@ export default function EditProperty() {
       }
 
       await axiosInstance.put(`/property/${id}`, formData, {
-        headers: { "Content-Type": "multipart/form-data" },
+        headers: { "Content-Type": "multipart/form-data" }
       });
 
       navigate("/admin/viewproperty");
@@ -100,8 +100,8 @@ export default function EditProperty() {
     return (
       <div className="max-w-6xl mx-auto px-3 sm:px-6 py-8 text-gray-500">
         Loading property...
-      </div>
-    );
+      </div>);
+
   }
 
   return (
@@ -111,11 +111,11 @@ export default function EditProperty() {
         <p className="text-gray-500 mt-1">Update your real estate listing.</p>
       </div>
 
-      {error && (
-        <div className="bg-red-50 text-red-600 text-sm rounded-xl px-4 py-3 mb-4">
+      {error &&
+      <div className="bg-red-50 text-red-600 text-sm rounded-xl px-4 py-3 mb-4">
           {error}
         </div>
-      )}
+      }
 
       <form onSubmit={handleSubmit} className="space-y-5">
         <input
@@ -123,23 +123,23 @@ export default function EditProperty() {
           value={form.title}
           onChange={handleChange}
           placeholder="Property Name"
-          className="w-full bg-gray-100 rounded-xl px-4 py-3 outline-none mb-3"
-        />
+          className="w-full bg-gray-100 rounded-xl px-4 py-3 outline-none mb-3" />
+
 
         <input
           name="location"
           value={form.location}
           onChange={handleChange}
           placeholder="Location"
-          className="w-full bg-gray-100 rounded-xl px-4 py-3 outline-none mb-3"
-        />
+          className="w-full bg-gray-100 rounded-xl px-4 py-3 outline-none mb-3" />
+
 
         <select
           name="type"
           value={form.type}
           onChange={handleChange}
-          className="w-full bg-gray-100 rounded-xl px-4 py-3 outline-none mb-3"
-        >
+          className="w-full bg-gray-100 rounded-xl px-4 py-3 outline-none mb-3">
+
           <option value="">Select Property Type</option>
           <option value="Villa">Villa</option>
           <option value="Apartment">Apartment</option>
@@ -152,8 +152,8 @@ export default function EditProperty() {
           value={form.amenities}
           onChange={handleChange}
           placeholder="Amenities (comma separated)"
-          className="w-full bg-gray-100 rounded-xl px-4 py-3 outline-none mb-3"
-        />
+          className="w-full bg-gray-100 rounded-xl px-4 py-3 outline-none mb-3" />
+
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <input
@@ -163,8 +163,8 @@ export default function EditProperty() {
             onChange={handleChange}
             placeholder="Bedrooms"
             min="0"
-            className="bg-gray-100 rounded-xl px-4 py-3 w-full outline-none"
-          />
+            className="bg-gray-100 rounded-xl px-4 py-3 w-full outline-none" />
+
           <input
             type="number"
             name="bathroom"
@@ -172,8 +172,8 @@ export default function EditProperty() {
             onChange={handleChange}
             placeholder="Bathrooms"
             min="0"
-            className="bg-gray-100 rounded-xl px-4 py-3 w-full outline-none"
-          />
+            className="bg-gray-100 rounded-xl px-4 py-3 w-full outline-none" />
+
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -183,16 +183,16 @@ export default function EditProperty() {
             value={form.size}
             onChange={handleChange}
             placeholder="Size (SQM)"
-            className="bg-gray-100 rounded-xl px-4 py-3 w-full outline-none"
-          />
+            className="bg-gray-100 rounded-xl px-4 py-3 w-full outline-none" />
+
           <input
             type="number"
             name="year"
             value={form.year}
             onChange={handleChange}
             placeholder="Year Built"
-            className="bg-gray-100 rounded-xl px-4 py-3 w-full outline-none"
-          />
+            className="bg-gray-100 rounded-xl px-4 py-3 w-full outline-none" />
+
         </div>
 
         <input
@@ -202,8 +202,8 @@ export default function EditProperty() {
           onChange={handleChange}
           placeholder="Price"
           min="0"
-          className="w-full bg-gray-100 rounded-xl px-4 py-3 outline-none mb-3"
-        />
+          className="w-full bg-gray-100 rounded-xl px-4 py-3 outline-none mb-3" />
+
 
         <textarea
           name="description"
@@ -211,22 +211,22 @@ export default function EditProperty() {
           onChange={handleChange}
           rows={5}
           placeholder="About Property"
-          className="w-full bg-gray-100 rounded-xl px-4 py-3 outline-none mb-3"
-        />
+          className="w-full bg-gray-100 rounded-xl px-4 py-3 outline-none mb-3" />
+
 
         <ImageUploader
           onImageSelect={setImageFile}
-          existingImage={existingImage}
-        />
+          existingImage={existingImage} />
+
 
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-[#374256] text-white rounded-lg py-3 disabled:opacity-60"
-        >
+          className="w-full bg-[#374256] text-white rounded-lg py-3 disabled:opacity-60">
+
           {loading ? "Updating..." : "Save Changes"}
         </button>
       </form>
-    </div>
-  );
+    </div>);
+
 }

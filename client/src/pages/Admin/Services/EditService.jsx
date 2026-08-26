@@ -17,7 +17,7 @@ const EditService = () => {
     icon: "FaBuilding",
     image: "",
     status: "active",
-    display_order: 0,
+    display_order: 0
   });
 
   useEffect(() => {
@@ -39,7 +39,7 @@ const EditService = () => {
 
     setForm((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: value
     }));
   };
 
@@ -67,10 +67,10 @@ const EditService = () => {
         form={form}
         handleChange={handleChange}
         handleSubmit={handleSubmit}
-        buttonText="Update Service"
-      />
-    </div>
-  );
+        buttonText="Update Service" />
+
+    </div>);
+
 };
 
 export default EditService;

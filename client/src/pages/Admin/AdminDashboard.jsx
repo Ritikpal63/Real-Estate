@@ -36,8 +36,12 @@ const AdminDashboard = () => {
 text-3xl
 font-bold
 mb-6
-"
-      >
+">
+
+
+
+
+
         Dashboard Overview
       </h1>
 
@@ -48,27 +52,33 @@ grid-cols-1
 md:grid-cols-2
 lg:grid-cols-4
 gap-5
-"
-      >
+">
+
+
+
+
+
+
+
         <StatsCard
           title="Properties"
           value={stats.totalProperties}
-          icon={<FaBuilding />}
-        />
+          icon={<FaBuilding />} />
+
 
         <StatsCard title="Blogs" value={stats.totalBlogs} icon={<FaUsers />} />
 
         <StatsCard
           title="Services"
           value={stats.totalServices}
-          icon={<FaImages />}
-        />
+          icon={<FaImages />} />
+
 
         <StatsCard
           title="Leads"
           value={stats.totalLeads}
-          icon={<FaEnvelope />}
-        />
+          icon={<FaEnvelope />} />
+
       </div>
 
       <div
@@ -78,15 +88,25 @@ mt-8
 rounded-xl
 shadow
 p-5
-"
-      >
+">
+
+
+
+
+
+
+
         <h2
           className="
 text-xl
 font-bold
 mb-4
-"
-        >
+">
+
+
+
+
+
           Recent Properties
         </h2>
         <div className="overflow-x-auto">
@@ -99,8 +119,14 @@ mb-4
           text-sm
           uppercase
           tracking-wider
-          "
-              >
+          ">
+
+
+
+
+
+
+
                 <th className="px-6 py-4 text-left">Title</th>
 
                 <th className="px-6 py-4 text-left">Price</th>
@@ -112,19 +138,23 @@ mb-4
             </thead>
 
             <tbody className="divide-y divide-gray-100">
-              {data.recentProperties.map((property) => (
-                <tr
-                  key={property.id}
-                  className="
+              {data.recentProperties.map((property) =>
+              <tr
+                key={property.id}
+                className="
             hover:bg-blue-50
             transition
             duration-200
-            "
-                >
+            ">
+
+
+
+
+
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-3">
                       <div
-                        className="
+                      className="
                   w-12
                   h-12
                   rounded-lg
@@ -134,27 +164,43 @@ mb-4
                   justify-center
                   text-blue-600
                   font-bold
-                  "
-                      >
+                  ">
+
+
+
+
+
+
+
+
+
+
+
                         {property.title?.charAt(0)}
                       </div>
 
                       <div>
                         <p
-                          className="
+                        className="
                   font-semibold
                   text-gray-800
-                  "
-                        >
+                  ">
+
+
+
+
                           {property.title}
                         </p>
 
                         <p
-                          className="
+                        className="
                   text-sm
                   text-gray-500
-                  "
-                        >
+                  ">
+
+
+
+
                           ID: {property.id}
                         </p>
                       </div>
@@ -163,7 +209,7 @@ mb-4
 
                   <td className="px-6 py-4">
                     <span
-                      className="
+                    className="
                 bg-green-100
                 text-green-700
                 px-3
@@ -171,25 +217,37 @@ mb-4
                 rounded-full
                 font-semibold
                 text-sm
-                "
-                    >
+                ">
+
+
+
+
+
+
+
+
+
                       ₹ {property.price}
                     </span>
                   </td>
 
                   <td
-                    className="
+                  className="
             px-6
             py-4
             text-gray-600
-            "
-                  >
+            ">
+
+
+
+
+
                     {property.location}
                   </td>
 
                   <td className="px-6 py-4">
                     <span
-                      className="
+                    className="
                 bg-blue-100
                 text-blue-700
                 px-3
@@ -197,19 +255,27 @@ mb-4
                 rounded-full
                 text-xs
                 font-medium
-                "
-                    >
+                ">
+
+
+
+
+
+
+
+
+
                       Available
                     </span>
                   </td>
                 </tr>
-              ))}
+              )}
             </tbody>
           </table>
         </div>
       </div>
-    </div>
-  );
+    </div>);
+
 };
 
 export default AdminDashboard;

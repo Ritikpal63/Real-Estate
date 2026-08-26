@@ -2,9 +2,9 @@ import axios from "axios";
 
 const axiosInstance = axios.create({
   baseURL:
-    import.meta.env.VITE_API_URL || "https://ncrspaceconnect.com/api",
+  import.meta.env.VITE_API_URL || "https://ncrspaceconnect.com/api" || "http://localhost:8000/api",
   timeout: 10000,
-  withCredentials: true,
+  withCredentials: true
 });
 
 axiosInstance.interceptors.request.use(
@@ -20,7 +20,7 @@ axiosInstance.interceptors.request.use(
   (error) => {
     console.error("Request interceptor error:", error);
     return Promise.reject(error);
-  },
+  }
 );
 
 axiosInstance.interceptors.response.use(
@@ -31,7 +31,7 @@ axiosInstance.interceptors.response.use(
     console.error(
       "Response error:",
       error.response?.status,
-      error.response?.data,
+      error.response?.data
     );
 
     if (error.response?.status === 401) {
@@ -45,7 +45,7 @@ axiosInstance.interceptors.response.use(
       }
     }
     return Promise.reject(error);
-  },
+  }
 );
 
 export default axiosInstance;

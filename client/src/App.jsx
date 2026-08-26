@@ -13,7 +13,7 @@ import AgentprofilePage from "./pages/AgentprofilePage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import PropertyDetailPage from "./pages/PropertyDetailPage";
-// import PropertyPage from "./pages/PropertyPage";
+
 import FaqPage from "./pages/FaqPage";
 import BlogUpload from "./pages/Admin/BlogUpload";
 import NotAuthorizedPage from "./pages/NotAuthorizedPage";
@@ -43,12 +43,12 @@ import AdminBlog from "./pages/Admin/Blog/AdminBlog";
 import BlogDetails from "./pages/Admin/Blog/BlogDetails";
 import AllProperty from "./components/AllProperty";
 import EditGallery from "./pages/Admin/Gallery/EditGallery";
-// import { ThemeProvider } from "./contextApi/ThemeContext";
+
 
 const App = () => {
   return (
-    // <ThemeProvider>
-      <AuthProvider>
+
+    <AuthProvider>
         <PostProvider>
         <Navbar />
         <ToastContainer />
@@ -60,7 +60,7 @@ const App = () => {
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/blogpost" element={<BlogpostPage />} />
-          {/* <Route path="/property" element={<PropertyPage />} /> */}
+          {}
           <Route path="/property" element={<AllProperty />} />
           <Route path="/property/:id" element={<PropertyDetailPage />} />
           <Route path="agent-profile" element={<AgentprofilePage />} />
@@ -74,11 +74,11 @@ const App = () => {
           <Route
             path="/admin"
             element={
-              <RequireAdmin>
+            <RequireAdmin>
                 <Outlet />
               </RequireAdmin>
-            }
-          >
+            }>
+
             <Route path="allteam" element={<ViewTeamMember />} />
             <Route index element={<AdminHome />} />
             <Route path="addblog" element={<BlogUpload />} />
@@ -102,9 +102,9 @@ const App = () => {
         </Routes>
         <Footer />
       </PostProvider>
-    </AuthProvider>
-    // </ThemeProvider>
-  );
+    </AuthProvider>);
+
+
 };
 
 export default App;

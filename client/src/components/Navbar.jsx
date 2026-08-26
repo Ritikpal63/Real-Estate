@@ -29,46 +29,46 @@ const Navbar = () => {
   };
 
   const navLinks = [
-    {
-      name: "Home",
-      path: "/",
-    },
-    {
-      name: "About Us",
-      path: "/about",
-    },
-    {
-      name: "Services",
-      path: "/allservice",
-    },
-    {
-      name: "Office Space",
-      path: "/property",
-    },
-    {
-      name: "Jobs",
-      path: "/jobs",
-    },
-    {
-      name: "News",
-      path: "/news/allnews",
-    },
-    {
-      name: "Partners",
-      path: "/partners",
-    },
-    {
-      name: "Contact Us",
-      path: "/contact",
-    },
-  ];
+  {
+    name: "Home",
+    path: "/"
+  },
+  {
+    name: "About Us",
+    path: "/about"
+  },
+  {
+    name: "Services",
+    path: "/allservice"
+  },
+  {
+    name: "Office Space",
+    path: "/property"
+  },
+  {
+    name: "Jobs",
+    path: "/jobs"
+  },
+  {
+    name: "News",
+    path: "/news/allnews"
+  },
+  {
+    name: "Partners",
+    path: "/partners"
+  },
+  {
+    name: "Contact Us",
+    path: "/contact"
+  }];
+
 
   const getNavClass = ({ isActive }) => {
     return `relative flex h-full items-center whitespace-nowrap px-1 text-[13px] font-semibold transition-all duration-300 ${
-      isActive
-        ? "text-[#078cff]"
-        : "text-white hover:text-[#078cff]"
-    }`;
+    isActive ?
+    "text-[#078cff]" :
+    "text-white hover:text-[#078cff]"}`;
+
   };
 
   return (
@@ -80,36 +80,36 @@ const Navbar = () => {
             <Link
               to="/"
               onClick={closeMenu}
-              className="flex items-center"
-            >
-              <img
-                src="/assets/img/ncrlogowithoutbg.png"
-                alt="NCR Space Connect"
-                className="h-[58px] w-[58px] object-contain"
-              />
+              className="flex items-center">
+
+              {
+
+
+
+              }
             </Link>
           </div>
 
           <div className="hidden h-full flex-1 items-center justify-center lg:flex">
             <div className="flex h-full items-center gap-7">
-              {navLinks.map((item) => (
-                <NavLink
-                  key={item.name}
-                  to={item.path}
-                  end={item.path === "/"}
-                  className={getNavClass}
-                >
-                  {({ isActive }) => (
-                    <>
+              {navLinks.map((item) =>
+              <NavLink
+                key={item.name}
+                to={item.path}
+                end={item.path === "/"}
+                className={getNavClass}>
+
+                  {({ isActive }) =>
+                <>
                       <span>{item.name}</span>
 
-                      {isActive && (
-                        <span className="absolute bottom-0 left-0 h-[2px] w-full bg-[#078cff]" />
-                      )}
+                      {isActive &&
+                  <span className="absolute bottom-0 left-0 h-[2px] w-full bg-[#078cff]" />
+                  }
                     </>
-                  )}
+                }
                 </NavLink>
-              ))}
+              )}
             </div>
           </div>
 
@@ -117,8 +117,8 @@ const Navbar = () => {
             <button
               type="button"
               onClick={handlePostProperty}
-              className="text-[13px] font-bold text-[#078cff] transition-all duration-300 hover:text-white"
-            >
+              className="text-[13px] font-bold text-[#078cff] transition-all duration-300 hover:text-white">
+
               Post Property
             </button>
           </div>
@@ -127,60 +127,60 @@ const Navbar = () => {
             <button
               type="button"
               onClick={() =>
-                setMobileMenuOpen((prev) => !prev)
+              setMobileMenuOpen((prev) => !prev)
               }
               className="flex h-10 w-10 items-center justify-center rounded-md text-white transition hover:bg-white/10 hover:text-[#078cff]"
               aria-label="Toggle navigation"
-              aria-expanded={mobileMenuOpen}
-            >
-              {mobileMenuOpen ? (
-                <X size={25} />
-              ) : (
-                <Menu size={25} />
-              )}
+              aria-expanded={mobileMenuOpen}>
+
+              {mobileMenuOpen ?
+              <X size={25} /> :
+
+              <Menu size={25} />
+              }
             </button>
           </div>
 
         </div>
       </div>
 
-      {mobileMenuOpen && (
-        <div className="absolute left-0 top-full w-full border-t border-white/10 bg-[#020d25] shadow-xl lg:hidden">
+      {mobileMenuOpen &&
+      <div className="absolute left-0 top-full w-full border-t border-white/10 bg-[#020d25] shadow-xl lg:hidden">
           <div className="mx-auto w-[90vw] py-4">
             <div className="flex flex-col">
 
-              {navLinks.map((item) => (
-                <NavLink
-                  key={item.name}
-                  to={item.path}
-                  end={item.path === "/"}
-                  onClick={closeMenu}
-                  className={({ isActive }) =>
-                    `border-b border-white/5 px-2 py-3 text-[14px] font-medium transition ${
-                      isActive
-                        ? "text-[#078cff]"
-                        : "text-slate-200 hover:bg-white/5 hover:text-[#078cff]"
-                    }`
-                  }
-                >
+              {navLinks.map((item) =>
+            <NavLink
+              key={item.name}
+              to={item.path}
+              end={item.path === "/"}
+              onClick={closeMenu}
+              className={({ isActive }) =>
+              `border-b border-white/5 px-2 py-3 text-[14px] font-medium transition ${
+              isActive ?
+              "text-[#078cff]" :
+              "text-slate-200 hover:bg-white/5 hover:text-[#078cff]"}`
+
+              }>
+
                   {item.name}
                 </NavLink>
-              ))}
+            )}
 
               <button
-                type="button"
-                onClick={handlePostProperty}
-                className="mt-4 flex h-[44px] items-center justify-center rounded-md bg-[#078cff] px-5 text-[13px] font-bold text-white transition hover:bg-[#0074df]"
-              >
+              type="button"
+              onClick={handlePostProperty}
+              className="mt-4 flex h-[44px] items-center justify-center rounded-md bg-[#078cff] px-5 text-[13px] font-bold text-white transition hover:bg-[#0074df]">
+
                 Post Property
               </button>
 
             </div>
           </div>
         </div>
-      )}
-    </nav>
-  );
+      }
+    </nav>);
+
 };
 
 export default Navbar;

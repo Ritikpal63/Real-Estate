@@ -13,8 +13,8 @@ const BlogUpload = () => {
           <UploadBlogPage />
         </div>
       </div>
-    </>
-  );
+    </>);
+
 };
 
 export default BlogUpload;

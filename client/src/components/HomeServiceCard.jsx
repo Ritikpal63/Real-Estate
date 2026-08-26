@@ -29,13 +29,16 @@ const HomeServiceCard = () => {
     return <div className="text-center py-10">Loading Services...</div>;
   }
 
-  return (<>
+  return <>
     <section
       className="
       w-full
       py-12
-      "
-    >
+      ">
+
+
+
+
       <div
         className="
         max-w-7xl
@@ -43,23 +46,36 @@ const HomeServiceCard = () => {
         px-4
         sm:px-6
         lg:px-8
-        "
-      >
-        {/* Heading */}
+        ">
+
+
+
+
+
+
+
+        {}
 
         <div
           className="
           text-center
           mb-10
-          "
-        >
+          ">
+
+
+
+
           <h2
             className="
             text-3xl
             font-bold
             text-gray-800
-            "
-          >
+            ">
+
+
+
+
+
             Our Services
           </h2>
 
@@ -67,36 +83,42 @@ const HomeServiceCard = () => {
             className="
             text-gray-500
             mt-2
-            "
-          >
+            ">
+
+
+
+
             Explore our professional services
           </p>
         </div>
 
-        {/* Cards */}
+        {}
 
         <ServiceCard services={services} />
 
-        {/* View All Button */}
+        {}
 
         <div
           className="
           text-center
           mt-10
-          "
-        >
+          ">
+
+
+
+
           <Link
             onClick={() => window.location.href = "/allservice"}
-            className="btn btn-primary px-3 py-3"
-          >
+            className="btn btn-primary px-3 py-3">
+
             View All Services
           </Link>
         </div>
       </div>
     </section>
 
-  </>
-  );
+  </>;
+
 };
 
 export default HomeServiceCard;

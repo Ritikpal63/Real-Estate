@@ -12,6 +12,6 @@ export default function AddPropertyPage() {
           <AddProperty />
         </div>
       </div>
-    </>
-  );
+    </>);
+
 }

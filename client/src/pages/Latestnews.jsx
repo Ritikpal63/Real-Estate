@@ -29,7 +29,7 @@ const LatestnewsPage = () => {
       } else if (error.request) {
         console.error("No Response:", error.request);
         setError(
-          "Cannot connect to server. Please check if backend is running.",
+          "Cannot connect to server. Please check if backend is running."
         );
       } else {
         console.error("Error:", error.message);
@@ -44,23 +44,23 @@ const LatestnewsPage = () => {
     getNews();
   }, []);
 
-  // Format date function
+
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return {
       day: date.getDate(),
-      month: date.toLocaleString("default", { month: "short" }),
+      month: date.toLocaleString("default", { month: "short" })
     };
   };
 
-  // Get category color
+
   const getCategoryColor = (category) => {
     const colors = {
       General: "bg-blue-100 text-blue-600",
       "Market Trends": "bg-purple-100 text-purple-600",
       "Investment Tips": "bg-green-100 text-green-600",
       "Property News": "bg-orange-100 text-orange-600",
-      "Legal Updates": "bg-red-100 text-red-600",
+      "Legal Updates": "bg-red-100 text-red-600"
     };
     return colors[category] || "bg-gray-100 text-gray-600";
   };
@@ -68,7 +68,7 @@ const LatestnewsPage = () => {
   return (
     <section id="blog" className=" py-16 bg-gray-50">
       <div className="w-full max-w-[1400px] mx-auto px-4">
-        {/* Section Title */}
+        {}
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-3">
             Latest <span className="text-green-500">News</span>
@@ -77,57 +77,57 @@ const LatestnewsPage = () => {
             Stay updated with the latest trends and insights in real estate
           </p>
         </div>
-        {/* Loading State */}
-        {loading && (
-          <div className="flex justify-center items-center py-20">
+        {}
+        {loading &&
+        <div className="flex justify-center items-center py-20">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-500"></div>
           </div>
-        )}
-        {/* Error State */}
-        {error && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-6 py-4 rounded-lg max-w-2xl mx-auto">
+        }
+        {}
+        {error &&
+        <div className="bg-red-100 border border-red-400 text-red-700 px-6 py-4 rounded-lg max-w-2xl mx-auto">
             <p className="font-bold">Error:</p>
             <p>{error}</p>
             <button
-              onClick={getNews}
-              className="mt-3 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors"
-            >
+            onClick={getNews}
+            className="mt-3 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors">
+
               Retry
             </button>
           </div>
-        )}
-        {/* News Grid */}
-        {!loading && !error && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {news.length === 0 ? (
-              <div className="col-span-full text-center py-12 bg-white rounded-lg shadow">
+        }
+        {}
+        {!loading && !error &&
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {news.length === 0 ?
+          <div className="col-span-full text-center py-12 bg-white rounded-lg shadow">
                 <p className="text-gray-500 text-lg">
                   No news articles available yet.
                 </p>
                 <p className="text-gray-400">Check back soon for updates!</p>
-              </div>
-            ) : (
-              news.map((item) => {
-                const { day, month } = formatDate(item.created_at);
-                return (
-                  <div
-                    key={item.id}
-                    className="w-full bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 group flex flex-col"
-                  >
-                    {/* ================= IMAGE ================= */}
+              </div> :
+
+          news.map((item) => {
+            const { day, month } = formatDate(item.created_at);
+            return (
+              <div
+                key={item.id}
+                className="w-full bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 group flex flex-col">
+
+                    {}
                     <div className="relative overflow-hidden h-52">
                       <Link to={`/news/${item.id}`}>
                         <img
-                          src={item.image}
-                          alt={item.title}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                          onError={(e) => {
-                            e.currentTarget.src = "/assets/img/blog/blog-1.jpg";
-                          }}
-                        />
+                      src={item.image}
+                      alt={item.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      onError={(e) => {
+                        e.currentTarget.src = "/assets/img/blog/blog-1.jpg";
+                      }} />
+
                       </Link>
 
-                      {/* Date Badge */}
+                      {}
                       <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg px-3 py-2 text-center min-w-[58px]">
                         <span className="block text-xl font-bold text-gray-800">
                           {day}
@@ -138,36 +138,36 @@ const LatestnewsPage = () => {
                         </span>
                       </div>
 
-                      {/* Category Badge */}
+                      {}
                       <div className="absolute top-4 right-4">
                         <span
-                          className={`px-3 py-1 rounded-full text-xs font-semibold shadow-sm ${getCategoryColor(
-                            item.category,
-                          )}`}
-                        >
+                      className={`px-3 py-1 rounded-full text-xs font-semibold shadow-sm ${getCategoryColor(
+                        item.category
+                      )}`}>
+
                           {item.category || "General"}
                         </span>
                       </div>
                     </div>
 
-                    {/* ================= CONTENT ================= */}
+                    {}
                     <div className="p-5 flex flex-col flex-1">
-                      {/* Title */}
+                      {}
                       <h3 className="text-lg font-bold text-gray-800 mb-3 line-clamp-2 group-hover:text-green-500 transition-colors duration-300">
                         <Link to={`/news/${item.id}`}>{item.title}</Link>
                       </h3>
 
-                      {/* Description */}
+                      {}
                       <p className="text-gray-600 text-sm leading-relaxed mb-5 line-clamp-3 flex-1">
-                        {item.summary ||
-                          (item.content
-                            ? item.content.substring(0, 120) + "..."
-                            : "Stay updated with the latest real estate news and property market updates.")}
+                        {item.summary || (
+                    item.content ?
+                    item.content.substring(0, 120) + "..." :
+                    "Stay updated with the latest real estate news and property market updates.")}
                       </p>
 
-                      {/* Footer */}
+                      {}
                       <div className="flex items-center justify-between border-t border-gray-100 pt-4">
-                        {/* Author */}
+                        {}
                         <span className="text-xs text-gray-500">
                           By{" "}
                           <span className="font-medium text-gray-700">
@@ -175,45 +175,50 @@ const LatestnewsPage = () => {
                           </span>
                         </span>
 
-                        {/* Read More */}
+                        {}
                         <Link
-                          to={`/news/${item.id}`}
-                          className="text-green-500 font-semibold text-sm hover:text-green-600 transition-colors duration-300"
-                        >
+                      to={`/news/${item.id}`}
+                      className="text-green-500 font-semibold text-sm hover:text-green-600 transition-colors duration-300">
+
                           Read More →
                         </Link>
                       </div>
                     </div>
-                  </div>
-                );
-              })
-            )}
+                  </div>);
+
+          })
+          }
           </div>
-        )}
-        {/* View All Button */}
-        {!loading && !error && news.length > 0 && (
-          <div className="text-center mt-12">
+        }
+        {}
+        {!loading && !error && news.length > 0 &&
+        <div className="text-center mt-12">
             <Link to="/news/allnews" className="">
               <span
-                className="inline-block
+              className="inline-block
             bg-primary
             text-white
             px-6
             py-3
             rounded-lg
             hover:bg-blue-700
-            transition"
-              >
+            transition">
+
+
+
+
+
+
+
+
                 View All News
               </span>
             </Link>
           </div>
-        )}
+        }
       </div>
-    </section>
-  );
+    </section>);
+
 };
 
 export default LatestnewsPage;
-
-

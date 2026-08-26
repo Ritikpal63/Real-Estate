@@ -1,8 +1,8 @@
 export default function PropertyPreview() {
 
-    return (
+  return (
 
-        <div className="bg-[#f8f9fd] rounded-3xl p-8">
+    <div className="bg-[#f8f9fd] rounded-3xl p-8">
 
             <h3 className="text-sm text-gray-500 uppercase">
                 Preview
@@ -43,19 +43,19 @@ export default function PropertyPreview() {
                     <div className="flex -space-x-3">
 
                         <img
-                            src="https://i.pravatar.cc/40?img=1"
-                            className="w-8 h-8 rounded-full border"
-                        />
+              src="https://i.pravatar.cc/40?img=1"
+              className="w-8 h-8 rounded-full border" />
+
 
                         <img
-                            src="https://i.pravatar.cc/40?img=2"
-                            className="w-8 h-8 rounded-full border"
-                        />
+              src="https://i.pravatar.cc/40?img=2"
+              className="w-8 h-8 rounded-full border" />
+
 
                         <img
-                            src="https://i.pravatar.cc/40?img=3"
-                            className="w-8 h-8 rounded-full border"
-                        />
+              src="https://i.pravatar.cc/40?img=3"
+              className="w-8 h-8 rounded-full border" />
+
 
                     </div>
 
@@ -67,8 +67,8 @@ export default function PropertyPreview() {
 
             </div>
 
-        </div>
+        </div>);
 
-    )
+
 
 }

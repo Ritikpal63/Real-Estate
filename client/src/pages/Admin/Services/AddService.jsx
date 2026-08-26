@@ -14,7 +14,7 @@ const AddService = () => {
     description: "",
     icon: "FaBuilding",
     status: "active",
-    display_order: 0,
+    display_order: 0
   });
 
   const handleChange = (e) => {
@@ -24,12 +24,12 @@ const AddService = () => {
       setForm((prev) => ({
         ...prev,
         title: value,
-        slug: value.toLowerCase().trim().replace(/\s+/g, "-"),
+        slug: value.toLowerCase().trim().replace(/\s+/g, "-")
       }));
     } else {
       setForm((prev) => ({
         ...prev,
-        [name]: value,
+        [name]: value
       }));
     }
   };
@@ -65,7 +65,7 @@ const AddService = () => {
 
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
-                  {/* Title */}
+                  {}
 
                   <div>
                     <label className="block font-semibold mb-2">Title</label>
@@ -76,11 +76,11 @@ const AddService = () => {
                       value={form.title}
                       onChange={handleChange}
                       className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-blue-500 outline-none"
-                      required
-                    />
+                      required />
+
                   </div>
 
-                  {/* Slug */}
+                  {}
 
                   <div>
                     <label className="block font-semibold mb-2">Slug</label>
@@ -91,12 +91,12 @@ const AddService = () => {
                       value={form.slug}
                       onChange={handleChange}
                       className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-blue-500 outline-none"
-                      required
-                    />
+                      required />
+
                   </div>
                 </div>
 
-                {/* Description */}
+                {}
 
                 <div>
                   <label className="block font-semibold mb-2">
@@ -108,12 +108,12 @@ const AddService = () => {
                     name="description"
                     value={form.description}
                     onChange={handleChange}
-                    className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-blue-500 outline-none"
-                  />
+                    className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-blue-500 outline-none" />
+
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-6">
-                  {/* Icon */}
+                  {}
 
                   <div>
                     <label className="block font-semibold mb-2">Icon</label>
@@ -122,21 +122,21 @@ const AddService = () => {
                       name="icon"
                       value={form.icon}
                       onChange={handleChange}
-                      className="w-full border rounded-lg p-3"
-                    >
-                      {iconOptions.map((item) => (
-                        <option key={item.name} value={item.name}>
+                      className="w-full border rounded-lg p-3">
+
+                      {iconOptions.map((item) =>
+                      <option key={item.name} value={item.name}>
                           {item.name}
                         </option>
-                      ))}
+                      )}
                     </select>
 
-                    {/* Preview */}
+                    {}
 
                     <div className="mt-4 flex items-center gap-4 border rounded-lg p-4 bg-gray-50">
-                      {SelectedIcon && (
-                        <SelectedIcon className="text-4xl text-blue-600" />
-                      )}
+                      {SelectedIcon &&
+                      <SelectedIcon className="text-4xl text-blue-600" />
+                      }
 
                       <div>
                         <p className="font-semibold">{form.icon}</p>
@@ -146,7 +146,7 @@ const AddService = () => {
                     </div>
                   </div>
 
-                  {/* Display Order */}
+                  {}
 
                   <div>
                     <label className="block font-semibold mb-2">
@@ -158,12 +158,12 @@ const AddService = () => {
                       name="display_order"
                       value={form.display_order}
                       onChange={handleChange}
-                      className="w-full border rounded-lg p-3"
-                    />
+                      className="w-full border rounded-lg p-3" />
+
                   </div>
                 </div>
 
-                {/* Status */}
+                {}
 
                 <div>
                   <label className="block font-semibold mb-2">Status</label>
@@ -172,20 +172,20 @@ const AddService = () => {
                     name="status"
                     value={form.status}
                     onChange={handleChange}
-                    className="w-full border rounded-lg p-3"
-                  >
+                    className="w-full border rounded-lg p-3">
+
                     <option value="active">Active</option>
 
                     <option value="inactive">Inactive</option>
                   </select>
                 </div>
 
-                {/* Submit */}
+                {}
 
                 <button
                   type="submit"
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg transition"
-                >
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg transition">
+
                   Create Service
                 </button>
               </form>
@@ -193,8 +193,8 @@ const AddService = () => {
           </div>
         </div>
       </div>
-    </>
-  );
+    </>);
+
 };
 
 export default AddService;

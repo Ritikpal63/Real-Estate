@@ -49,7 +49,7 @@ export const AuthProvider = ({ children }) => {
       return true;
     } catch (err) {
       setAuthError(
-        err.response?.data?.message || "Login failed. Please try again.",
+        err.response?.data?.message || "Login failed. Please try again."
       );
       return false;
     } finally {
@@ -71,7 +71,7 @@ export const AuthProvider = ({ children }) => {
       return false;
     } catch (err) {
       setAuthError(
-        err.response?.data?.message || "Registration failed. Please try again.",
+        err.response?.data?.message || "Registration failed. Please try again."
       );
 
       return false;
@@ -100,10 +100,10 @@ export const AuthProvider = ({ children }) => {
         login,
         register,
         logout,
-        isAuthenticated,
-      }}
-    >
+        isAuthenticated
+      }}>
+
       {children}
-    </AuthContext.Provider>
-  );
+    </AuthContext.Provider>);
+
 };

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-// import axios from "axios";
+
 
 
 const Latestnews = () => {
@@ -21,8 +21,8 @@ const Latestnews = () => {
                     <img
                       src="assets/img/blog/blog-1.jpg"
                       className="img-fluid"
-                      alt="image"
-                    />
+                      alt="image" />
+
                   </Link>
                   <div className="post-date">
                     <span className="date">15</span>
@@ -49,8 +49,8 @@ const Latestnews = () => {
                     <img
                       src="assets/img/blog/blog-2.jpg"
                       className="img-fluid"
-                      alt="image"
-                    />
+                      alt="image" />
+
                   </Link>
                   <div className="post-date">
                     <span className="date">16</span>
@@ -77,8 +77,8 @@ const Latestnews = () => {
                     <img
                       src="assets/img/blog/blog-3.jpg"
                       className="img-fluid"
-                      alt="image"
-                    />
+                      alt="image" />
+
                   </Link>
                   <div className="post-date">
                     <span className="date">17</span>
@@ -101,8 +101,8 @@ const Latestnews = () => {
           </div>
         </div>
       </section>
-    </>
-  );
+    </>);
+
 };
 
 export default Latestnews;

@@ -57,14 +57,14 @@ const FooterNew = () => {
           <div className="copy">
             <p>
               &copy; 2025 NCR Space Connect. All rights reserved. Built with{" "}
-              <i className="fas fa-heart" style={{color:"#ef4444"}}></i> for the
+              <i className="fas fa-heart" style={{ color: "#ef4444" }}></i> for the
               NCR community.
             </p>
           </div>
         </div>
       </footer>
-    </div>
-  );
+    </div>);
+
 };
 
 export default FooterNew;

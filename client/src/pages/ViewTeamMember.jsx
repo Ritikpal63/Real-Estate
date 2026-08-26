@@ -13,9 +13,9 @@ export default function ViewTeamMember() {
   const [filteredTeam, setFilteredTeam] = useState([]);
   const [search, setSearch] = useState("");
 
-  // ============================================
-  // FETCH TEAM MEMBERS
-  // ============================================
+
+
+
 
   useEffect(() => {
     const fetchTeamMembers = async () => {
@@ -33,7 +33,7 @@ export default function ViewTeamMember() {
         console.error("Team Fetch Error:", err);
 
         setError(
-          err.response?.data?.message || err.message || "Something went wrong",
+          err.response?.data?.message || err.message || "Something went wrong"
         );
       } finally {
         setLoading(false);
@@ -43,9 +43,9 @@ export default function ViewTeamMember() {
     fetchTeamMembers();
   }, []);
 
-  // ============================================
-  // SEARCH
-  // ============================================
+
+
+
 
   const handleSearch = (value) => {
     setSearch(value);
@@ -59,16 +59,16 @@ export default function ViewTeamMember() {
 
     const result = items.filter(
       (item) =>
-        item.name?.toLowerCase().includes(searchValue) ||
-        item.designation?.toLowerCase().includes(searchValue),
+      item.name?.toLowerCase().includes(searchValue) ||
+      item.designation?.toLowerCase().includes(searchValue)
     );
 
     setFilteredTeam(result);
   };
 
-  // ============================================
-  // DELETE
-  // ============================================
+
+
+
 
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this team member?")) return;
@@ -80,16 +80,16 @@ export default function ViewTeamMember() {
 
       setItems(updatedItems);
 
-      // Apply current search after delete
+
       if (search.trim()) {
         const searchValue = search.toLowerCase();
 
         setFilteredTeam(
           updatedItems.filter(
             (item) =>
-              item.name?.toLowerCase().includes(searchValue) ||
-              item.designation?.toLowerCase().includes(searchValue),
-          ),
+            item.name?.toLowerCase().includes(searchValue) ||
+            item.designation?.toLowerCase().includes(searchValue)
+          )
         );
       } else {
         setFilteredTeam(updatedItems);
@@ -99,36 +99,36 @@ export default function ViewTeamMember() {
 
       alert(
         err.response?.data?.message ||
-          err.message ||
-          "Failed to delete team member",
+        err.message ||
+        "Failed to delete team member"
       );
     }
   };
 
   return (
     <>
-      {/* ============================================
-          PAGE TITLE
-      ============================================ */}
+      {
+
+      }
 
       <Section title="All Team Members" />
 
       <div className="flex flex-col lg:flex-row min-h-screen">
-        {/* ============================================
-            SIDEBAR
-        ============================================ */}
+        {
+
+        }
 
         <AdminAsideSection />
 
-        {/* ============================================
-            MAIN CONTENT
-        ============================================ */}
+        {
+
+        }
 
         <div className="flex-1 w-full min-w-0 bg-gray-50">
           <div className="w-full max-w-7xl mx-auto px-3 sm:px-5 lg:px-8 py-4 sm:py-6 lg:py-8">
-            {/* ========================================
-                HEADER
-            ======================================== */}
+            {
+
+            }
 
             <div
               className="
@@ -139,8 +139,16 @@ export default function ViewTeamMember() {
                 sm:justify-between
                 gap-4
                 mb-6
-              "
-            >
+              ">
+
+
+
+
+
+
+
+
+
               <div>
                 <h2 className="text-xl sm:text-2xl font-semibold text-gray-800">
                   Team Members
@@ -170,31 +178,54 @@ export default function ViewTeamMember() {
                   duration-300
                   w-full
                   sm:w-auto
-                "
-              >
+                ">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 + Add Team Member
               </Link>
             </div>
 
-            {/* ========================================
-                LOADING
-            ======================================== */}
+            {
 
-            {loading && (
-              <>
-                {/* Mobile Loading */}
+            }
+
+            {loading &&
+            <>
+                {}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:hidden">
-                  {[1, 2, 3, 4].map((n) => (
-                    <div
-                      key={n}
-                      className="
+                  {[1, 2, 3, 4].map((n) =>
+                <div
+                  key={n}
+                  className="
                         bg-white
                         rounded-xl
                         shadow-sm
                         p-4
                         animate-pulse
-                      "
-                    >
+                      ">
+
+
+
+
+
+
+
                       <div className="flex gap-4">
                         <div className="w-16 h-16 bg-gray-200 rounded-xl" />
 
@@ -205,23 +236,23 @@ export default function ViewTeamMember() {
                         </div>
                       </div>
                     </div>
-                  ))}
+                )}
                 </div>
 
-                {/* Desktop Loading */}
+                {}
                 <div className="hidden lg:block bg-white rounded-xl shadow-lg overflow-hidden">
                   <div className="h-[600px] bg-gray-100 animate-pulse" />
                 </div>
               </>
-            )}
+            }
 
-            {/* ========================================
-                ERROR
-            ======================================== */}
+            {
 
-            {!loading && error && (
-              <div
-                className="
+            }
+
+            {!loading && error &&
+            <div
+              className="
                   bg-red-50
                   border
                   border-red-200
@@ -230,19 +261,28 @@ export default function ViewTeamMember() {
                   px-4
                   py-4
                   text-sm
-                "
-              >
+                ">
+
+
+
+
+
+
+
+
+
+
                 {error}
               </div>
-            )}
+            }
 
-            {/* ========================================
-                NO DATA
-            ======================================== */}
+            {
 
-            {!loading && !error && items.length === 0 && (
-              <div
-                className="
+            }
+
+            {!loading && !error && items.length === 0 &&
+            <div
+              className="
                     bg-white
                     rounded-xl
                     shadow-sm
@@ -250,13 +290,21 @@ export default function ViewTeamMember() {
                     py-12
                     text-center
                     text-gray-500
-                  "
-              >
+                  ">
+
+
+
+
+
+
+
+
+
                 <p className="text-base sm:text-lg">No team members yet.</p>
 
                 <Link
-                  to="/admin/addteam"
-                  className="
+                to="/admin/addteam"
+                className="
                       inline-block
                       mt-4
                       bg-primary
@@ -266,31 +314,41 @@ export default function ViewTeamMember() {
                       rounded-lg
                       text-sm
                       font-medium
-                    "
-                >
+                    ">
+
+
+
+
+
+
+
+
+
+
+
                   + Add Team Member
                 </Link>
               </div>
-            )}
+            }
 
-            {/* ========================================
-                TEAM DATA
-            ======================================== */}
+            {
 
-            {!loading && !error && items.length > 0 && (
-              <>
-                {/* ==================================
-                      SEARCH
-                  ================================== */}
+            }
+
+            {!loading && !error && items.length > 0 &&
+            <>
+                {
+
+              }
 
                 <div className="mb-5">
                   <div className="relative">
                     <input
-                      type="text"
-                      placeholder="Search by name or designation..."
-                      value={search}
-                      onChange={(e) => handleSearch(e.target.value)}
-                      className="
+                    type="text"
+                    placeholder="Search by name or designation..."
+                    value={search}
+                    onChange={(e) => handleSearch(e.target.value)}
+                    className="
                           w-full
                           bg-white
                           border
@@ -305,14 +363,29 @@ export default function ViewTeamMember() {
                           focus:ring-primary/30
                           focus:border-primary
                           transition
-                        "
-                    />
+                        " />
 
-                    {search && (
-                      <button
-                        type="button"
-                        onClick={() => handleSearch("")}
-                        className="
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    {search &&
+                  <button
+                    type="button"
+                    onClick={() => handleSearch("")}
+                    className="
                             absolute
                             right-3
                             top-1/2
@@ -320,11 +393,19 @@ export default function ViewTeamMember() {
                             text-gray-400
                             hover:text-gray-700
                             text-lg
-                          "
-                      >
+                          ">
+
+
+
+
+
+
+
+
+
                         ×
                       </button>
-                    )}
+                  }
                   </div>
 
                   <p className="text-xs sm:text-sm text-gray-500 mt-2">
@@ -332,13 +413,13 @@ export default function ViewTeamMember() {
                   </p>
                 </div>
 
-                {/* ==================================
-                      NO SEARCH RESULT
-                  ================================== */}
+                {
 
-                {filteredTeam.length === 0 && (
-                  <div
-                    className="
+              }
+
+                {filteredTeam.length === 0 &&
+              <div
+                className="
                         bg-white
                         rounded-xl
                         shadow-sm
@@ -346,31 +427,46 @@ export default function ViewTeamMember() {
                         py-10
                         text-center
                         text-gray-500
-                      "
-                  >
+                      ">
+
+
+
+
+
+
+
+
+
                     No team member found for{" "}
                     <span className="font-semibold">"{search}"</span>
                   </div>
-                )}
+              }
 
-                {/* ==================================
-                      DESKTOP TABLE
-                  ================================== */}
+                {
 
-                {filteredTeam.length > 0 && (
-                  <div
-                    className="
+              }
+
+                {filteredTeam.length > 0 &&
+              <div
+                className="
                         hidden
                         lg:block
                         bg-white
                         rounded-xl
                         shadow-lg
                         overflow-hidden
-                      "
-                  >
+                      ">
+
+
+
+
+
+
+
+
                     <div className="max-h-[700px] overflow-y-auto adminNews">
                       <table className="w-full">
-                        {/* TABLE HEADER */}
+                        {}
 
                         <thead className="bg-gray-50 sticky top-0 z-10">
                           <tr>
@@ -396,36 +492,43 @@ export default function ViewTeamMember() {
                           </tr>
                         </thead>
 
-                        {/* TABLE BODY */}
+                        {}
 
                         <tbody className="divide-y divide-gray-200">
-                          {filteredTeam.map((p) => (
-                            <tr
-                              key={p.id}
-                              className="hover:bg-gray-50 transition"
-                            >
-                              {/* IMAGE */}
+                          {filteredTeam.map((p) =>
+                      <tr
+                        key={p.id}
+                        className="hover:bg-gray-50 transition">
+
+                              {}
 
                               <td className="px-6 py-4">
                                 <img
-                                  src={p.image}
-                                  alt={p.name}
-                                  className="
+                            src={p.image}
+                            alt={p.name}
+                            className="
                                       w-12
                                       h-12
                                       rounded-lg
                                       object-cover
                                       border
                                       border-gray-200
-                                    "
-                                />
+                                    " />
+
+
+
+
+
+
+
+
                               </td>
 
-                              {/* DESIGNATION */}
+                              {}
 
                               <td className="px-6 py-4">
                                 <span
-                                  className="
+                            className="
                                       inline-block
                                       text-xs
                                       font-semibold
@@ -437,36 +540,47 @@ export default function ViewTeamMember() {
                                       max-w-[180px]
                                       truncate
                                     "
-                                  title={p.designation}
-                                >
+
+
+
+
+
+
+
+
+
+
+
+                            title={p.designation}>
+
                                   {p.designation || "N/A"}
                                 </span>
                               </td>
 
-                              {/* NAME */}
+                              {}
 
                               <td className="px-6 py-4 text-sm font-medium text-gray-700">
                                 {p.name || "N/A"}
                               </td>
 
-                              {/* DATE */}
+                              {}
 
                               <td className="px-6 py-4 text-sm text-green-800">
-                                {p.created_at
-                                  ? new Date(p.created_at).toLocaleDateString()
-                                  : "N/A"}
+                                {p.created_at ?
+                          new Date(p.created_at).toLocaleDateString() :
+                          "N/A"}
                               </td>
 
-                              {/* ACTIONS */}
+                              {}
 
                               <td className="px-6 py-4">
                                 <div className="flex gap-2 justify-center">
                                   <button
-                                    type="button"
-                                    onClick={() =>
-                                      navigate(`/admin/team/${p.id}/edit`)
-                                    }
-                                    className="
+                              type="button"
+                              onClick={() =>
+                              navigate(`/admin/team/${p.id}/edit`)
+                              }
+                              className="
                                         bg-blue-600
                                         hover:bg-blue-700
                                         text-white
@@ -475,15 +589,24 @@ export default function ViewTeamMember() {
                                         rounded-lg
                                         text-sm
                                         transition
-                                      "
-                                  >
+                                      ">
+
+
+
+
+
+
+
+
+
+
                                     Edit
                                   </button>
 
                                   <button
-                                    type="button"
-                                    onClick={() => handleDelete(p.id)}
-                                    className="
+                              type="button"
+                              onClick={() => handleDelete(p.id)}
+                              className="
                                         bg-red-600
                                         hover:bg-red-700
                                         text-white
@@ -492,38 +615,53 @@ export default function ViewTeamMember() {
                                         rounded-lg
                                         text-sm
                                         transition
-                                      "
-                                  >
+                                      ">
+
+
+
+
+
+
+
+
+
+
                                     Delete
                                   </button>
                                 </div>
                               </td>
                             </tr>
-                          ))}
+                      )}
                         </tbody>
                       </table>
                     </div>
                   </div>
-                )}
+              }
 
-                {/* ==================================
-                      MOBILE + TABLET CARDS
-                  ================================== */}
+                {
 
-                {filteredTeam.length > 0 && (
-                  <div
-                    className="
+              }
+
+                {filteredTeam.length > 0 &&
+              <div
+                className="
                         grid
                         grid-cols-1
                         sm:grid-cols-2
                         gap-4
                         lg:hidden
-                      "
-                  >
-                    {filteredTeam.map((p) => (
-                      <div
-                        key={p.id}
-                        className="
+                      ">
+
+
+
+
+
+
+
+                    {filteredTeam.map((p) =>
+                <div
+                  key={p.id}
+                  className="
                             bg-white
                             rounded-xl
                             shadow-sm
@@ -533,17 +671,27 @@ export default function ViewTeamMember() {
                             hover:shadow-md
                             transition
                             duration-300
-                          "
-                      >
-                        {/* CARD TOP */}
+                          ">
+
+
+
+
+
+
+
+
+
+
+
+                        {}
 
                         <div className="flex items-start gap-4">
-                          {/* IMAGE */}
+                          {}
 
                           <img
-                            src={p.image}
-                            alt={p.name}
-                            className="
+                      src={p.image}
+                      alt={p.name}
+                      className="
                                 w-16
                                 h-16
                                 sm:w-20
@@ -553,26 +701,42 @@ export default function ViewTeamMember() {
                                 flex-shrink-0
                                 border
                                 border-gray-200
-                              "
-                          />
+                              " />
 
-                          {/* INFO */}
+
+
+
+
+
+
+
+
+
+
+
+                          {}
 
                           <div className="min-w-0 flex-1">
                             <h3
-                              className="
+                        className="
                                   text-base
                                   sm:text-lg
                                   font-semibold
                                   text-gray-800
                                   truncate
-                                "
-                            >
+                                ">
+
+
+
+
+
+
+
                               {p.name || "N/A"}
                             </h3>
 
                             <span
-                              className="
+                        className="
                                   inline-block
                                   mt-1
                                   text-xs
@@ -586,30 +750,43 @@ export default function ViewTeamMember() {
                                   max-w-full
                                   truncate
                                 "
-                              title={p.designation}
-                            >
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        title={p.designation}>
+
                               {p.designation || "N/A"}
                             </span>
 
                             <p className="text-xs sm:text-sm text-gray-500 mt-2">
-                              {p.created_at
-                                ? new Date(p.created_at).toLocaleDateString()
-                                : "Date unavailable"}
+                              {p.created_at ?
+                        new Date(p.created_at).toLocaleDateString() :
+                        "Date unavailable"}
                             </p>
                           </div>
                         </div>
 
-                        {/* DIVIDER */}
+                        {}
 
                         <div className="border-t border-gray-100 my-4" />
 
-                        {/* ACTION BUTTONS */}
+                        {}
 
                         <div className="grid grid-cols-2 gap-2">
                           <button
-                            type="button"
-                            onClick={() => navigate(`/admin/team/${p.id}/edit`)}
-                            className="
+                      type="button"
+                      onClick={() => navigate(`/admin/team/${p.id}/edit`)}
+                      className="
                                 w-full
                                 bg-blue-600
                                 hover:bg-blue-700
@@ -620,15 +797,26 @@ export default function ViewTeamMember() {
                                 text-sm
                                 font-medium
                                 transition
-                              "
-                          >
+                              ">
+
+
+
+
+
+
+
+
+
+
+
+
                             Edit
                           </button>
 
                           <button
-                            type="button"
-                            onClick={() => handleDelete(p.id)}
-                            className="
+                      type="button"
+                      onClick={() => handleDelete(p.id)}
+                      className="
                                 w-full
                                 bg-red-600
                                 hover:bg-red-700
@@ -639,20 +827,31 @@ export default function ViewTeamMember() {
                                 text-sm
                                 font-medium
                                 transition
-                              "
-                          >
+                              ">
+
+
+
+
+
+
+
+
+
+
+
+
                             Delete
                           </button>
                         </div>
                       </div>
-                    ))}
-                  </div>
                 )}
+                  </div>
+              }
               </>
-            )}
+            }
           </div>
         </div>
       </div>
-    </>
-  );
+    </>);
+
 }

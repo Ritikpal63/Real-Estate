@@ -4,10 +4,10 @@ import { useAuth } from "../contextApi/useAuth";
 
 const Login = () => {
   const { login, authError, authLoading, user, setAuthError, isAuthenticated } =
-    useAuth();
+  useAuth();
   const [credentials, setCredentials] = useState({
     email: "",
-    password: "",
+    password: ""
   });
   const navigate = useNavigate();
   const location = useLocation();
@@ -18,7 +18,7 @@ const Login = () => {
       const destination = from || (user.role === "admin" ? "/admin" : "/");
 
       navigate(destination, {
-        replace: true,
+        replace: true
       });
     }
   }, [user, from, navigate]);
@@ -26,7 +26,7 @@ const Login = () => {
   const handleChange = (e) => {
     setCredentials((prev) => ({
       ...prev,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     }));
 
     if (authError) {
@@ -52,11 +52,11 @@ const Login = () => {
           <div className="col-lg-6 offset-lg-3 col-sm-12 col-xs-12">
             <div className="login">
               <h4 className="login_register_title">Login</h4>
-              {authError && (
-                <div className="alert alert-danger" role="alert">
+              {authError &&
+              <div className="alert alert-danger" role="alert">
                   {authError}
                 </div>
-              )}
+              }
               <form onSubmit={handleSubmit}>
                 <div className="form-group">
                   <input
@@ -66,8 +66,8 @@ const Login = () => {
                     name="email"
                     value={credentials.email}
                     onChange={handleChange}
-                    disabled={authLoading}
-                  />
+                    disabled={authLoading} />
+
                 </div>
                 <div className="form-group">
                   <input
@@ -77,27 +77,27 @@ const Login = () => {
                     name="password"
                     value={credentials.password}
                     onChange={handleChange}
-                    disabled={authLoading}
-                  />
+                    disabled={authLoading} />
+
                 </div>
                 <div className="form-group col-md-12 mbnone">
                   <button
                     className="btn w-full btn-blog-bg"
                     type="submit"
-                    disabled={authLoading}
-                  >
-                    {authLoading ? (
-                      <>
+                    disabled={authLoading}>
+
+                    {authLoading ?
+                    <>
                         <span
-                          className="spinner-border spinner-border-sm me-2"
-                          role="status"
-                          aria-hidden="true"
-                        ></span>
+                        className="spinner-border spinner-border-sm me-2"
+                        role="status"
+                        aria-hidden="true">
+                      </span>
                         Signing in...
-                      </>
-                    ) : (
-                      "Login"
-                    )}
+                      </> :
+
+                    "Login"
+                    }
                   </button>
                 </div>
                 <div className="mt-3 text-center">
@@ -113,8 +113,8 @@ const Login = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>);
+
 };
 
 export default Login;

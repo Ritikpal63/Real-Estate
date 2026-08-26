@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 const Notfound = () => {
   return (
@@ -12,7 +12,7 @@ const Notfound = () => {
 						<h2>The requested URL was not found on this server.</h2>
 						<form>
 							<div className="form-group has-feedback  wow fadeInRight" data-wow-duration="1s"
-								data-wow-delay="0.3s" data-wow-offset="0">
+                  data-wow-delay="0.3s" data-wow-offset="0">
 								<input type="text" placeholder="Search" className="form-control" />
 								<a href="#"><i className="fa fa-search form-control-feedback"></i></a>
 							</div>
@@ -23,8 +23,8 @@ const Notfound = () => {
 			</div>
 		</div>
 	</section>
-    </>
-  )
-}
+    </>);
 
-export default Notfound
+};
+
+export default Notfound;

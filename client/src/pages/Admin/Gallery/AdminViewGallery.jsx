@@ -34,7 +34,7 @@ export default function AdminViewGallery() {
       return;
     }
     const result = items.filter((article) =>
-      article.title?.toLowerCase().includes(value.toLowerCase()),
+    article.title?.toLowerCase().includes(value.toLowerCase())
     );
     setFilteredGallery(result);
   };
@@ -63,52 +63,52 @@ export default function AdminViewGallery() {
               </div>
               <Link
                 to="/admin/addgallery"
-                className="bg-primary text-white text-md rounded-lg px-4 py-2"
-              >
+                className="bg-primary text-white text-md rounded-lg px-4 py-2">
+
                 + Add Photo
               </Link>
             </div>
 
-            {loading && (
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-                {[1, 2, 3, 4].map((n) => (
-                  <div key={n} className="bg-gray-100 rounded-2xl h-48 animate-pulse" />
-                ))}
+            {loading &&
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+                {[1, 2, 3, 4].map((n) =>
+              <div key={n} className="bg-gray-100 rounded-2xl h-48 animate-pulse" />
+              )}
               </div>
-            )}
+            }
 
-            {!loading && error && (
-              <div className="bg-red-50 text-red-600 rounded-xl px-4 py-3 text-sm">{error}</div>
-            )}
+            {!loading && error &&
+            <div className="bg-red-50 text-red-600 rounded-xl px-4 py-3 text-sm">{error}</div>
+            }
 
-            {!loading && !error && items.length === 0 && (
-              <div className="bg-gray-50 rounded-xl px-4 py-10 text-center text-gray-500">
+            {!loading && !error && items.length === 0 &&
+            <div className="bg-gray-50 rounded-xl px-4 py-10 text-center text-gray-500">
                 No gallery items yet. Click "+ Add Photo" to upload one.
               </div>
-            )}
+            }
 
 
-            {!loading && error && (
-              <div className="bg-red-50 text-red-600 rounded-xl px-4 py-3 text-sm">
+            {!loading && error &&
+            <div className="bg-red-50 text-red-600 rounded-xl px-4 py-3 text-sm">
                 {error}
               </div>
-            )}
+            }
 
-            {!loading && !error && items.length === 0 && (
-              <div className="bg-gray-50 rounded-xl px-4 py-10 text-center text-gray-500">
+            {!loading && !error && items.length === 0 &&
+            <div className="bg-gray-50 rounded-xl px-4 py-10 text-center text-gray-500">
                 No Gallery found. Click "Add Property" to create one.
               </div>
-            )}
+            }
 
-            {/* Property Grid */}
-            {!loading && !error && items.length > 0 && (<>
+            {}
+            {!loading && !error && items.length > 0 && <>
               <input
                 type="text"
                 placeholder="Search Gallery..."
                 value={search}
                 onChange={(e) => handleSearch(e.target.value)}
-                className="w-full border rounded-lg p-2 mb-4"
-              />
+                className="w-full border rounded-lg p-2 mb-4" />
+
               <div className="hidden lg:block bg-white rounded-xl shadow-lg overflow-hidden">
                 <div className="h-[750px] overflow-y-auto adminNews">
                   <table className="w-full">
@@ -132,15 +132,15 @@ export default function AdminViewGallery() {
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-200">
-                      {filteredGallery.map((p) => (
-                        <tr key={p.id} className="hover:bg-gray-50">
+                      {filteredGallery.map((p) =>
+                      <tr key={p.id} className="hover:bg-gray-50">
                           <td className="px-6 py-4 max-w-xs">
                             <div className="flex items-center gap-3">
                               <img
-                                src={p.image}
-                                alt={p.title}
-                                className="w-10 h-10 rounded-lg object-cover shrink-0"
-                              />
+                              src={p.image}
+                              alt={p.title}
+                              className="w-10 h-10 rounded-lg object-cover shrink-0" />
+
                             </div>
                           </td>
                           <td className="px-6 py-4">
@@ -157,30 +157,30 @@ export default function AdminViewGallery() {
                           <td className="px-6 py-4">
                             <div className="flex gap-3 justify-around">
                               <button
-                                onClick={() => navigate(`/admin/gallery/${p.id}/edit`)}
-                                className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-                              >
+                              onClick={() => navigate(`/admin/gallery/${p.id}/edit`)}
+                              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+
                                 Edit
                               </button>
                               <button
-                                onClick={() => handleDelete(p.id)}
-                                className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
-                              >
+                              onClick={() => handleDelete(p.id)}
+                              className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">
+
                                 Delete
                               </button>
                             </div>
                           </td>
                         </tr>
-                      ))}
+                      )}
                     </tbody>
                   </table>
                 </div>
               </div>
             </>
-            )}
+            }
           </div>
         </div>
       </div>
-    </>
-  );
+    </>);
+
 }

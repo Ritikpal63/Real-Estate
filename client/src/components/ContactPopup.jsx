@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import "./ContactPopup.css";
 import axiosInstance from "../utils/axiosConfig";
-import { toast } from "react-toastify"; 
+import { toast } from "react-toastify";
 
 export default function ContactPopup() {
   const [isOpen, setIsOpen] = useState(false);
@@ -9,7 +9,7 @@ export default function ContactPopup() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    message: "",
+    message: ""
   });
 
   useEffect(() => {
@@ -59,29 +59,29 @@ export default function ContactPopup() {
             placeholder="Your Name"
             value={formData.name}
             onChange={handleChange}
-            required
-          />
+            required />
+
           <input
             type="email"
             name="email"
             placeholder="Your Email"
             value={formData.email}
             onChange={handleChange}
-            required
-          />
+            required />
+
           <textarea
             name="message"
             placeholder="Your Message"
             value={formData.message}
             onChange={handleChange}
             rows="4"
-            required
-          />
+            required />
+
           <button type="submit" disabled={loading}>
             {loading ? "Sending..." : "Send"}
           </button>
         </form>
       </div>
-    </div>
-  );
+    </div>);
+
 }

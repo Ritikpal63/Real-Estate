@@ -3,36 +3,36 @@ import { iconOptions } from "../utils/iconMap";
 
 
 
-// const iconOptions = [
-//   { name: "FaBuilding", icon: FaBuilding },
-//   { name: "FaUsers", icon: FaUsers },
-//   { name: "FaStore", icon: FaStore },
-//   { name: "FaWarehouse", icon: FaWarehouse },
-//   { name: "FaHome", icon: FaHome },
-//   { name: "FaExchangeAlt", icon: FaExchangeAlt },
-//   { name: "FaChartLine", icon: FaChartLine },
-//   { name: "FaHandshake", icon: FaHandshake },
-//   { name: "FaBullhorn", icon: FaBullhorn },
-//   { name: "FaShareAlt", icon: FaShareAlt },
-//   { name: "FaNewspaper", icon: FaNewspaper },
-//   { name: "FaBullseye", icon: FaBullseye },
-//   { name: "FaPodcast", icon: FaPodcast },
-//   { name: "FaVideo", icon: FaVideo },
-//   { name: "FaCamera", icon: FaCamera },
-//   { name: "FaListAlt", icon: FaListAlt },
-//   { name: "FaRegNewspaper", icon: FaRegNewspaper },
-// ];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const ServiceForm = ({
   form,
   handleChange,
   handleSubmit,
-  buttonText,
+  buttonText
 }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-white p-6 rounded-xl shadow-md"
-    >
+      className="bg-white p-6 rounded-xl shadow-md">
+
       <div className="grid md:grid-cols-2 gap-5">
         <div>
           <label className="block mb-2 font-medium">
@@ -45,8 +45,8 @@ const ServiceForm = ({
             value={form.title}
             onChange={handleChange}
             className="w-full border rounded-lg p-3"
-            required
-          />
+            required />
+
         </div>
 
         <div>
@@ -60,8 +60,8 @@ const ServiceForm = ({
             value={form.slug}
             onChange={handleChange}
             className="w-full border rounded-lg p-3"
-            required
-          />
+            required />
+
         </div>
 
         <div className="md:col-span-2">
@@ -74,8 +74,8 @@ const ServiceForm = ({
             name="description"
             value={form.description}
             onChange={handleChange}
-            className="w-full border rounded-lg p-3"
-          />
+            className="w-full border rounded-lg p-3" />
+
         </div>
 
         <div>
@@ -87,13 +87,13 @@ const ServiceForm = ({
             name="icon"
             value={form.icon}
             onChange={handleChange}
-            className="w-full border rounded-lg p-3"
-          >
-            {iconOptions.map((i) => (
-              <option key={i.name} value={i.name}>
+            className="w-full border rounded-lg p-3">
+
+            {iconOptions.map((i) =>
+            <option key={i.name} value={i.name}>
                 {i.icon}
               </option>
-            ))}
+            )}
           </select>
         </div>
 
@@ -107,8 +107,8 @@ const ServiceForm = ({
             name="display_order"
             value={form.display_order}
             onChange={handleChange}
-            className="w-full border rounded-lg p-3"
-          />
+            className="w-full border rounded-lg p-3" />
+
         </div>
 
         <div>
@@ -120,8 +120,8 @@ const ServiceForm = ({
             name="status"
             value={form.status}
             onChange={handleChange}
-            className="w-full border rounded-lg p-3"
-          >
+            className="w-full border rounded-lg p-3">
+
             <option value="active">Active</option>
 
             <option value="inactive">
@@ -132,12 +132,12 @@ const ServiceForm = ({
       </div>
 
       <button
-        className="mt-6 bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg"
-      >
+        className="mt-6 bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg">
+
         {buttonText}
       </button>
-    </form>
-  );
+    </form>);
+
 };
 
 export default ServiceForm;

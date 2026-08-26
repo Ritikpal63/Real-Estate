@@ -49,7 +49,7 @@ export const AuthProvider = ({ children }) => {
       return true;
     } catch (err) {
       setAuthError(
-        err.response?.data?.message || "Login failed. Please try again."
+        err.response?.data?.message || "Login failed. Please try again.",
       );
       return false;
     } finally {
@@ -60,16 +60,20 @@ export const AuthProvider = ({ children }) => {
   const register = async (userData) => {
     setAuthLoading(true);
     setAuthError("");
+
     try {
       const res = await axiosInstance.post("/auth/register", userData);
-      localStorage.setItem("token", res.data.token);
-      setUser(res.data.user);
-      setIsAdmin(res.data.user?.role === "admin");
-      return true;
+
+      if (res.data.success) {
+        return true;
+      }
+
+      return false;
     } catch (err) {
       setAuthError(
-        err.response?.data?.message || "Registration failed. Please try again."
+        err.response?.data?.message || "Registration failed. Please try again.",
       );
+
       return false;
     } finally {
       setAuthLoading(false);

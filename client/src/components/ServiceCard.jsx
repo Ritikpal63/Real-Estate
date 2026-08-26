@@ -1,8 +1,13 @@
+import { useState } from "react";
 import { iconMap } from "../utils/iconMap";
+import ServiceQueryModal from "./ServiceQueryModal";
 
 const ServiceCard = ({ services = [] }) => {
+  const [selectedService, setSelectedService] = useState(null);
+
   return (
-    <div
+    <>
+      <div
       className="
       grid
       grid-cols-1
@@ -23,6 +28,16 @@ const ServiceCard = ({ services = [] }) => {
           return (
             <div
               key={service.id}
+              role="button"
+              tabIndex={0}
+              onClick={() => setSelectedService(service)}
+              onKeyDown={(event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                  event.preventDefault();
+                  setSelectedService(service);
+                }
+              }}
+              aria-label={`Enquire about ${service.title}`}
               className="
                 bg-white
                 rounded-2xl
@@ -35,6 +50,7 @@ const ServiceCard = ({ services = [] }) => {
                 duration-300
                 hover:-translate-y-2
                 hover:shadow-xl
+                cursor-pointer
                 "
             >
               {/* Icon */}
@@ -88,11 +104,23 @@ const ServiceCard = ({ services = [] }) => {
                   {service.description}
                 </p>
               )}
+
+              <span className="inline-block mt-5 text-sm font-semibold text-blue-600">
+                Enquire now
+              </span>
             </div>
           );
         })
       )}
-    </div>
+      </div>
+
+      {selectedService && (
+        <ServiceQueryModal
+          service={selectedService}
+          onClose={() => setSelectedService(null)}
+        />
+      )}
+    </>
   );
 };
 

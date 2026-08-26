@@ -8,6 +8,22 @@ CREATE TABLE IF NOT EXISTS users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id)
 );
+CREATE TABLE IF NOT EXISTS properties (
+    id VARCHAR(36) NOT NULL PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    location VARCHAR(255) NOT NULL,
+    type VARCHAR(100) NOT NULL,
+    amenities TEXT,
+    size INT DEFAULT 0,
+    year INT DEFAULT NULL,
+    bedroom INT DEFAULT 0,
+    bathroom INT DEFAULT 0,
+    description TEXT,
+    image VARCHAR(500),
+    price DECIMAL(15,2) DEFAULT 0.00,
+    views INT NOT NULL DEFAULT 0,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
 
 CREATE TABLE IF NOT EXISTS news (
     id VARCHAR(36) NOT NULL,
@@ -41,6 +57,22 @@ CREATE TABLE IF NOT EXISTS services (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS service_queries (
+    id CHAR(36) NOT NULL,
+    service_id CHAR(36) NOT NULL,
+    service_title VARCHAR(255) NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    contact VARCHAR(20) NOT NULL,
+    message TEXT NOT NULL,
+    email_status ENUM('pending', 'sent', 'failed') NOT NULL DEFAULT 'pending',
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    INDEX idx_service_queries_created_at (created_at),
+    CONSTRAINT fk_service_queries_service
+      FOREIGN KEY (service_id) REFERENCES services(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS team (

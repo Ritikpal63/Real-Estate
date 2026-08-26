@@ -12,12 +12,6 @@ const HomePage = () => {
   return (
     <>
       <Home />
-      <Latestnews />
-      {/* <HomeServiceCard /> */}
-      <Property />
-      <YoutubeVideo />
-      <TeamPage />
-      <Newsletter />
     </>
   );
 };

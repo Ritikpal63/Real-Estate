@@ -21,36 +21,55 @@ const PropertyDetail = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    message: "",
+  });
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
-
-
 
   useEffect(() => {
     const fetchProperty = async () => {
       try {
         setLoading(true);
         setError(null);
+
         const res = await axiosInstance.get(`/property/${id}`);
+
+        console.log("Property response:", res.data);
+
         setProperty(res.data);
-        const visitorId = getVisitorId();
-        await axiosInstance.post(`/property/${id}/view`, {
-          visitorId,
-        });
       } catch (err) {
         console.error("PropertyDetail fetch error:", err);
+
         setError(
           err.response?.status === 404
             ? "This property could not be found."
-            : "Something went wrong while loading this property."
+            : "Something went wrong while loading this property.",
         );
       } finally {
         setLoading(false);
       }
     };
 
-    fetchProperty();
+    const registerView = async () => {
+      try {
+        const visitorId = getVisitorId();
+
+        await axiosInstance.post(`/property/${id}/view`, {
+          visitorId,
+        });
+      } catch (err) {
+        console.error("Property view tracking error:", err);
+      }
+    };
+
+    if (id) {
+      fetchProperty();
+      registerView();
+    }
   }, [id]);
 
   const handleChange = (e) => {
@@ -102,7 +121,10 @@ const PropertyDetail = () => {
   }
 
   const amenitiesList = property.amenities
-    ? property.amenities.split(",").map((a) => a.trim()).filter(Boolean)
+    ? property.amenities
+        .split(",")
+        .map((a) => a.trim())
+        .filter(Boolean)
     : [];
 
   return (
@@ -115,24 +137,38 @@ const PropertyDetail = () => {
                 src={property.image}
                 className="h-[400px] w-auto"
                 alt={property.title}
-                onError={(e) => { e.currentTarget.src = FALLBACK_IMG; }}
+                onError={(e) => {
+                  e.currentTarget.src = FALLBACK_IMG;
+                }}
               />
             </div>
 
             <div className="property_single_details_price">
               <h1>{property.title}</h1>
-              <h4>${Number(property.price || 0).toLocaleString()}</h4>
+              <h4>₹{Number(property.price || 0).toLocaleString()}</h4>
               <p>{property.location}</p>
               <ul>
-                <li><i className="fa fa-check"></i> {property.bedroom ?? 0} bed rooms</li>
-                <li><i className="fa fa-check"></i> {property.bathroom ?? 0} bathrooms</li>
-                <li><i className="fa fa-check"></i> {property.size ? `${property.size} sq ft` : "—"}</li>
+                <li>
+                  <i className="fa fa-check"></i> {property.bedroom ?? 0} bed
+                  rooms
+                </li>
+                <li>
+                  <i className="fa fa-check"></i> {property.bathroom ?? 0}{" "}
+                  bathrooms
+                </li>
+                <li>
+                  <i className="fa fa-check"></i>{" "}
+                  {property.size ? `${property.size} sq ft` : "—"}
+                </li>
               </ul>
             </div>
 
             <div className="property_single_details_description">
               <h4>Property description</h4>
-              <p>{property.description || "No description provided for this property."}</p>
+              <p>
+                {property.description ||
+                  "No description provided for this property."}
+              </p>
             </div>
 
             {amenitiesList.length > 0 && (
@@ -143,7 +179,9 @@ const PropertyDetail = () => {
                       <h4>Amenities</h4>
                       <ul className="single_property_list_mr">
                         {amenitiesList.map((a, i) => (
-                          <li key={i}><i className="fa fa-check"></i> {a}</li>
+                          <li key={i}>
+                            <i className="fa fa-check"></i> {a}
+                          </li>
                         ))}
                       </ul>
                     </div>
@@ -158,7 +196,7 @@ const PropertyDetail = () => {
                 <iframe
                   title="property-location"
                   src={`https://www.google.com/maps?q=${encodeURIComponent(
-                    property.location || ""
+                    property.location || "",
                   )}&output=embed`}
                   width="600"
                   height="450"
@@ -175,37 +213,62 @@ const PropertyDetail = () => {
             <div className="single_property_form">
               <h4>Enquire here</h4>
               {sent ? (
-                <p>Thanks! We've received your enquiry and will get back to you soon.</p>
+                <p>
+                  Thanks! We've received your enquiry and will get back to you
+                  soon.
+                </p>
               ) : (
                 <form className="form" onSubmit={handleEnquirySubmit}>
                   <div className="row">
                     <div className="form-group col-md-12">
                       <input
-                        type="text" name="name" className="form-control"
-                        placeholder="Name" value={form.name} onChange={handleChange}
+                        type="text"
+                        name="name"
+                        className="form-control"
+                        placeholder="Name"
+                        value={form.name}
+                        onChange={handleChange}
                       />
                     </div>
                     <div className="form-group col-md-12">
                       <input
-                        type="email" name="email" className="form-control"
-                        placeholder="Email" required value={form.email} onChange={handleChange}
+                        type="email"
+                        name="email"
+                        className="form-control"
+                        placeholder="Email"
+                        required
+                        value={form.email}
+                        onChange={handleChange}
                       />
                     </div>
                     <div className="form-group col-md-12">
                       <input
-                        type="text" name="phone" className="form-control"
-                        placeholder="Phone" value={form.phone} onChange={handleChange}
+                        type="text"
+                        name="phone"
+                        className="form-control"
+                        placeholder="Phone"
+                        value={form.phone}
+                        onChange={handleChange}
                       />
                     </div>
                     <div className="form-group col-md-12 mbnone">
                       <textarea
-                        rows="6" name="message" className="form-control"
-                        placeholder="Your Message" required value={form.message} onChange={handleChange}
+                        rows="6"
+                        name="message"
+                        className="form-control"
+                        placeholder="Your Message"
+                        required
+                        value={form.message}
+                        onChange={handleChange}
                       ></textarea>
                     </div>
                     <div className="col-md-12">
                       <div className="actions">
-                        <button type="submit" disabled={sending} className="btn btn-lg btn-contact-bg">
+                        <button
+                          type="submit"
+                          disabled={sending}
+                          className="btn btn-lg btn-contact-bg"
+                        >
                           {sending ? "Sending..." : "Send message"}
                         </button>
                       </div>

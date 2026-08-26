@@ -67,6 +67,22 @@ CREATE TABLE IF NOT EXISTS services (
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+CREATE TABLE IF NOT EXISTS service_queries (
+  id CHAR(36) NOT NULL,
+  service_id CHAR(36) NOT NULL,
+  service_title VARCHAR(255) NOT NULL,
+  name VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL,
+  contact VARCHAR(20) NOT NULL,
+  message TEXT NOT NULL,
+  email_status ENUM('pending','sent','failed') NOT NULL DEFAULT 'pending',
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  INDEX idx_service_queries_created_at (created_at),
+  CONSTRAINT fk_service_queries_service
+    FOREIGN KEY (service_id) REFERENCES services(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 CREATE TABLE IF NOT EXISTS gallery (
   id VARCHAR(36) NOT NULL,
   title VARCHAR(255),

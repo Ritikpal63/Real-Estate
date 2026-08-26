@@ -1,51 +1,138 @@
-import PropTypes from "prop-types";
+import React, { useState } from "react";
 
-const StatsCard = ({ title, value, icon, bgColor = "bg-blue-600" }) => {
+import { iconMap } from "../utils/iconMap";
+
+import ServiceQueryModal from "./ServiceQueryModal";
+
+const ServiceCard = ({ services = [] }) => {
+  const [selectedService, setSelectedService] = useState(null);
+
   return (
-    <div
-      className="
-        bg-white
-        rounded-xl
-        shadow-md
-        p-5
-        flex
-        items-center
-        justify-between
-        hover:shadow-lg
-        transition
-        duration-300
-      "
-    >
-      <div>
-        <p className="text-gray-500 text-sm font-medium">{title}</p>
-
-        <h2 className="text-3xl font-bold text-gray-800 mt-2">{value}</h2>
-      </div>
-
+    <>
       <div
-        className={`
-          ${bgColor}
-          w-14
-          h-14
-          rounded-full
-          flex
-          items-center
-          justify-center
-          text-white
-          text-2xl
-        `}
+        className="
+          grid
+          grid-cols-1
+          sm:grid-cols-2
+          md:grid-cols-3
+          lg:grid-cols-4
+          gap-6
+        "
       >
-        {icon}
+        {services.length === 0 ? (
+          <div
+            className="
+              col-span-full
+              text-center
+              py-10
+              text-gray-500
+            "
+          >
+            No Services Available
+          </div>
+        ) : (
+          services.map((service) => {
+            const Icon = iconMap[service.icon];
+
+            return (
+              <div
+                key={service.id}
+                onClick={() => setSelectedService(service)}
+                className="
+                    bg-white
+                    rounded-2xl
+                    shadow-md
+                    border
+                    border-gray-100
+                    p-6
+                    text-center
+                    transition-all
+                    duration-300
+                    hover:-translate-y-2
+                    hover:shadow-xl
+                    cursor-pointer
+                  "
+              >
+                <div
+                  className="
+                      w-16
+                      h-16
+                      mx-auto
+                      rounded-full
+                      bg-blue-100
+                      flex
+                      items-center
+                      justify-center
+                      mb-4
+                    "
+                >
+                  {Icon && (
+                    <Icon
+                      className="
+                          text-3xl
+                          text-blue-600
+                        "
+                    />
+                  )}
+                </div>
+
+                <h3
+                  className="
+                      text-lg
+                      font-semibold
+                      text-gray-800
+                    "
+                >
+                  {service.title}
+                </h3>
+
+                {service.description && (
+                  <p
+                    className="
+                        mt-3
+                        text-sm
+                        text-gray-500
+                        line-clamp-3
+                      "
+                  >
+                    {service.description}
+                  </p>
+                )}
+
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+
+                    setSelectedService(service);
+                  }}
+                  className="
+                      mt-5
+                      px-5
+                      py-2.5
+                      bg-blue-600
+                      hover:bg-blue-700
+                      text-white
+                      rounded-lg
+                      transition
+                    "
+                >
+                  Enquire Now
+                </button>
+              </div>
+            );
+          })
+        )}
       </div>
-    </div>
+
+      {selectedService && (
+        <ServiceQueryModal
+          service={selectedService}
+          onClose={() => setSelectedService(null)}
+        />
+      )}
+    </>
   );
 };
 
-StatsCard.propTypes = {
-  title: PropTypes.string.isRequired,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  icon: PropTypes.element.isRequired,
-  bgColor: PropTypes.string,
-};
-
-export default StatsCard;
+export default ServiceCard;

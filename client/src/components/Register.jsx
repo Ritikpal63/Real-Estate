@@ -1,252 +1,318 @@
-import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import axios from 'axios';
-// import { useAuth } from '../contextApi/AuthContext';
-import { useAuth } from "../contextApi/useAuth";
-import axiosInstance from '../utils/axiosConfig';
+import React, { useEffect, useState } from "react";
 
+import { useNavigate, Link } from "react-router-dom";
+
+import { useAuth } from "../contextApi/useAuth";
+import axiosInstance from "../utils/axiosConfig";
 
 const Register = () => {
   const navigate = useNavigate();
-  const { register } = useAuth(); // Get register from auth context
+
+  const { register } = useAuth();
+
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
+
+  const [otpLoading, setOtpLoading] = useState(false);
+
+  const [otpSent, setOtpSent] = useState(false);
+
+  const [otp, setOtp] = useState("");
+
+  const [resendSeconds, setResendSeconds] = useState(0);
+
+  const [otpEmail, setOtpEmail] = useState("");
+
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+
   const [formData, setFormData] = useState({
-    username: '',
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: ''
+    username: "",
+    name: "",
+    email: "",
+    contact: "",
+    category: "Consumer",
+    password: "",
+    confirmPassword: "",
   });
 
+  useEffect(() => {
+    if (resendSeconds <= 0) {
+      return;
+    }
+
+    const timer = setInterval(() => {
+      setResendSeconds((prev) => {
+        if (prev <= 1) {
+          clearInterval(timer);
+          return 0;
+        }
+
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [resendSeconds]);
+
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-    // Clear errors when user types
-    if (error) setError('');
-    if (success) setSuccess('');
+    const { name, value } = e.target;
+
+    if (
+      name === "email" &&
+      otpSent &&
+      value.trim().toLowerCase() !== otpEmail
+    ) {
+      setOtpSent(false);
+      setOtp("");
+      setResendSeconds(0);
+      setOtpEmail("");
+    }
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+
+    if (error) {
+      setError("");
+    }
+
+    if (success) {
+      setSuccess("");
+    }
+  };
+
+  const handleOtpChange = (e) => {
+    const value = e.target.value.replace(/\D/g, "").slice(0, 6);
+
+    setOtp(value);
+
+    if (error) {
+      setError("");
+    }
+  };
+
+  const handleSendOtp = async () => {
+    const cleanEmail = formData.email.trim().toLowerCase();
+
+    if (!cleanEmail) {
+      setError("Please enter your email address first");
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(cleanEmail)) {
+      setError("Please enter a valid email address");
+      return;
+    }
+
+    try {
+      setOtpLoading(true);
+      setError("");
+      setSuccess("");
+
+      const response = await axiosInstance.post("/auth/send-register-otp", {
+        email: cleanEmail,
+      });
+
+      if (response.data.success) {
+        setOtpSent(true);
+        setOtpEmail(cleanEmail);
+        setOtp("");
+        setResendSeconds(60);
+
+        setSuccess("OTP sent successfully. Please check your email.");
+      }
+    } catch (error) {
+      setError(error.response?.data?.message || "Unable to send OTP");
+    } finally {
+      setOtpLoading(false);
+    }
   };
 
   const validateForm = () => {
-    // Check all fields are filled
-    if (!formData.username || !formData.name || !formData.email || !formData.password || !formData.confirmPassword) {
-      setError('All fields are required');
+    if (
+      !formData.username.trim() ||
+      !formData.name.trim() ||
+      !formData.email.trim() ||
+      !formData.contact.trim() ||
+      !formData.category ||
+      !formData.password ||
+      !formData.confirmPassword
+    ) {
+      setError("All fields are required");
       return false;
     }
 
-    // Validate email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) {
-      setError('Please enter a valid email address');
+
+    if (!emailRegex.test(formData.email.trim())) {
+      setError("Please enter a valid email address");
+
       return false;
     }
 
-    // Check password length
+    const contactRegex = /^[6-9]\d{9}$/;
+
+    if (!contactRegex.test(formData.contact.trim())) {
+      setError("Please enter a valid 10 digit contact number");
+
+      return false;
+    }
+
+    if (!["Dealer", "Consumer"].includes(formData.category)) {
+      setError("Please select a valid category");
+
+      return false;
+    }
+
     if (formData.password.length < 6) {
-      setError('Password must be at least 6 characters long');
+      setError("Password must be at least 6 characters long");
+
       return false;
     }
 
-    // Check if passwords match
     if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match');
+      setError("Passwords do not match");
+      return false;
+    }
+
+    if (!otpSent) {
+      setError("Please send OTP to your email first");
+
+      return false;
+    }
+
+    if (formData.email.trim().toLowerCase() !== otpEmail) {
+      setError("Email changed. Please request a new OTP");
+
+      return false;
+    }
+
+    if (!/^\d{6}$/.test(otp)) {
+      setError("Please enter the 6 digit OTP");
+
       return false;
     }
 
     return true;
   };
 
-  // Option 1: Using AuthContext register function
-  const handleSubmitWithAuth = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    // Validate form
+
     if (!validateForm()) {
       return;
     }
 
     setLoading(true);
-    setError('');
-    setSuccess('');
+    setError("");
+    setSuccess("");
 
     try {
-      // Prepare data for API (remove confirmPassword)
       const userData = {
-        username: formData.username,
-        name: formData.name,
-        email: formData.email,
-        password: formData.password
+        username: formData.username.trim(),
+
+        name: formData.name.trim(),
+
+        email: formData.email.trim().toLowerCase(),
+
+        contact: formData.contact.trim(),
+
+        category: formData.category,
+
+        password: formData.password,
+
+        otp,
       };
 
-      console.log('📤 Sending registration data via AuthContext:', { ...userData, password: '********' });
-
-      // Use the register function from AuthContext
       const result = await register(userData);
-      
+
       if (result) {
-        setSuccess('Registration successful! Redirecting to dashboard...');
+        setSuccess(
+          "Email verified and registration successful! Redirecting to login...",
+        );
+
         setFormData({
-          username: '',
-          name: '',
-          email: '',
-          password: '',
-          confirmPassword: ''
+          username: "",
+          name: "",
+          email: "",
+          contact: "",
+          category: "Consumer",
+          password: "",
+          confirmPassword: "",
         });
 
-        // Redirect to admin dashboard after 2 seconds
+        setOtp("");
+        setOtpSent(false);
+        setOtpEmail("");
+        setResendSeconds(0);
+
         setTimeout(() => {
-          navigate('/admin');
+          navigate("/login");
         }, 2000);
       } else {
-        setError('Registration failed. Please try again.');
+        setError("Registration failed. Please try again.");
       }
     } catch (error) {
-      console.error('❌ Registration error:', error);
-      setError(error.message || 'Registration failed. Please try again.');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Option 2: Using direct axios (if AuthContext register doesn't work)
-  const handleSubmitWithAxios = async (e) => {
-    e.preventDefault();
-    
-    // Validate form
-    if (!validateForm()) {
-      return;
-    }
-
-    setLoading(true);
-    setError('');
-    setSuccess('');
-
-    try {
-      // Prepare data for API (remove confirmPassword)
-      const userData = {
-        username: formData.username,
-        name: formData.name,
-        email: formData.email,
-        password: formData.password
-      };
-
-      console.log('📤 Sending registration data via Axios:', { ...userData, password: '********' });
-
-      const response = await axiosInstance.post('/auth/register',
-        userData,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
+      setError(
+        error.response?.data?.message || error.message || "Registration failed",
       );
-
-      console.log('📥 Registration response:', response.data);
-
-      if (response.data.success) {
-        setSuccess('Registration successful! Redirecting to login...');
-        
-        // Clear form
-        setFormData({
-          username: '',
-          name: '',
-          email: '',
-          password: '',
-          confirmPassword: ''
-        });
-
-        // Redirect to login after 2 seconds
-        setTimeout(() => {
-          navigate('/admin');
-        }, 2000);
-      } else {
-        setError(response.data.message || 'Registration failed. Please try again.');
-      }
-    } catch (error) {
-      console.error('❌ Registration error:', error);
-      
-      if (error.response) {
-        console.error('Response data:', error.response.data);
-        console.error('Response status:', error.response.status);
-        
-        const message = error.response.data?.message || 'Registration failed';
-        
-        if (error.response.status === 409) {
-          setError('User already exists. Please use a different email or username.');
-        } else if (error.response.status === 400) {
-          setError(message);
-        } else {
-          setError(message);
-        }
-      } else if (error.request) {
-        console.error('No response received');
-        setError('Cannot connect to server. Please check if backend is running.');
-      } else {
-        console.error('Request error:', error.message);
-        setError('An error occurred. Please try again.');
-      }
     } finally {
       setLoading(false);
     }
   };
-
-  // Choose which handleSubmit to use
-  const handleSubmit = handleSubmitWithAuth; // Change to handleSubmitWithAuth if you want to use AuthContext
 
   return (
-    <>
-      <section className="login_register section-padding">
-        <div className="container">
-          <div className="row">
-            <div className="col-lg-6 offset-lg-3 col-sm-12 col-xs-12">
-              <div className="register">
-                <h4 className="login_register_title">Create a new account:</h4>
-                
-                {/* Error Message */}
-                {error && (
-                  <div className="alert alert-danger" role="alert">
-                    {error}
-                  </div>
-                )}
-                
-                {/* Success Message */}
-                {success && (
-                  <div className="alert alert-success" role="alert">
-                    {success}
-                  </div>
-                )}
+    <section className="login_register section-padding">
+      <div className="container">
+        <div className="row">
+          <div className="col-lg-6 offset-lg-3 col-sm-12 col-xs-12">
+            <div className="register">
+              <h4 className="login_register_title">Create a new account:</h4>
 
-                <form onSubmit={handleSubmit}>
-                  <div className="form-group">
-                    <input
-                      type="text"
-                      className="form-control requiredField input-label"
-                      placeholder="Username"
-                      name="username"
-                      value={formData.username}
-                      onChange={handleChange}
-                      disabled={loading}
-                      required
-                    />
-                  </div>
+              {error && (
+                <div className="alert alert-danger" role="alert">
+                  {error}
+                </div>
+              )}
 
-                  <div className="form-group">
-                    <input
-                      type="text"
-                      className="form-control requiredField input-label"
-                      placeholder="Full Name"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      disabled={loading}
-                      required
-                    />
-                  </div>
+              {success && (
+                <div className="alert alert-success" role="alert">
+                  {success}
+                </div>
+              )}
 
-                  <div className="form-group">
+              <form onSubmit={handleSubmit}>
+                <div className="form-group">
+                  <input
+                    type="text"
+                    className="form-control requiredField input-label"
+                    placeholder="Username"
+                    name="username"
+                    value={formData.username}
+                    onChange={handleChange}
+                    disabled={loading}
+                    required
+                  />
+                </div>
+
+                <div className="form-group">
+                  <input
+                    type="text"
+                    className="form-control requiredField input-label"
+                    placeholder="Full Name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    disabled={loading}
+                    required
+                  />
+                </div>
+
+                <div className="form-group">
+                  <div className="d-flex gap-2">
                     <input
                       type="email"
                       className="form-control requiredField input-label"
@@ -257,68 +323,138 @@ const Register = () => {
                       disabled={loading}
                       required
                     />
-                  </div>
 
-                  <div className="form-group">
-                    <input
-                      type="password"
-                      className="form-control requiredField input-label"
-                      placeholder="Password (min. 6 characters)"
-                      name="password"
-                      value={formData.password}
-                      onChange={handleChange}
-                      disabled={loading}
-                      required
-                    />
-                  </div>
-
-                  <div className="form-group">
-                    <input
-                      type="password"
-                      className="form-control requiredField input-label"
-                      placeholder="Confirm Password"
-                      name="confirmPassword"
-                      value={formData.confirmPassword}
-                      onChange={handleChange}
-                      disabled={loading}
-                      required
-                    />
-                  </div>
-
-                  <div className="form-group col-md-12 mbnone">
                     <button
-                      className="btn btn-contact-bg"
-                      type="submit"
-                      name="submit"
-                      disabled={loading}
-                      style={{ width: '100%' }}
+                      type="button"
+                      className="btn btn-blog-bg"
+                      onClick={handleSendOtp}
+                      disabled={loading || otpLoading || resendSeconds > 0}
+                      style={{
+                        whiteSpace: "nowrap",
+                      }}
                     >
-                      {loading ? (
-                        <>
-                          <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                          Creating Account...
-                        </>
-                      ) : (
-                        'Sign Up Now'
-                      )}
+                      {otpLoading
+                        ? "Sending..."
+                        : resendSeconds > 0
+                          ? `${resendSeconds}s`
+                          : otpSent
+                            ? "Resend OTP"
+                            : "Send OTP"}
                     </button>
                   </div>
+                </div>
 
-                  <div className="mt-3 text-center">
-                    <p className="text-muted">
-                      Already have an account?{' '}
-                      <Link to="/login" className="text-primary">
-                        Login here
-                      </Link>
-                    </p>
+                {otpSent && (
+                  <div className="form-group">
+                    <input
+                      type="text"
+                      className="form-control requiredField input-label"
+                      placeholder="Enter 6 Digit Email OTP"
+                      value={otp}
+                      onChange={handleOtpChange}
+                      disabled={loading}
+                      maxLength={6}
+                      inputMode="numeric"
+                      autoComplete="one-time-code"
+                      required
+                    />
                   </div>
-                </form>
-              </div>
+                )}
+
+                <div className="form-group">
+                  <input
+                    type="tel"
+                    className="form-control requiredField input-label"
+                    placeholder="Contact Number"
+                    name="contact"
+                    value={formData.contact}
+                    onChange={handleChange}
+                    disabled={loading}
+                    maxLength={10}
+                    inputMode="numeric"
+                    required
+                  />
+                </div>
+
+                <div className="form-group">
+                  <select
+                    className="form-control requiredField input-label"
+                    name="category"
+                    value={formData.category}
+                    onChange={handleChange}
+                    disabled={loading}
+                    required
+                  >
+                    <option value="Consumer">Consumer</option>
+
+                    <option value="Dealer">Dealer</option>
+                  </select>
+                </div>
+
+                <div className="form-group">
+                  <input
+                    type="password"
+                    className="form-control requiredField input-label"
+                    placeholder="Password (min. 6 characters)"
+                    name="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    disabled={loading}
+                    required
+                  />
+                </div>
+
+                <div className="form-group">
+                  <input
+                    type="password"
+                    className="form-control requiredField input-label"
+                    placeholder="Confirm Password"
+                    name="confirmPassword"
+                    value={formData.confirmPassword}
+                    onChange={handleChange}
+                    disabled={loading}
+                    required
+                  />
+                </div>
+
+                <div className="form-group col-md-12 mbnone">
+                  <button
+                    className="btn btn-contact-bg"
+                    type="submit"
+                    disabled={loading || otpLoading}
+                    style={{
+                      width: "100%",
+                    }}
+                  >
+                    {loading ? (
+                      <>
+                        <span
+                          className="spinner-border spinner-border-sm me-2"
+                          role="status"
+                          aria-hidden="true"
+                        ></span>
+                        Creating Account...
+                      </>
+                    ) : (
+                      "Verify OTP & Sign Up"
+                    )}
+                  </button>
+                </div>
+
+                <div className="mt-3 text-center">
+                  <p className="text-muted">
+                    Already have an account?{" "}
+                    <Link to="/login" className="text-primary">
+                      Login here
+                    </Link>
+                  </p>
+                </div>
+              </form>
             </div>
           </div>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 };
 

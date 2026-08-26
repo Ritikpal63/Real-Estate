@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../utils/axiosConfig";
-import NewsCard from "./NewsCard";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
+
 const LIMIT = 9;
 
 const AllProperty = () => {
@@ -10,6 +10,9 @@ const AllProperty = () => {
   const [error, setError] = useState(null);
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
+  const [searchParams] = useSearchParams();
+
+  const filterKey = searchParams.toString();
 
   const totalPages = Math.max(1, Math.ceil(total / LIMIT));
 
@@ -17,17 +20,60 @@ const AllProperty = () => {
     try {
       setLoading(true);
       setError(null);
+
       const offset = (pageNum - 1) * LIMIT;
+
+      const params = {
+        limit: LIMIT,
+        offset,
+      };
+
+      const mode = searchParams.get("mode");
+      const location = searchParams.get("location");
+      const type = searchParams.get("type");
+      const budget = searchParams.get("budget");
+      const area = searchParams.get("area");
+
+      if (mode) {
+        params.mode = mode;
+      }
+
+      if (location) {
+        params.location = location;
+      }
+
+      if (type) {
+        params.type = type;
+      }
+
+      if (budget) {
+        params.budget = budget;
+      }
+
+      if (area) {
+        params.area = area;
+      }
+
       const res = await axiosInstance.get("/property/all", {
-        params: { limit: LIMIT, offset },
+        params,
       });
+
       if (res.data.success) {
-        setProperties(res.data.data);
-        setTotal(res.data.pagination?.total || 0);
+        setProperties(Array.isArray(res.data.data) ? res.data.data : []);
+
+        setTotal(Number(res.data.pagination?.total || 0));
       } else {
+        setProperties([]);
+        setTotal(0);
+
         setError(res.data.message || "Failed to fetch properties");
       }
     } catch (err) {
+      console.error("Property fetch error:", err);
+
+      setProperties([]);
+      setTotal(0);
+
       setError(
         err.response?.data?.message ||
           "Cannot connect to server. Please check if backend is running.",
@@ -38,19 +84,29 @@ const AllProperty = () => {
   };
 
   useEffect(() => {
+    setPage(1);
+  }, [filterKey]);
+
+  useEffect(() => {
     getProperties(page);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }, [page]);
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, [page, filterKey]);
 
   const goToPage = (p) => {
-    if (p < 1 || p > totalPages || p === page) return;
+    if (p < 1 || p > totalPages || p === page) {
+      return;
+    }
+
     setPage(p);
   };
 
-  // Build page numbers with ellipsis for large page counts, e.g. 1 2 3 ... 8
   const getPageNumbers = () => {
     const pages = [];
-    const windowSize = 1; // pages shown around current page
+    const windowSize = 1;
 
     for (let p = 1; p <= totalPages; p++) {
       if (
@@ -63,6 +119,7 @@ const AllProperty = () => {
         pages.push("...");
       }
     }
+
     return pages;
   };
 
@@ -78,6 +135,7 @@ const AllProperty = () => {
         {!loading && error && (
           <div className="max-w-xl mx-auto text-center bg-red-50 border border-red-200 text-red-600 rounded-lg px-6 py-4">
             <p>{error}</p>
+
             <button
               onClick={() => getProperties(page)}
               className="mt-3 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors"
@@ -92,44 +150,44 @@ const AllProperty = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {properties.length === 0 ? (
                 <p className="col-span-full text-center text-gray-400 py-10">
-                  No properties available.
+                  No properties found matching your search.
                 </p>
               ) : (
-                properties.map((p) => {
-                  return (
-                    <div
-                      className="col-md-4 col-sm-12 col-xs-12 hover:cursor-pointer"
-                      key={p.id}
-                      onClick={() =>
-                        (window.location.href = `/property/${p.id}`)
-                      }
+                properties.map((p) => (
+                  <div className="col-md-4 col-sm-12 col-xs-12" key={p.id}>
+                    <Link
+                      to={`/property/${p.id}`}
+                      className="block hover:cursor-pointer"
                     >
                       <div className="single_property w-[350px] overflow-hidden rounded-[30px]">
-                        {/* Fixed Image Size */}
                         <div className="w-full h-[250px] overflow-hidden">
                           <img
-                            src={p.image}
+                            src={p.image || "/assets/img/property/1.jpg"}
                             alt={p.title}
                             className="w-full h-full object-cover object-center"
+                            onError={(e) => {
+                              e.currentTarget.src =
+                                "/assets/img/property/1.jpg";
+                            }}
                           />
                         </div>
 
                         <div className="single_property_content">
-                          <h4>
-                            <Link to={`/property/${p.id}`}>{p.title}</Link>
-                          </h4>
+                          <h4>{p.title}</h4>
 
                           <p>{p.location}</p>
                         </div>
 
                         <div className="single_property_price">
                           {p.location}{" "}
-                          <span>${Number(p.price || 0).toLocaleString()}</span>
+                          <span>
+                            ₹{Number(p.price || 0).toLocaleString("en-IN")}
+                          </span>
                         </div>
                       </div>
-                    </div>
-                  );
-                })
+                    </Link>
+                  </div>
+                ))
               )}
             </div>
 
@@ -174,7 +232,7 @@ const AllProperty = () => {
             )}
 
             <p className="text-center text-sm text-gray-400 mt-3">
-              Page {page} of {totalPages} · {total} articles
+              Page {page} of {totalPages} · {total} properties
             </p>
           </>
         )}

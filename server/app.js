@@ -4,10 +4,17 @@ require("dotenv").config();
 
 const app = express();
 
-const vercelURL = "https://real-estate-sand-five.vercel.app";
+const allowedOrigins = [
+  process.env.CLIENT_URL,
+  "http://localhost:5173",
+  "https://real-estate-sand-five.vercel.app",
+].filter(Boolean);
 app.use(
   cors({
-    origin: vercelURL,
+    origin(origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) return callback(null, true);
+      return callback(new Error("Origin is not allowed by CORS"));
+    },
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
@@ -15,6 +22,7 @@ app.use(
 );
 
 const path = require("path");
+const bcrypt = require("bcrypt");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

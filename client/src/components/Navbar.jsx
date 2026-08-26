@@ -1,179 +1,181 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { useContext } from "react";
-import { Sun, Moon } from "lucide-react";
-// import { ThemeContext } from "../contextApi/ThemeContext";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Menu, X } from "lucide-react";
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  // const { theme, toggleTheme } = useContext(ThemeContext);
+
+  const navigate = useNavigate();
 
   const closeMenu = () => {
     setMobileMenuOpen(false);
   };
 
+  const handlePostProperty = () => {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      navigate("/admin");
+    } else {
+      sessionStorage.setItem(
+        "redirectAfterLogin",
+        "/admin"
+      );
+
+      navigate("/admin");
+    }
+
+    closeMenu();
+  };
+
+  const navLinks = [
+    {
+      name: "Home",
+      path: "/",
+    },
+    {
+      name: "About Us",
+      path: "/about",
+    },
+    {
+      name: "Services",
+      path: "/allservice",
+    },
+    {
+      name: "Office Space",
+      path: "/property",
+    },
+    {
+      name: "Jobs",
+      path: "/jobs",
+    },
+    {
+      name: "News",
+      path: "/news/allnews",
+    },
+    {
+      name: "Partners",
+      path: "/partners",
+    },
+    {
+      name: "Contact Us",
+      path: "/contact",
+    },
+  ];
+
+  const getNavClass = ({ isActive }) => {
+    return `relative flex h-full items-center whitespace-nowrap px-1 text-[13px] font-semibold transition-all duration-300 ${
+      isActive
+        ? "text-[#078cff]"
+        : "text-white hover:text-[#078cff]"
+    }`;
+  };
+
   return (
-    <nav className="bg-[#374256] text-white shadow-lg border-b border-white/10 ">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-24 navbar">
-          {/* Logo */}
-          <div className="flex-shrink-0">
-            <Link to="/" className="block">
+    <nav className="relative z-50 w-full bg-[#020d25] text-white shadow-sm">
+      <div className="mx-auto w-[90vw]">
+        <div className="flex h-[74px] items-center justify-between">
+
+          <div className="flex shrink-0 items-center">
+            <Link
+              to="/"
+              onClick={closeMenu}
+              className="flex items-center"
+            >
               <img
-                src="/assets/img/NCRLOGOGolden01.png"
+                src="/assets/img/ncrlogowithoutbg.png"
                 alt="NCR Space Connect"
-                className="w-auto logo"
+                className="h-[58px] w-[58px] object-contain"
               />
             </Link>
           </div>
 
-          <div className="hidden lg:flex items-center space-x-6">
-            <Link
-              to="/"
-              className="text-white hover:text-green-400 transition-colors duration-300 text-sm font-medium"
-            >
-              Home
-            </Link>
-            <Link
-              to="/about"
-              className="text-white hover:text-green-400 transition-colors duration-300 text-sm font-medium"
-            >
-              About
-            </Link>
+          <div className="hidden h-full flex-1 items-center justify-center lg:flex">
+            <div className="flex h-full items-center gap-7">
+              {navLinks.map((item) => (
+                <NavLink
+                  key={item.name}
+                  to={item.path}
+                  end={item.path === "/"}
+                  className={getNavClass}
+                >
+                  {({ isActive }) => (
+                    <>
+                      <span>{item.name}</span>
 
-            <Link
-              to="/property"
-              className="text-white hover:text-green-400 transition-colors duration-300 text-sm font-medium"
-            >
-              Properties
-            </Link>
-            <Link
-              to="/gallery"
-              className="text-white hover:text-green-400 transition-colors duration-300 text-sm font-medium"
-            >
-              Gallery
-            </Link>
-            <Link
-              to="/allservice"
-              className="text-white hover:text-green-400 transition-colors duration-300 text-sm font-medium"
-            >
-              Services
-            </Link>            
-            <Link
-              to="/blog"
-              className="text-white hover:text-green-400 transition-colors duration-300 text-sm font-medium"
-            >
-              Blogs
-            </Link>
-            <Link
-              to="/contact"
-              className="text-white hover:text-green-400 transition-colors duration-300 text-sm font-medium"
-            >
-              Contact
-            </Link>
-            <Link
-              to="/admin"
-              className="text-white hover:text-green-400 transition-colors duration-300 text-sm font-medium"
-            >
-              Admin
-            </Link>
+                      {isActive && (
+                        <span className="absolute bottom-0 left-0 h-[2px] w-full bg-[#078cff]" />
+                      )}
+                    </>
+                  )}
+                </NavLink>
+              ))}
+            </div>
           </div>
 
-          {/* Mobile Menu Button */}
-          <div className="lg:hidden">
+          <div className="hidden shrink-0 items-center lg:flex">
             <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="text-white hover:text-green-400 transition-colors focus:outline-none p-2"
-              aria-expanded={mobileMenuOpen}
+              type="button"
+              onClick={handlePostProperty}
+              className="text-[13px] font-bold text-[#078cff] transition-all duration-300 hover:text-white"
             >
-              <svg
-                className="h-6 w-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                {mobileMenuOpen ? (
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                ) : (
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
-                )}
-              </svg>
+              Post Property
             </button>
           </div>
+
+          <div className="flex items-center lg:hidden">
+            <button
+              type="button"
+              onClick={() =>
+                setMobileMenuOpen((prev) => !prev)
+              }
+              className="flex h-10 w-10 items-center justify-center rounded-md text-white transition hover:bg-white/10 hover:text-[#078cff]"
+              aria-label="Toggle navigation"
+              aria-expanded={mobileMenuOpen}
+            >
+              {mobileMenuOpen ? (
+                <X size={25} />
+              ) : (
+                <Menu size={25} />
+              )}
+            </button>
+          </div>
+
         </div>
       </div>
 
-      {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-[#2a3344] px-4 pt-2 border-t border-white/10">
-          <div className="space-y-2 flex flex-col">
-            <Link
-              to="/"
-              className="text-white hover:text-green-400 transition-colors duration-300 text-sm font-medium"
-              onClick={closeMenu}
-            >
-              Home
-            </Link>
-            <Link
-              to="/about"
-              className="text-white hover:text-green-400 transition-colors duration-300 text-sm font-medium"
-              onClick={closeMenu}
-            >
-              About
-            </Link>
+        <div className="absolute left-0 top-full w-full border-t border-white/10 bg-[#020d25] shadow-xl lg:hidden">
+          <div className="mx-auto w-[90vw] py-4">
+            <div className="flex flex-col">
 
-            <Link
-              to="/property"
-              className="text-white hover:text-green-400 transition-colors duration-300 text-sm font-medium"
-              onClick={closeMenu}
-            >
-              Properties
-            </Link>
-            <Link
-              to="/gallery"
-              className="text-white hover:text-green-400 transition-colors duration-300 text-sm font-medium"
-              onClick={closeMenu}
-            >
-              Gallery
-            </Link>
-            <Link
-              to="/allservice"
-              className="text-white hover:text-green-400 transition-colors duration-300 text-sm font-medium"
-              onClick={closeMenu}
-            >
-              Services
-            </Link>            
-            <Link
-              to="/blog"
-              className="text-white hover:text-green-400 transition-colors duration-300 text-sm font-medium"
-              onClick={closeMenu}
-            >
-              Blogs
-            </Link>
-            <Link
-              to="/contact"
-              className="text-white hover:text-green-400 transition-colors duration-300 text-sm font-medium"
-              onClick={closeMenu}
-            >
-              Contact
-            </Link>
-            <Link
-              to="/admin"
-              className="text-white hover:text-green-400 transition-colors duration-300 text-sm font-medium"
-              onClick={closeMenu}
-            >
-              Admin
-            </Link>
+              {navLinks.map((item) => (
+                <NavLink
+                  key={item.name}
+                  to={item.path}
+                  end={item.path === "/"}
+                  onClick={closeMenu}
+                  className={({ isActive }) =>
+                    `border-b border-white/5 px-2 py-3 text-[14px] font-medium transition ${
+                      isActive
+                        ? "text-[#078cff]"
+                        : "text-slate-200 hover:bg-white/5 hover:text-[#078cff]"
+                    }`
+                  }
+                >
+                  {item.name}
+                </NavLink>
+              ))}
+
+              <button
+                type="button"
+                onClick={handlePostProperty}
+                className="mt-4 flex h-[44px] items-center justify-center rounded-md bg-[#078cff] px-5 text-[13px] font-bold text-white transition hover:bg-[#0074df]"
+              >
+                Post Property
+              </button>
+
+            </div>
           </div>
         </div>
       )}

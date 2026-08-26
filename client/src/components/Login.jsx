@@ -1,22 +1,27 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../contextApi/useAuth";
 
 const Login = () => {
-  const { login, authError, authLoading, user, setAuthError, isAuthenticated } = useAuth();
+  const { login, authError, authLoading, user, setAuthError, isAuthenticated } =
+    useAuth();
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
   });
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathname || "/admin";
+  const from = location.state?.from?.pathname || null;
 
   useEffect(() => {
-    if (isAuthenticated() || user) {
-      navigate(from, { replace: true });
+    if (user) {
+      const destination = from || (user.role === "admin" ? "/admin" : "/");
+
+      navigate(destination, {
+        replace: true,
+      });
     }
-  }, [user, from, navigate, isAuthenticated]);
+  }, [user, from, navigate]);
 
   const handleChange = (e) => {
     setCredentials((prev) => ({
@@ -28,20 +33,16 @@ const Login = () => {
       setAuthError("");
     }
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!credentials.email || !credentials.password) {
       setAuthError("Please enter email and password");
+
       return;
     }
 
-    const success = await login(credentials);
-
-    if (success) {
-      navigate(from, { replace: true });
-    }
+    await login(credentials);
   };
 
   return (
@@ -50,7 +51,7 @@ const Login = () => {
         <div className="row">
           <div className="col-lg-6 offset-lg-3 col-sm-12 col-xs-12">
             <div className="login">
-              <h4 className="login_register_title">Admin Login</h4>
+              <h4 className="login_register_title">Login</h4>
               {authError && (
                 <div className="alert alert-danger" role="alert">
                   {authError}
@@ -98,6 +99,14 @@ const Login = () => {
                       "Login"
                     )}
                   </button>
+                </div>
+                <div className="mt-3 text-center">
+                  <p className="text-muted">
+                    If you don't have an account?{" "}
+                    <Link to="/register" className="text-primary">
+                      Register here
+                    </Link>
+                  </p>
                 </div>
               </form>
             </div>

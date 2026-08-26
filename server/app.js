@@ -7,7 +7,10 @@ const app = express();
 const allowedOrigins = [
 process.env.CLIENT_URL,
 "http://localhost:5173",
-"https://real-estate-sand-five.vercel.app"].
+"https://real-estate-sand-five.vercel.app",
+"https://ncrspaceconnect.com",
+  "https://www.ncrspaceconnect.com",
+].
 filter(Boolean);
 app.use(
   cors({

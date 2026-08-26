@@ -303,11 +303,11 @@ class ServiceController {
 
         await ServiceQueryModel.updateEmailStatus(query.id, "failed");
 
-        return res.status(201).json({
-          success: true,
+        return res.status(502).json({
+          success: false,
           emailSent: false,
           message:
-            "Your enquiry has been saved successfully. Email notification is temporarily unavailable.",
+            "We could not email your enquiry right now. Please try again shortly.",
           queryId: query.id,
         });
       }
